@@ -6,7 +6,7 @@ grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
-grails.plugin.location."bie-plugin" = "../bie-plugin"
+//grails.plugin.location."bie-plugin" = "../bie-plugin"
 
 grails.project.fork = [
         test: false,
