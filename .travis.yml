@@ -1,41 +1,20 @@
 language: groovy
-sudo: false
 jdk:
 - oraclejdk7
+sudo: false
 branches:
   only:
   - master
 before_install:
-- export TZ=Australia/Canberra
-- date
-- rm -rf ~/.gvm
-- curl -s get.gvmtool.net > ~/install_gvm.sh
-- chmod 775 ~/install_gvm.sh
-- ~/install_gvm.sh
-- echo "gvm_auto_answer=true" > ~/.gvm/etc/config
-- source ~/.gvm/bin/gvm-init.sh
-- GRAILS_VERSION=`grep '^\s*app.grails.version' application.properties | sed -e 's/^\s*app\.grails\.version=//g'
-  | tr -d "\r"`
-- echo "GRAILS_VERSION:$GRAILS_VERSION"
-- gvm install grails $GRAILS_VERSION || true
-before_script:
-- GRAILS_VERSION_NUMBER=`echo $GRAILS_VERSION | sed -e 's/\.[0-9]*$//g' -e 's/\.//g'
-  | tr -d "\r"`
-- echo "GRAILS_VERSION_NUMBER:$GRAILS_VERSION_NUMBER"
-- GRAILS_SETTINGS_FILE="travis_grails_settings_new.groovy"
-- if [ "$GRAILS_VERSION_NUMBER" -lt "23" ]; then GRAILS_SETTINGS_FILE="travis_grails_settings_old.groovy";
-  fi;
-- echo "GRAILS_SETTINGS_FILE:$GRAILS_SETTINGS_FILE"
-- mkdir -p ~/.grails; wget -q -O ~/.grails/settings.groovy https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/$GRAILS_SETTINGS_FILE
-- MAVEN_REPO="ala-repo-snapshot"
-- grep '^\s*app\.version=' ./application.properties | grep -q "\-SNAPSHOT"; if [ "$?"
-  = "1" ]; then MAVEN_REPO="ala-repo-release"; fi;
-- echo "MAVEN_REPO:$MAVEN_REPO"
+- wget -q https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/ala_common.sh
+- chmod +x ala_common.sh
+- source ./ala_common.sh
+
+- ala_travis_grails_setup_env
+
 script:
-- grails clean && grails refresh-dependencies --non-interactive && grails prod war
-  --non-interactive && grails prod maven-install --non-interactive
-after_success: '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && grails prod maven-deploy
-  --repository=$MAVEN_REPO --non-interactive'
+- ala_travis_grails_build
+
 env:
   global:
   - secure: vAvXXCGHSSalJAR9YUemQgO4qKWRAQWmGRzeDRpp2Djm6T24aUNEvuvcsPz1spfHs+kSDeyUHz7DsozL4V9CbwVmWZROzEs4Q+UUNI2SUtJRdWl3SMLJd92iEkGdvsufsLJpfu099IqnVbYg+wx53trApAUSO8rj9u/2ldVVCFlt9lk0gQaIxkpEqSkQza196RrWoeRUn138i4FqyeEEmDCV9L4ajfrkaLoPQ3CTz7l8s2UIFA1jmezU8jQX8kSRc2u4i014uw3/TdaBWnImyx2uyJB4NIJM+kjHMkw6CHnIVKCPfVoV6yLfhnTrci9opPHdK64S0KdzAn9zyBhQMDir2SbdrFuy29yhuq+anhBPR0oxtk2srJk4aIUBt/fRVN0m/6WGiYitO7a/EnYD7512Bmn1jUT/VDYezXn61YCFGnG9UEajFqUa3+as5+MRaHj7XTXHgkCVfv16RSFd3GEE1MFZZ4e+YGonZxcRWr44s+K+1wxRucUUs/VRLS7b2uQLy2QIYJdh0Iel0xaCSYW2rWHfwFXC9X7hx/jbRMml+4skPCOY5TAcXxCApVw6dx6iyDEnKYF7oHLYbo6LbjuV1bJQdMyEWO9sqs5+stNRw1LvqMtY4QG7wb9VD8Hjem7NzXK3MgNuzWDgZvpf5yUHW3mb+UAdWWroj+gWyPI=
