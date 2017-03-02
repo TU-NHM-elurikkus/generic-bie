@@ -9,8 +9,8 @@ grails.project.source.level = 1.6
 //grails.plugin.location."bie-plugin" = "../bie-plugin"
 
 grails.project.fork = [
-        test: false,
-        run: false
+    test: false,
+    run: false
 ]
 
 grails.project.dependency.resolver = "maven" // or ivy
@@ -27,7 +27,7 @@ grails.project.dependency.resolution = {
     repositories {
         mavenLocal()
         mavenRepo ("http://nexus.ala.org.au/content/groups/public/") {
-            updatePolicy 'always'
+            updatePolicy 'daily'
         }
     }
 
@@ -41,7 +41,8 @@ grails.project.dependency.resolution = {
         }
         // plugins for the build system only
         build ":tomcat:7.0.55"
-        compile ':bie-plugin:1.0'
+        compile ':bie-plugin:1.3.0-SNAPSHOT'
         compile ':cache:1.1.8'
+        runtime ":elurikkus-commons:0.1"
     }
 }
