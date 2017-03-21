@@ -43,6 +43,6 @@ grails.project.dependency.resolution = {
         build ":tomcat:7.0.55"
         compile ':bie-plugin:1.3.0-SNAPSHOT'
         compile ':cache:1.1.8'
-        runtime ":elurikkus-commons:0.1"
+        runtime ":elurikkus-commons:0.2-SNAPSHOT"
     }
 }

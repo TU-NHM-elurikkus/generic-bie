@@ -4,10 +4,6 @@
 /* Typography */
 h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {margin-top: 0;}
 
-/* Tabs */
-.tab-content {border: 1px solid #ddd; border-top: 0;}
-.tab-pane {padding: 20px;}
-
 /* Panels */
 .panel-footer p {font-size: 12px; line-height: 14px; margin: 0;}
 

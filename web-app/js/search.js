@@ -21,6 +21,7 @@
 $(document).ready(function() {
     // set the search input to the current q param value
     var query = SEARCH_CONF.query;
+
     if (query) {
         $(":input#search-2011").val(query);
     }
@@ -30,10 +31,12 @@ $(document).ready(function() {
         var val = $("option:selected", this).val();
         reloadWithParam('sortField',val);
     });
+
     $("select#sort-order").change(function() {
         var val = $("option:selected", this).val();
         reloadWithParam('dir',val);
     });
+
     $("select#per-page").change(function() {
         var val = $("option:selected", this).val();
         reloadWithParam('rows',val);
@@ -46,6 +49,7 @@ $(document).ready(function() {
     // in mobile view toggle display of facets
     $("#toggleFacetDisplay").click(function() {
         $(this).find("i").toggleClass("icon-chevron-down icon-chevron-right");
+
         if ($("#accordion").is(":visible")) {
             $("#accordion").removeClass("overrideHide");
         } else {
@@ -60,7 +64,6 @@ $(document).ready(function() {
  * @param facet
  */
 function removeFacet(facetIdx) {
-
     var q = $.getQueryParam('q') ? $.getQueryParam('q') : SEARCH_CONF.query ; //$.query.get('q')[0];
     var fqList = $.getQueryParam('fq'); //$.query.get('fq');
 
@@ -83,6 +86,7 @@ function removeFacet(facetIdx) {
         // empty fq so redirect doesn't happen
         paramList.push("fq=");
     }
+
     console.log("new URL: " + window.location.pathname + '?' + paramList.join('&'));
     window.location.href = window.location.pathname + '?' + paramList.join('&');
 }
@@ -96,26 +100,32 @@ function reloadWithParam(paramName, paramValue) {
     var fqList = $.getQueryParam('fq'); //$.query.get('fq');
     var sort = $.getQueryParam('sortField');
     var dir = $.getQueryParam('dir');
+
     // add query param
     if (q != null) {
         paramList.push("q=" + q);
     }
+
     // add filter query param
     if (fqList != null) {
         paramList.push("fq=" + fqList.join("&fq="));
     }
+
     // add sort param if already set
     if (paramName != 'sortField' && sort != null) {
         paramList.push('sortField' + "=" + sort);
     }
+
     // add dir param if already set
     if (paramName != 'dir' && dir != null) {
         paramList.push('dir' + "=" + dir);
     }
+
     // add the changed value
     if (paramName != null && paramValue != null) {
         paramList.push(paramName + "=" +paramValue);
     }
+
     //alert("paramName = " + paramName + " and paramValue = " + paramValue);
     //alert("params = "+paramList.join("&"));
     //alert("url = "+window.location.pathname);
@@ -131,9 +141,11 @@ function reloadWithParam(paramName, paramValue) {
         // get the pairs of params fist
         var pairs = location.search.substring(1).split('&');
         var values = [];
+
         // now iterate each pair
         for (var i = 0; i < pairs.length; i++) {
             var params = pairs[i].split('=');
+
             if (params[0] == param) {
                 // if the param doesn't have a value, like ?photos&videos, then return an empty srting
                 //return params[1] || '';
@@ -156,15 +168,15 @@ function numberWithCommas(x) {
 }
 
 function injectBhlResults() {
-
     var bhlHtml = "<li><a href='http://www.biodiversitylibrary.org/search?SearchTerm=" + SEARCH_CONF.query + "&SearchCat=M#/names' target='bhl'>BHL Literature </a></li>"
+
     insertSearchLinks(bhlHtml);
 }
 
 function injectBiocacheResults() {
-
     var queryToUse = (SEARCH_CONF.query == "" || SEARCH_CONF.query == "*" ? "*:*" : SEARCH_CONF.query);
     var url = SEARCH_CONF.biocacheServicesUrl + "/occurrences/search.json?q=" + queryToUse + "&start=0&pageSize=0&facet=off&qc=" + SEARCH_CONF.biocacheQueryContext;
+
     $.ajax({
         url: url,
         dataType: 'jsonp',
@@ -172,6 +184,7 @@ function injectBiocacheResults() {
             var maxItems = parseInt(data.totalRecords, 10);
             var url = SEARCH_CONF.biocacheUrl + "/occurrences/search?q=" + queryToUse;
             var html = "<li data-count=\"" + maxItems + "\"><a href=\"" + url + "\" id=\"biocacheSearchLink\">Occurrence records</a> (" + numberWithCommas(maxItems) + ")</li>";
+
             insertSearchLinks(html);
         }
     });
@@ -184,5 +197,5 @@ function insertSearchLinks(html) {
     $('#related-searches ul li').sortElements(function(a, b){
         return $(a).data("count") < $(b).data("count") ? 1 : -1;
     });
-    $('#related-searches').removeClass('hide');
+    $('#related-searches').removeClass('hide-node');
 }
