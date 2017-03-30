@@ -94,7 +94,7 @@
         </div>
     </header>
 
-    <div id="main-content" class="main-content panel panel-body">
+    <div id="main-content" class="main-content">
         <div class="taxon-tabs">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
@@ -176,12 +176,12 @@
                             </div>
 
                             <g:if test="${tc.conservationStatuses}">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Conservation Status</h3>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Conservation Status</h3>
                                     </div>
 
-                                    <div class="panel-body">
+                                    <div class="card-body">
                                         <ul class="conservationList">
                                             <g:each in="${tc.conservationStatuses.entrySet().sort { it.key }}" var="cs">
                                                 <li>
@@ -207,12 +207,12 @@
 
                             <div id="sounds" style="padding-bottom:20px;"></div>
 
-                            <div class="panel panel-default panel-resources">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Online Resources</h3>
+                            <div class="card bie-card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Online Resources</h3>
                                 </div>
 
-                                <div class="panel-body">
+                                <div class="card-block">
                                     <g:render template="onlineResources" plugin="bie-plugin"/>
                                 </div>
                             </div>
@@ -263,38 +263,12 @@
                                 </div>
                             </div>
 
-                            <div class="panel panel-default panel-actions">
-                                <div class="panel-body">
-                                    <ul class="list-unstyled">
-                                        <g:if test="${citizenSciUrl}">
-                                            <li>
-                                                <a href="${citizenSciUrl}/${tc.taxonConcept.guid}">
-                                                    <span class="glyphicon glyphicon-map-marker"></span> Record a sighting
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a href="${citizenSciUrl}/${tc.taxonConcept.guid}">
-                                                    <span class="glyphicon glyphicon-camera"></span> Submit a photo
-                                                </a>
-                                            </li>
-                                        </g:if>
-
-                                        <li>
-                                            <a id="alertsButton" href="#">
-                                                <span class="glyphicon glyphicon-bell"></span> Receive alerts when new records are added
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="panel panel-default panel-data-providers">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Datasets</h3>
+                            <div class="card bie-card panel-data-providers bie-vertical-space">
+                                <div class="card-header">
+                                    <h3 class="card-title">Datasets</h3>
                                 </div>
 
-                                <div class="panel-body">
+                                <div class="card-block">
                                     <p>
                                         <strong>
                                             <span class="datasetCount"></span>
@@ -717,7 +691,7 @@
                 </section>
 
                 <section class="tab-pane" id="records" role="tabpanel">
-                    <div class="pull-right btn-group btn-group-vertical">
+                    <div class="pull-right">
                         <a class="btn btn-default"
                            href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}">
                             <i class="glyphicon glyphicon-th-list"></i>
@@ -836,16 +810,16 @@
 </a>
 
 <!-- description template -->
-<div id="descriptionTemplate" class="panel panel-default panel-description" style="display:none;">
-    <div class="panel-heading">
-        <h3 class="panel-title title"></h3>
+<div id="descriptionTemplate" class="card bie-card panel-description" style="display:none;">
+    <div class="card-header">
+        <h3 class="card-title title"></h3>
     </div>
 
-    <div class="panel-body">
+    <div class="card-block">
         <p class="content"></p>
     </div>
 
-    <div class="panel-footer">
+    <div class="card-footer">
         <p class="source">Source: <span class="sourceText"></span></p>
 
         <p class="rights">Rights holder: <span class="rightsText"></span></p>

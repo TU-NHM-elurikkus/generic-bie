@@ -173,9 +173,36 @@ a.nav-link.active {
 
 .tab-content {
     border-top: 1px solid #ddd;
+    padding-top: 1em;
 }
 
 .nav-tabs li.nav-item {
     padding: 0;
     margin-bottom: -2px;
+}
+
+.bie-card {
+    padding: 0;
+}
+
+.bie-card .card-header {
+    padding: 10px;
+    padding-bottom: 0;
+}
+
+.bie-card .card-footer {
+    padding: 10px;
+    padding-bottom: 0;
+}
+
+.bie-vertical-space, .species-list-block {
+    margin-bottom: 20px;
+}
+
+.map-buttons > a.btn.btn-lg {
+    border: 1px solid #3dc8d3;
+}
+
+.taxon-map {
+    margin-top: 20px;
 }
