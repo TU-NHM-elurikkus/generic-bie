@@ -9,7 +9,7 @@
             <g:layoutTitle />
         </title>
 
-        <r:require modules="bie"/>
+        <r:require modules="jquery, bie, menu"/>
 
         <!-- Resources -->
         <r:layoutResources/>
@@ -24,9 +24,9 @@
     </head>
 
     <body>
-        <div class="wrap">
-            <g:render template="/menu" plugin="elurikkus-commons" />
+        <g:render template="/menu" plugin="elurikkus-commons" />
 
+        <div class="wrap">
             <g:layoutBody/>
         </div>
 

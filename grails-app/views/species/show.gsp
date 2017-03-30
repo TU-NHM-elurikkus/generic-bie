@@ -48,32 +48,45 @@
     <header class="pg-header">
         <g:if test="${taxonHierarchy && taxonHierarchy.size() > 1}">
             <div class="taxonomy-bcrumb">
-                <ol class="list-inline breadcrumb">
+                <ol class="breadcrumb">
                     <g:each in="${taxonHierarchy}" var="taxon">
                         <g:if test="${taxon.guid != tc.taxonConcept.guid}">
-                            <li><g:link controller="species" action="show"
-                                        params="[guid: taxon.guid]">${taxon.scientificName}</g:link></li>
+                            <li class="breadcrumb-item">
+                                <g:link controller="species" action="show" params="[guid: taxon.guid]">
+                                    ${taxon.scientificName}
+                                </g:link>
+                            </li>
                         </g:if>
                         <g:else>
-                            <li>${taxon.scientificName}</li>
+                            <li class="breadcrumb-item">
+                                ${taxon.scientificName}
+                            </li>
                         </g:else>
                     </g:each>
                 </ol>
             </div>
         </g:if>
+
         <div class="header-inner">
             <h5 class="pull-right json">
                 <a href="${jsonLink}" target="data"
                    title="${message(code:"show.view.json.title")}" class="btn btn-sm btn-default active"
-                   data-toggle="tooltip" data-placement="bottom"><g:message code="show.json" /></a>
+                   data-toggle="tooltip" data-placement="bottom">
+                   <g:message code="show.json" />
+                </a>
             </h5>
+
             <h1>${raw(sciNameFormatted)}</h1>
             <g:set var="commonNameDisplay" value="${(tc?.commonNames) ? tc?.commonNames?.opt(0)?.nameString : ''}"/>
+
             <g:if test="${commonNameDisplay}">
                 <h2>${raw(commonNameDisplay)}</h2>
             </g:if>
+
             <h5 class="inline-head taxon-rank">${tc.taxonConcept.rankString}</h5>
+
             <g:if test="${tc.taxonConcept.taxonomicStatus}"><h5 class="inline-head taxonomic-status" title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}"><g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" default="${tc.taxonConcept.taxonomicStatus}"/></h5></g:if>
+
             <h5 class="inline-head name-authority">
                 <strong>Name authority:</strong>
                 <span class="name-authority">${tc?.taxonConcept.nameAuthority ?: grailsApplication.config.defaultNameAuthority}</span>
@@ -84,23 +97,61 @@
     <div id="main-content" class="main-content panel panel-body">
         <div class="taxon-tabs">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
-                <li><a href="#gallery" data-toggle="tab">Gallery</a></li>
-                <li><a href="#names" data-toggle="tab">Names</a></li>
-                <li><a href="#classification" data-toggle="tab">Classification</a></li>
-                <li><a href="#records" data-toggle="tab">Records</a></li>
-                <li><a href="#literature" data-toggle="tab">Literature</a></li>
-                <li><a href="#sequences" data-toggle="tab">Sequences</a></li>
-                <li><a href="#data-partners" data-toggle="tab">Datasets</a></li>
-            </ul>
-            <div class="tab-content">
+                <li class="nav-item active">
+                    <a href="#overview" data-toggle="tab" class="nav-link">
+                        Overview
+                    </a>
+                </li>
 
+                <li class="nav-item">
+                    <a href="#gallery" data-toggle="tab" class="nav-link">
+                        Gallery
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#names" data-toggle="tab" class="nav-link">
+                        Names
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#classification" data-toggle="tab" class="nav-link">
+                        Classification
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#records" data-toggle="tab" class="nav-link">
+                        Records
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#literature" data-toggle="tab" class="nav-link">
+                        Literature
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#sequences" data-toggle="tab" class="nav-link">
+                        Sequences
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#data-partners" data-toggle="tab" class="nav-link">
+                        Datasets
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
                 <section class="tab-pane fade in active" id="overview">
                     <div class="row taxon-row">
                         <div class="col-md-6">
-
                             <div class="taxon-summary-gallery">
-                                <div class="main-img hide">
+                                <div class="main-img hidden-node">
                                     <a class="lightbox-img"
                                        data-toggle="lightbox"
                                        data-gallery="taxon-summary-gallery"
@@ -114,7 +165,7 @@
                                     <div class="caption mainOverviewImageInfo"></div>
                                 </div>
 
-                                <div class="thumb-row hide">
+                                <div class="thumb-row hidden-node">
                                     <div id="overview-thumbs"></div>
 
                                     <div id="more-photo-thumb-link" class="taxon-summary-thumb" style="">
@@ -166,7 +217,7 @@
                                 </div>
                             </div>
 
-                        </div><!-- end col 1 -->
+                        </div>
 
                         <div class="col-md-6">
                             <div id="expertDistroDiv" style="display:none;margin-bottom: 20px;">
@@ -174,6 +225,7 @@
                                 <img id="distroMapImage" src="${resource(dir: 'images', file: 'noImage.jpg')}" class="distroImg" style="width:316px;" alt="occurrence map" onerror="this.style.display='none'"/>
                                 <p class="mapAttribution">Compiled distribution map provided by <span id="dataResource">[data resource not known]</span></p>
                             </div>
+
                             <div class="taxon-map">
                                 <h3>Occurrence records map (<span class="occurrenceRecordCount">0</span> records)</h3>
                                 <div id="leafletMap"></div>
@@ -189,17 +241,25 @@
                                     <a class="btn btn-primary btn-lg"
                                        href="${mapUrl}"
                                        title="${g.message(code:'overview.map.button.records.map.title', default:'View interactive map')}"
-                                       role="button"><g:message code="overview.map.button.records.map" default="View Interactive Map"/></a>
+                                       role="button">
+                                       <g:message code="overview.map.button.records.map" default="View Interactive Map"/>
+                                    </a>
+
                                     <g:if test="${grailsApplication.config.map.simpleMapButton.toBoolean()}">
                                         <a class="btn btn-primary btn-lg"
                                            href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab_mapView"
                                            title="${g.message(code:'overview.map.button.records.simplemap.title', default:'View map')}"
-                                           role="button"><g:message code="overview.map.button.records.simplemap" default="View map"/></a>
+                                           role="button">
+                                           <g:message code="overview.map.button.records.simplemap" default="View map"/>
+                                        </a>
                                     </g:if>
+
                                     <a class="btn btn-primary btn-lg"
                                        href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab_recordsView"
                                        title="${g.message(code:'overview.map.button.records.list.title', default:'View records')}"
-                                       role="button"><g:message code="overview.map.button.records.list" default="View records"/></a>
+                                       role="button">
+                                       <g:message code="overview.map.button.records.list" default="View records"/>
+                                    </a>
                                 </div>
                             </div>
 
@@ -207,15 +267,24 @@
                                 <div class="panel-body">
                                     <ul class="list-unstyled">
                                         <g:if test="${citizenSciUrl}">
-                                            <li><a href="${citizenSciUrl}/${tc.taxonConcept.guid}"><span
-                                                    class="glyphicon glyphicon-map-marker"></span> Record a sighting</a>
+                                            <li>
+                                                <a href="${citizenSciUrl}/${tc.taxonConcept.guid}">
+                                                    <span class="glyphicon glyphicon-map-marker"></span> Record a sighting
+                                                </a>
                                             </li>
-                                            <li><a href="${citizenSciUrl}/${tc.taxonConcept.guid}"><span
-                                                    class="glyphicon glyphicon-camera"></span> Submit a photo</a></li>
+
+                                            <li>
+                                                <a href="${citizenSciUrl}/${tc.taxonConcept.guid}">
+                                                    <span class="glyphicon glyphicon-camera"></span> Submit a photo
+                                                </a>
+                                            </li>
                                         </g:if>
-                                        <li><a id="alertsButton" href="#"><span
-                                                class="glyphicon glyphicon-bell"></span> Receive alerts when new records are added
-                                        </a></li>
+
+                                        <li>
+                                            <a id="alertsButton" href="#">
+                                                <span class="glyphicon glyphicon-bell"></span> Receive alerts when new records are added
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -226,34 +295,40 @@
                                 </div>
 
                                 <div class="panel-body">
-                                    <p><strong><span class="datasetCount"></span>
-                                    </strong> datasets have provided data to the ${grailsApplication.config.skin.orgNameShort} for this ${tc.taxonConcept.rankString}.
+                                    <p>
+                                        <strong>
+                                            <span class="datasetCount"></span>
+                                        </strong>
+                                        &nbsp;datasets have provided data to the ${grailsApplication.config.skin.orgNameShort} for this ${tc.taxonConcept.rankString}.
                                     </p>
 
-                                    <p><a class="tab-link"
-                                          href="#data-partners">Browse the list of datasets</a> and find organisations you can join if you are
-                                    interested in participating in a survey for
-                                    <g:if test="${tc.taxonConcept?.rankID > 6000}">
-                                        species like ${raw(sciNameFormatted)}
-                                    </g:if>
-                                    <g:else>
-                                        species of ${raw(sciNameFormatted)}.
-                                    </g:else>
+                                    <p>
+                                        <a class="tab-link" href="#data-partners">
+                                            Browse the list of datasets
+                                        </a>
+                                        &nbsp;and find organisations you can join if you are interested in participating in a survey for
+                                        <g:if test="${tc.taxonConcept?.rankID > 6000}">
+                                            species like ${raw(sciNameFormatted)}
+                                        </g:if>
+                                        <g:else>
+                                            species of ${raw(sciNameFormatted)}.
+                                        </g:else>
                                     </p>
                                 </div>
                             </div>
 
                             <div id="listContent">
                             </div>
-
-                        </div><!-- end col 2 -->
+                        </div>
                     </div>
                 </section>
 
                 <section class="tab-pane fade" id="gallery">
                     <g:each in="${["type","specimen","other","uncertain"]}" var="cat">
-                        <div id="cat_${cat}" class="hide image-section">
-                            <h2><g:message code="images.heading.${cat}" default="${cat}"/>&nbsp;
+                        <div id="cat_${cat}" class="hidden-node image-section">
+                            <h2>
+                                <g:message code="images.heading.${cat}" default="${cat}"/>&nbsp;
+
                                 <div class="btn-group btn-group-sm" role="group">
                                     <button type="button" class="btn btn-sm btn-default collapse-image-gallery" onclick="collapseImageGallery(this)">Collapse</button>
                                     <button type="button" class="btn btn-sm btn-default btn-primary expand-image-gallery" onclick="expandImageGallery(this)">Expand</button>
@@ -262,7 +337,6 @@
 
                             <div class="taxon-gallery"></div>
                         </div>
-
                     </g:each>
 
                     <div id="cat_nonavailable">
@@ -274,53 +348,80 @@
                             please upload using the upload tools.
                         </p>
                     </div>
-                    <img src="${resource(dir: 'images', file: 'spinner.gif', plugin: 'biePlugin')}" id="gallerySpinner" class="hide" alt="spinner icon"/>
+
+                    <img src="${resource(dir: 'images', file: 'spinner.gif', plugin: 'biePlugin')}" id="gallerySpinner" class="hidden-node" alt="spinner icon"/>
                 </section>
 
                 <section class="tab-pane fade" id="names">
                     <g:set var="acceptedName" value="${tc.taxonConcept.taxonomicStatus == 'accepted'}"/>
+
                     <h2>Names and sources</h2>
-                    <table class="table name-table  table-responsive">
+
+                    <table class="table name-table table-responsive">
                         <thead>
-                        <tr>
-                            <th><g:if test="${acceptedName}">Accepted name</g:if><g:else>Name</g:else></th>
-                            <th>Source</th>
-                        </tr>
+                            <tr>
+                                <th>
+                                    <g:if test="${acceptedName}">
+                                        Accepted name
+                                    </g:if>
+                                    <g:else>
+                                        Name
+                                    </g:else>
+                                </th>
+
+                                <th>Source</th>
+                            </tr>
                         </thead>
+
                         <tbody>
-                        <tr>
-                            <td>
-                                <g:set var="baseNameFormatted"><bie:formatSciName rankId="${tc?.taxonConcept?.rankID}"
-                                                                                 nameFormatted="${tc?.taxonConcept?.nameFormatted}"
-                                                                                 nameComplete="${tc?.taxonConcept?.nameComplete}"
-                                                                                 name="${tc?.taxonConcept?.name}"
-                                                                                 taxonomicStatus="name"
-                                                                                 acceptedName="${tc?.taxonConcept?.acceptedConceptName}"/></g:set>
-                                <g:if test="${tc.taxonConcept.infoSourceURL && tc.taxonConcept.infoSourceURL != tc.taxonConcept.datasetURL}"><a
-                                        href="${tc.taxonConcept.infoSourceURL}" target="_blank"
-                                        class="external">${raw(baseNameFormatted)}</a></g:if>
-                                <g:else>${raw(baseNameFormatted)}</g:else>
-                            </td>
-                            <td class="source">
-                                <ul><li>
-                                    <g:if test="${tc.taxonConcept.datasetURL}"><a href="${tc.taxonConcept.datasetURL}"
-                                                                                  target="_blank"
-                                                                                  class="external">${tc.taxonConcept.nameAuthority ?: tc.taxonConcept.infoSourceName}</a></g:if>
-                                    <g:else>${tc.taxonConcept.nameAuthority ?: tc.taxonConcept.infoSourceName}</g:else>
-                                    <g:if test="${!acceptedName}"><span class="annotation annotation-taxonomic-status" title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}"><g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}.annotation" default="${tc.taxonConcept.taxonomicStatus}"/></span></g:if>
-                                    <g:if test="${tc.taxonConcept.nomenclaturalStatus && tc.taxonConcept.nomenclaturalStatus != tc.taxonConcept.taxonomicStatus}"><span class="annotation annotation-nomenclatural-status">${tc.taxonConcept.nomenclaturalStatus}</span></g:if>
-                                </li></ul>
-                            </td>
-                        </tr>
-                        <g:if test="${(tc.taxonName && tc.taxonName.namePublishedIn) || tc.taxonConcept.namePublishedIn}">
-                            <tr class="cite">
-                                <td colspan="2">
-                                    <cite>Published in: <span
-                                            class="publishedIn">${tc.taxonName?.namePublishedIn ?: tc.taxonConcept.namePublishedIn}</span>
-                                    </cite>
+                            <tr>
+                                <td>
+                                    <g:set var="baseNameFormatted">
+                                        <bie:formatSciName rankId="${tc?.taxonConcept?.rankID}"
+                                            nameFormatted="${tc?.taxonConcept?.nameFormatted}"
+                                            nameComplete="${tc?.taxonConcept?.nameComplete}"
+                                            name="${tc?.taxonConcept?.name}"
+                                            taxonomicStatus="name"
+                                            acceptedName="${tc?.taxonConcept?.acceptedConceptName}"/>
+                                    </g:set>
+
+                                    <g:if test="${tc.taxonConcept.infoSourceURL && tc.taxonConcept.infoSourceURL != tc.taxonConcept.datasetURL}"><a
+                                            href="${tc.taxonConcept.infoSourceURL}" target="_blank"
+                                            class="external">${raw(baseNameFormatted)}</a></g:if>
+                                    <g:else>${raw(baseNameFormatted)}</g:else>
+                                </td>
+
+                                <td class="source">
+                                    <ul>
+                                        <li>
+                                            <g:if test="${tc.taxonConcept.datasetURL}">
+                                                <a href="${tc.taxonConcept.datasetURL}" target="_blank" class="external">
+                                                    ${tc.taxonConcept.nameAuthority ?: tc.taxonConcept.infoSourceName}
+                                                </a>
+                                            </g:if>
+                                            <g:else>
+                                                ${tc.taxonConcept.nameAuthority ?: tc.taxonConcept.infoSourceName}
+                                            </g:else>
+
+                                            <g:if test="${!acceptedName}"><span class="annotation annotation-taxonomic-status" title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}"><g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}.annotation" default="${tc.taxonConcept.taxonomicStatus}"/></span></g:if>
+                                            <g:if test="${tc.taxonConcept.nomenclaturalStatus && tc.taxonConcept.nomenclaturalStatus != tc.taxonConcept.taxonomicStatus}"><span class="annotation annotation-nomenclatural-status">${tc.taxonConcept.nomenclaturalStatus}</span></g:if>
+                                        </li>
+                                    </ul>
                                 </td>
                             </tr>
-                        </g:if>
+
+                            <g:if test="${(tc.taxonName && tc.taxonName.namePublishedIn) || tc.taxonConcept.namePublishedIn}">
+                                <tr class="cite">
+                                    <td colspan="2">
+                                        <cite>
+                                            Published in:&nbsp;
+                                            <span class="publishedIn">
+                                                ${tc.taxonName?.namePublishedIn ?: tc.taxonConcept.namePublishedIn}
+                                            </span>
+                                        </cite>
+                                    </td>
+                                </tr>
+                            </g:if>
                         </tbody>
                     </table>
 
@@ -710,7 +811,7 @@
 
 <!-- taxon-summary-thumb template -->
 <div id="taxon-summary-thumb-template"
-     class="taxon-summary-thumb hide"
+     class="taxon-summary-thumb hidden-node"
      style="">
     <a data-toggle="lightbox"
        data-gallery="taxon-summary-gallery"
@@ -723,7 +824,7 @@
 
 <!-- thumbnail template -->
 <a id="taxon-thumb-template"
-   class="taxon-thumb hide"
+   class="taxon-thumb hidden-node"
    data-toggle="lightbox"
    data-gallery="main-image-gallery"
    data-title=""
@@ -756,7 +857,7 @@
 </div>
 
 <!-- genbank -->
-<div id="genbankTemplate" class="result hide">
+<div id="genbankTemplate" class="result hidden-node">
     <h3><a href="" class="externalLink"></a></h3>
 
     <p class="description"></p>
@@ -766,7 +867,7 @@
 
 
 <!-- indigenous-profile-summary template -->
-<div id="indigenous-profile-summary-template" class="hide padding-bottom-2">
+<div id="indigenous-profile-summary-template" class="hidden-node padding-bottom-2">
 
     <div class="indigenous-profile-summary row">
         <div class="col-md-2">
@@ -793,7 +894,7 @@
         <div class="col-md-2 ">
         </div>
 
-        <div class="col-md-5 hide main-image padding-bottom-2">
+        <div class="col-md-5 hidden-node main-image padding-bottom-2">
             <div class="row">
 
                 <div class="col-md-8 panel-heading">
@@ -810,7 +911,7 @@
         </div>
         <div class="col-md-1">
         </div>
-        <div class="col-md-3 hide main-audio padding-bottom-2">
+        <div class="col-md-3 hidden-node main-audio padding-bottom-2">
             <div class="row">
                 <div class="col-md-8 panel-heading">
                     <h3 class="panel-title">Main Audio</h3>
@@ -860,7 +961,7 @@
         </div>
     </div>
 
-    <div class="hide main-video padding-bottom-2">
+    <div class="hidden-node main-video padding-bottom-2">
         <div class="row">
             <div class="col-md-2 ">
             </div>
@@ -999,19 +1100,22 @@
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         var target = $(e.target).attr("href");
-        if(target == "#records"){
+
+        if(target == "#records") {
             $('#charts').html(''); //prevent multiple loads
+
             <charts:biocache
                 biocacheServiceUrl="${grailsApplication.config.biocacheService.baseURL}"
                 biocacheWebappUrl="${grailsApplication.config.biocache.baseURL}"
                 q="lsid:${guid}"
                 qc="${grailsApplication.config.biocacheService.queryContext ?: ''}"
                 fq=""/>
-    }
-    if(target == '#overview'){
-        loadMap();
-    }
-});
+        }
+
+        if(target == '#overview'){
+            loadMap();
+        }
+    });
 </r:script>
 </body>
 </html>
