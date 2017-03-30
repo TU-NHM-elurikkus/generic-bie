@@ -165,3 +165,17 @@ html, body {height:100%;}
 
 /* Hide wikipedia links */
 .mw-editsection { display:none; }
+
+/* Hackz */
+a.nav-link.active {
+    border-bottom: 1px solid white;
+}
+
+.tab-content {
+    border-top: 1px solid #ddd;
+}
+
+.nav-tabs li.nav-item {
+    padding: 0;
+    margin-bottom: -2px;
+}
