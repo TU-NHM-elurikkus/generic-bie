@@ -9,7 +9,7 @@
             <g:layoutTitle />
         </title>
 
-        <r:require modules="jquery, bie, menu"/>
+        <r:require modules="jquery, biefixed, menu"/>
 
         <!-- Resources -->
         <r:layoutResources/>

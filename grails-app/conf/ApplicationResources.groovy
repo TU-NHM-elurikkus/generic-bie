@@ -6,6 +6,13 @@ modules = {
         resource url: [dir: 'css', file: 'atlas.css'], attrs: [media: 'screen, print']
     }
 
+    biefixed {
+        dependsOn 'bootstrap', 'ekko'
+        resource url: [dir: 'js', file: 'atlas.js', plugin:'bie-plugin'], disposition: 'head', exclude: '*'
+        // TODO: Replace.
+        resource url: [dir: 'css', file: 'atlas.css'], attrs: [media: 'screen, print']
+    }
+
     application {
         resource url: [dir: 'js', file: 'application.js', plugin:'bie-plugin']
     }
