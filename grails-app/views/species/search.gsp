@@ -58,13 +58,13 @@
         </div>
     </header>
 
-    <div class="main-content panel panel-body">
+    <div class="main-content card card-block">
         <g:if test="${searchResults.totalRecords}">
             <g:set var="paramsValues" value="${[:]}"/>
 
             <div class="row">
                 <div class="col-sm-3">
-                    <div class="well refine-box">
+                    <div class="card card-block refine-box">
                         <h2 class="hidden-xs-down">
                             Refine results
                         </h2>

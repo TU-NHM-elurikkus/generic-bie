@@ -29,6 +29,8 @@
         <div class="wrap">
             <g:layoutBody/>
         </div>
+        
+        <g:render template="/footer" plugin="elurikkus-commons" />
 
         <!-- Resources -->
         <r:layoutResources/>

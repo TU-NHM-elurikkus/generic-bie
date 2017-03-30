@@ -94,60 +94,60 @@
         </div>
     </header>
 
-    <div id="main-content" class="main-content panel panel-body">
+    <div id="main-content" class="main-content">
         <div class="taxon-tabs">
             <ul class="nav nav-tabs">
-                <li class="nav-item active">
-                    <a href="#overview" data-toggle="tab" class="nav-link">
+                <li class="nav-item">
+                    <a href="#overview" data-toggle="tab" class="nav-link active" role="tab">
                         Overview
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#gallery" data-toggle="tab" class="nav-link">
+                    <a href="#gallery" data-toggle="tab" class="nav-link" role="tab">
                         Gallery
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#names" data-toggle="tab" class="nav-link">
+                    <a href="#names" data-toggle="tab" class="nav-link" role="tab">
                         Names
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#classification" data-toggle="tab" class="nav-link">
+                    <a href="#classification" data-toggle="tab" class="nav-link" role="tab">
                         Classification
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#records" data-toggle="tab" class="nav-link">
+                    <a href="#records" data-toggle="tab" class="nav-link" role="tab">
                         Records
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#literature" data-toggle="tab" class="nav-link">
+                    <a href="#literature" data-toggle="tab" class="nav-link" role="tab">
                         Literature
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#sequences" data-toggle="tab" class="nav-link">
+                    <a href="#sequences" data-toggle="tab" class="nav-link" role="tab">
                         Sequences
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#data-partners" data-toggle="tab" class="nav-link">
+                    <a href="#data-partners" data-toggle="tab" class="nav-link" role="tab">
                         Datasets
                     </a>
                 </li>
             </ul>
 
             <div class="tab-content">
-                <section class="tab-pane fade in active" id="overview">
+                <section class="tab-pane active" id="overview" role="tabpanel">
                     <div class="row taxon-row">
                         <div class="col-md-6">
                             <div class="taxon-summary-gallery">
@@ -176,12 +176,12 @@
                             </div>
 
                             <g:if test="${tc.conservationStatuses}">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Conservation Status</h3>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Conservation Status</h3>
                                     </div>
 
-                                    <div class="panel-body">
+                                    <div class="card-body">
                                         <ul class="conservationList">
                                             <g:each in="${tc.conservationStatuses.entrySet().sort { it.key }}" var="cs">
                                                 <li>
@@ -207,12 +207,12 @@
 
                             <div id="sounds" style="padding-bottom:20px;"></div>
 
-                            <div class="panel panel-default panel-resources">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Online Resources</h3>
+                            <div class="card bie-card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Online Resources</h3>
                                 </div>
 
-                                <div class="panel-body">
+                                <div class="card-block">
                                     <g:render template="onlineResources" plugin="bie-plugin"/>
                                 </div>
                             </div>
@@ -263,38 +263,12 @@
                                 </div>
                             </div>
 
-                            <div class="panel panel-default panel-actions">
-                                <div class="panel-body">
-                                    <ul class="list-unstyled">
-                                        <g:if test="${citizenSciUrl}">
-                                            <li>
-                                                <a href="${citizenSciUrl}/${tc.taxonConcept.guid}">
-                                                    <span class="glyphicon glyphicon-map-marker"></span> Record a sighting
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a href="${citizenSciUrl}/${tc.taxonConcept.guid}">
-                                                    <span class="glyphicon glyphicon-camera"></span> Submit a photo
-                                                </a>
-                                            </li>
-                                        </g:if>
-
-                                        <li>
-                                            <a id="alertsButton" href="#">
-                                                <span class="glyphicon glyphicon-bell"></span> Receive alerts when new records are added
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="panel panel-default panel-data-providers">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Datasets</h3>
+                            <div class="card bie-card panel-data-providers bie-vertical-space">
+                                <div class="card-header">
+                                    <h3 class="card-title">Datasets</h3>
                                 </div>
 
-                                <div class="panel-body">
+                                <div class="card-block">
                                     <p>
                                         <strong>
                                             <span class="datasetCount"></span>
@@ -323,7 +297,7 @@
                     </div>
                 </section>
 
-                <section class="tab-pane fade" id="gallery">
+                <section class="tab-pane" id="gallery" role="tabpanel">
                     <g:each in="${["type","specimen","other","uncertain"]}" var="cat">
                         <div id="cat_${cat}" class="hidden-node image-section">
                             <h2>
@@ -352,7 +326,7 @@
                     <img src="${resource(dir: 'images', file: 'spinner.gif', plugin: 'biePlugin')}" id="gallerySpinner" class="hidden-node" alt="spinner icon"/>
                 </section>
 
-                <section class="tab-pane fade" id="names">
+                <section class="tab-pane" id="names" rol="tabpanel">
                     <g:set var="acceptedName" value="${tc.taxonConcept.taxonomicStatus == 'accepted'}"/>
 
                     <h2>Names and sources</h2>
@@ -624,8 +598,7 @@
                         </tbody></table>
                 </section>
 
-                <section class="tab-pane fade" id="classification">
-
+                <section class="tab-pane fade" id="classification" role="tabpanel">
                     <g:if test="${tc.taxonConcept.rankID < 7000}">
                         <div class="pull-right btn-group btn-group-vertical">
                             <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&${grailsApplication.config.bieService.queryContext}"
@@ -717,9 +690,8 @@
                     </g:each>
                 </section>
 
-                <section class="tab-pane fade" id="records">
-
-                    <div class="pull-right btn-group btn-group-vertical">
+                <section class="tab-pane" id="records" role="tabpanel">
+                    <div class="pull-right">
                         <a class="btn btn-default"
                            href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}">
                             <i class="glyphicon glyphicon-th-list"></i>
@@ -743,7 +715,7 @@
                     </div>
                 </section>
 
-                <section class="tab-pane fade" id="literature">
+                <section class="tab-pane" id="literature" role="tabpanel">
                     <div class="row">
                         <!--left-->
                         <div class="col-md-3 sidebarCol">
@@ -779,7 +751,7 @@
                     </div><!--/row-->
                 </section>
 
-                <section class="tab-pane fade" id="sequences">
+                <section class="tab-pane" id="sequences" role="tabpanel">
                     <h2>Genbank</h2>
 
                     <p class="genbankResultCount"></p>
@@ -788,7 +760,7 @@
                     </div>
                 </section>
 
-                <section class="tab-pane fade" id="data-partners">
+                <section class="tab-pane" id="data-partners" role="tabpanel">
                     <table id="data-providers-list" class="table name-table  table-responsive">
                         <thead>
                         <tr>
@@ -801,7 +773,7 @@
                     </table>
                 </section>
 
-                <section class="tab-pane fade" id="indigenous-info">
+                <section class="tab-pane" id="indigenous-info" roles="tabpanel">
 
                 </section>
             </div>
@@ -838,16 +810,16 @@
 </a>
 
 <!-- description template -->
-<div id="descriptionTemplate" class="panel panel-default panel-description" style="display:none;">
-    <div class="panel-heading">
-        <h3 class="panel-title title"></h3>
+<div id="descriptionTemplate" class="card bie-card panel-description" style="display:none;">
+    <div class="card-header">
+        <h3 class="card-title title"></h3>
     </div>
 
-    <div class="panel-body">
+    <div class="card-block">
         <p class="content"></p>
     </div>
 
-    <div class="panel-footer">
+    <div class="card-footer">
         <p class="source">Source: <span class="sourceText"></span></p>
 
         <p class="rights">Rights holder: <span class="rightsText"></span></p>

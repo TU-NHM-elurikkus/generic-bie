@@ -47,11 +47,18 @@ a.expand-options {border-top: 1px solid #e3e3e3; display: block; padding-top: 2p
 
 /* Taxon header */
 .page-taxon .pg-header {padding-bottom: 20px; margin-top: 20px;}
-.taxonomy-bcrumb li {position: relative; padding-left: 16px;}
+.taxonomy-bcrumb li {position: relative; }
 .taxonomy-bcrumb li:first-child {padding-left: 5px;}
-.taxonomy-bcrumb li:before {content:"›"; position:absolute; left:2px;}
+/* .taxonomy-bcrumb li:before {content:"›"; position:absolute; left:2px;} */
 .taxonomy-bcrumb li:first-child:before {content: none;}
 .inline-head {display: inline-block; margin-right: 20px;}
+
+ol.breadcrumb {
+    list-style-position: outside;
+    padding-left: 16px;
+    text-indent: 0;
+    line-height: 21px;
+}
 
 /* Taxon column gutters */
 .taxon-row {margin-left: -10px; margin-right: -10px;}
@@ -158,3 +165,48 @@ html, body {height:100%;}
 
 /* Hide wikipedia links */
 .mw-editsection { display:none; }
+
+/* Hackz */
+a.nav-link.active {
+    border-bottom: 1px solid white;
+}
+
+.tab-content {
+    border-top: 1px solid #ddd;
+    padding-top: 1em;
+}
+
+.nav-tabs li.nav-item {
+    padding: 0;
+    margin-bottom: -2px;
+}
+
+.bie-card {
+    padding: 0;
+}
+
+.bie-card .card-header {
+    padding: 10px;
+    padding-bottom: 0;
+}
+
+.bie-card .card-footer {
+    padding: 10px;
+    padding-bottom: 0;
+}
+
+.bie-vertical-space, .species-list-block {
+    margin-bottom: 20px;
+}
+
+.map-buttons > a.btn.btn-lg {
+    border: 1px solid #3dc8d3;
+}
+
+.taxon-map {
+    margin-top: 20px;
+}
+
+#search-results-list {
+    text-indent: 0;
+}
