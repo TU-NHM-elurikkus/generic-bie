@@ -206,3 +206,7 @@ a.nav-link.active {
 .taxon-map {
     margin-top: 20px;
 }
+
+#search-results-list {
+    text-indent: 0;
+}
