@@ -43,8 +43,8 @@
     <r:require modules="show, charts, image-viewer"/>
 </head>
 
-<body class="page-taxon">
-<section class="container">
+<body>
+<section class="container page-taxon">
     <header class="pg-header">
         <g:if test="${taxonHierarchy && taxonHierarchy.size() > 1}">
             <div class="taxonomy-bcrumb">
@@ -238,27 +238,33 @@
                                 </g:else>
 
                                 <div class="map-buttons">
-                                    <a class="btn btn-primary btn-lg"
-                                       href="${mapUrl}"
+                                    <a href="${mapUrl}"
                                        title="${g.message(code:'overview.map.button.records.map.title', default:'View interactive map')}"
-                                       role="button">
-                                       <g:message code="overview.map.button.records.map" default="View Interactive Map"/>
+                                       role="button"
+                                    >
+                                        <button class="erk-button erk-button--light">
+                                            <g:message code="overview.map.button.records.map" default="View Interactive Map"/>
+                                        </button>
                                     </a>
 
                                     <g:if test="${grailsApplication.config.map.simpleMapButton.toBoolean()}">
-                                        <a class="btn btn-primary btn-lg"
-                                           href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab_mapView"
+                                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab_mapView"
                                            title="${g.message(code:'overview.map.button.records.simplemap.title', default:'View map')}"
-                                           role="button">
-                                           <g:message code="overview.map.button.records.simplemap" default="View map"/>
+                                           role="button"
+                                        >
+                                            <button class="erk-button erk-button--light">
+                                                <g:message code="overview.map.button.records.simplemap" default="View map"/>
+                                            </button>
                                         </a>
                                     </g:if>
 
-                                    <a class="btn btn-primary btn-lg"
-                                       href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab_recordsView"
+                                    <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab_recordsView"
                                        title="${g.message(code:'overview.map.button.records.list.title', default:'View records')}"
-                                       role="button">
-                                       <g:message code="overview.map.button.records.list" default="View records"/>
+                                       role="button"
+                                    >
+                                        <button class="erk-button erk-button--light">
+                                            <g:message code="overview.map.button.records.list" default="View records"/>
+                                       </button>
                                     </a>
                                 </div>
                             </div>
@@ -692,17 +698,20 @@
 
                 <section class="tab-pane" id="records" role="tabpanel">
                     <div class="pull-right">
-                        <a class="btn btn-default"
-                           href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}">
-                            <i class="glyphicon glyphicon-th-list"></i>
-                            View list of all
-                            occurrence records for this taxon (<span class="occurrenceRecordCount">0</span> records)
+                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}">
+                            <button class="erk-button erk-button--light">
+                                <i class="glyphicon glyphicon-th-list"></i>
+                                View list of all
+                                occurrence records for this taxon (<span class="occurrenceRecordCount">0</span> records)
+                            </button>
                         </a>
-                        <a class="btn btn-default"
-                           href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab_mapView">
-                            <i class="glyphicon glyphicon-map-marker"></i>
-                            View map of all
-                            occurrence records for this taxon (<span class="occurrenceRecordCount">0</span> records)
+
+                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab_mapView">
+                            <button class="erk-button erk-button--light">
+                                <i class="glyphicon glyphicon-map-marker"></i>
+                                View map of all
+                                occurrence records for this taxon (<span class="occurrenceRecordCount">0</span> records)
+                            </button>
                         </a>
                     </div>
 
@@ -721,9 +730,14 @@
                         <div class="col-md-3 sidebarCol">
                             <div class="side-menu" id="sidebar">
                                 <nav class="navbar navbar-default" role="navigation">
-                                    <ul class="nav nav-stacked">
-                                        <li><a href="#bhl-integration">Biodiversity Heritage Library</a></li>
-                                        <li><a href="#trove-integration">Trove</a></li>
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#bhl-integration">Biodiversity Heritage Library</a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#trove-integration">Trove</a>
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>
