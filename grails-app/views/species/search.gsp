@@ -36,9 +36,9 @@
         }
     </r:script>
 </head>
-<body class="general-search page-search">
+<body class="general-search">
 
-<section class="container">
+<section class="container page-search">
     <header class="pg-header">
         <div class="row">
             <div class="col-sm-9">
@@ -174,14 +174,13 @@
                 <div class="col-sm-9">
                     <div class="result-options">
                         <g:if test="${idxTypes.contains("TAXON")}">
-                            <div class="download-button float-right">
-                                <g:set var="downloadUrl" value="${grailsApplication.config.bie.index.url}/download?${request.queryString?:''}${grailsApplication.config.bieService.queryContext}"/>
-
-                                <a class="btn btn-default active btn-small" href="${downloadUrl}" title="Download a list of taxa for your search">
+                            <g:set var="downloadUrl" value="${grailsApplication.config.bie.index.url}/download?${request.queryString?:''}${grailsApplication.config.bieService.queryContext}"/>
+                            <a class="download-button float-right" href="${downloadUrl}" title="Download a list of taxa for your search">
+                                <button class="erk-button erk-button--light">
                                     <i class="glyphicon glyphicon-download"></i>
                                     Download
-                                </a>
-                            </div>
+                                </button>
+                            </a>
                         </g:if>
 
                         <form class="form-inline">
