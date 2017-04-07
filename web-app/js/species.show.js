@@ -30,8 +30,6 @@ function showSpeciesPage() {
 }
 
 function loadSpeciesLists(){
-
-    //console.log('### loadSpeciesLists #### ' + SHOW_CONF.speciesListUrl + '/ws/species/' + SHOW_CONF.guid);
     $.getJSON(SHOW_CONF.speciesListUrl + '/ws/species/' + SHOW_CONF.guid + '?callback=?', function( data ) {
         for(var i = 0; i < data.length; i++) {
             var specieslist = data[i];
@@ -267,11 +265,11 @@ function loadIndigenousData() {
     var url = SHOW_CONF.profileServiceUrl + "/api/v1/profiles?summary=true&tags=IEK&guids=" + SHOW_CONF.guid;
     $.getJSON(url, function (data) {
         if (data.total > 0) {
-            $("#indigenous-info-tab").parent().removeClass("hide");
+            $("#indigenous-info-tab").parent().removeClass("hidden-node");
 
             $.each(data.profiles, function(index, profile) {
                 var panel = $('#indigenous-profile-summary-template').clone();
-                panel.removeClass("hide");
+                panel.removeClass("hidden-node");
                 panel.attr("id", profile.id);
 
                 var logo = profile.collection.logo || SHOW_CONF.noImage100Url;
@@ -299,13 +297,13 @@ function loadIndigenousData() {
                 panel.find(".profile-link").append("<a href='" + profile.url + "' title='Click to view the whole profile' target='_blank'>View the full profile</a>");
 
                 if(profile.thumbnailUrl) {
-                    panel.find(".main-image").removeClass("hide");
+                    panel.find(".main-image").removeClass("hidden-node");
 
                     panel.find(".image-embedded").append("<img src='" + profile.thumbnailUrl + "' alt='" + profile.collection.title + " main image'>");
                 }
 
                 if(profile.mainVideo) {
-                    panel.find(".main-video").removeClass("hide");
+                    panel.find(".main-video").removeClass("hidden-node");
                     panel.find(".video-name").append(profile.mainVideo.name);
                     panel.find(".video-attribution").append(profile.mainVideo.attribution);
                     panel.find(".video-license").append(profile.mainVideo.license);
@@ -313,7 +311,7 @@ function loadIndigenousData() {
                 }
 
                 if(profile.mainAudio) {
-                    panel.find(".main-audio").removeClass("hide");
+                    panel.find(".main-audio").removeClass("hidden-node");
                     panel.find(".audio-name").append(profile.mainAudio.name);
                     panel.find(".audio-attribution").append(profile.mainAudio.attribution);
                     panel.find(".audio-license").append(profile.mainAudio.license);
@@ -548,11 +546,11 @@ function addOverviewImages(imagesArray, hasPreferredImage) {
 }
 
 function addOverviewImage(overviewImageRecord) {
-    $('#noOverviewImages').addClass('hide');
-    $('.main-img').removeClass('hide');
-    $('.thumb-row').removeClass('hide');
+    $('#noOverviewImages').addClass('hidden-node');
+    $('.main-img').removeClass('hidden-node');
+    $('.thumb-row').removeClass('hidden-node');
     var $categoryTmpl = $('#overviewImages');
-    $categoryTmpl.removeClass('hide');
+    $categoryTmpl.removeClass('hidden-node');
 
     var $mainOverviewImage = $('.mainOverviewImage');
     $mainOverviewImage.attr('src',overviewImageRecord.largeImageUrl);
@@ -578,7 +576,7 @@ function addOverviewThumb(record, i) {
 function generateOverviewThumb(occurrence, id){
     var $taxonSummaryThumb = $('#taxon-summary-thumb-template').clone();
     var $taxonSummaryThumbLink = $taxonSummaryThumb.find('a');
-    $taxonSummaryThumb.removeClass('hide');
+    $taxonSummaryThumb.removeClass('hidden-node');
     $taxonSummaryThumb.attr('id', 'taxon-summary-thumb-'+id);
     $taxonSummaryThumb.attr('style', 'background-image:url(' + occurrence.smallImageUrl + ')');
     $taxonSummaryThumbLink.attr('data-title', getImageTitleFromOccurrence(occurrence));
@@ -610,7 +608,7 @@ function loadGalleryType(category, start) {
 
     if (start > 0) {
         $('.loadMore.' + category + ' button').addClass('disabled');
-        $('.loadMore.' + category + ' img').removeClass('hide');
+        $('.loadMore.' + category + ' img').removeClass('hidden-node');
     }
 
     //TODO a toggle between LSID based searches and names searches
@@ -629,13 +627,13 @@ function loadGalleryType(category, start) {
         if (data && data.totalRecords > 0) {
             var br = "<br>";
             var $categoryTmpl = $('#cat_' + category);
-            $categoryTmpl.removeClass('hide');
-            $('#cat_nonavailable').addClass('hide');
+            $categoryTmpl.removeClass('hidden-node');
+            $('#cat_nonavailable').addClass('hidden-node');
 
             $.each(data.occurrences, function(i, el) {
                 // clone template div & populate with metadata
                 var $taxonThumb = $('#taxon-thumb-template').clone();
-                $taxonThumb.removeClass('hide');
+                $taxonThumb.removeClass('hidden-node');
                 $taxonThumb.attr('id','thumb_' + category + i);
                 $taxonThumb.attr('href', el.largeImageUrl);
                 $taxonThumb.find('img').attr('src', el.smallImageUrl);
@@ -660,8 +658,8 @@ function loadGalleryType(category, start) {
             if (data.totalRecords > (start + pageSize)) {
                 // add new 'load more images' button if required
                 var spinnerLink = $('img#gallerySpinner').attr('src');
-                var btn = '<div class="loadMore ' + category + '"><br><button class="btn btn-default" onCLick="loadGalleryType(\'' + category + '\','
-                    + (start + pageSize)  + ');">Load more images <img src="' + spinnerLink + '" class="hide"/></button></div>';
+                var btn = '<div class="loadMore ' + category + '"><br><button class="erk-btn erk-button--light" onCLick="loadGalleryType(\'' + category + '\','
+                    + (start + pageSize)  + ');">Load more images <img src="' + spinnerLink + '" class="hidden-node"/></button></div>';
                 $categoryTmpl.find('.taxon-gallery').append(btn);
             }
         }

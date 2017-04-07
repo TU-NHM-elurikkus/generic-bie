@@ -310,8 +310,8 @@
                                 <g:message code="images.heading.${cat}" default="${cat}"/>&nbsp;
 
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" class="btn btn-sm btn-default collapse-image-gallery" onclick="collapseImageGallery(this)">Collapse</button>
-                                    <button type="button" class="btn btn-sm btn-default btn-primary expand-image-gallery" onclick="expandImageGallery(this)">Expand</button>
+                                    <button type="button" class="erk-button erk-button--light btn-default collapse-image-gallery" onclick="collapseImageGallery(this)">Collapse</button>
+                                    <button type="button" class="erk-button erk-button--light  btn-default btn-primary expand-image-gallery" onclick="expandImageGallery(this)">Expand</button>
                                 </div>
                             </h2>
 
