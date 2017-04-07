@@ -13,7 +13,6 @@
  * rights and limitations under the License.
  */
 function showSpeciesPage() {
-    //console.log("Starting show species page");
     //load content
     loadOverviewImages();
     loadMap();
@@ -23,14 +22,15 @@ function showSpeciesPage() {
     loadSpeciesLists();
     loadDataProviders();
     loadIndigenousData();
-
+    //
     ////setup controls
     addAlerts();
-    // loadBhl(); // now an external link to BHL
-    loadTrove(SHOW_CONF.scientificName,'trove-integration','trove-result-list','previousTrove','nextTrove');
+
+    loadReferences('plutof-references', SHOW_CONF.guid);
 }
 
 function loadSpeciesLists(){
+
     //console.log('### loadSpeciesLists #### ' + SHOW_CONF.speciesListUrl + '/ws/species/' + SHOW_CONF.guid);
     $.getJSON(SHOW_CONF.speciesListUrl + '/ws/species/' + SHOW_CONF.guid + '?callback=?', function( data ) {
         for(var i = 0; i < data.length; i++) {
@@ -267,11 +267,11 @@ function loadIndigenousData() {
     var url = SHOW_CONF.profileServiceUrl + "/api/v1/profiles?summary=true&tags=IEK&guids=" + SHOW_CONF.guid;
     $.getJSON(url, function (data) {
         if (data.total > 0) {
-            $("#indigenous-info-tab").parent().removeClass("hidden-node");
+            $("#indigenous-info-tab").parent().removeClass("hide");
 
             $.each(data.profiles, function(index, profile) {
                 var panel = $('#indigenous-profile-summary-template').clone();
-                panel.removeClass('hidden-node');
+                panel.removeClass("hide");
                 panel.attr("id", profile.id);
 
                 var logo = profile.collection.logo || SHOW_CONF.noImage100Url;
@@ -299,13 +299,13 @@ function loadIndigenousData() {
                 panel.find(".profile-link").append("<a href='" + profile.url + "' title='Click to view the whole profile' target='_blank'>View the full profile</a>");
 
                 if(profile.thumbnailUrl) {
-                    panel.find(".main-image").removeClass('hidden-node');
+                    panel.find(".main-image").removeClass("hide");
 
                     panel.find(".image-embedded").append("<img src='" + profile.thumbnailUrl + "' alt='" + profile.collection.title + " main image'>");
                 }
 
                 if(profile.mainVideo) {
-                    panel.find(".main-video").removeClass('hidden-node');
+                    panel.find(".main-video").removeClass("hide");
                     panel.find(".video-name").append(profile.mainVideo.name);
                     panel.find(".video-attribution").append(profile.mainVideo.attribution);
                     panel.find(".video-license").append(profile.mainVideo.license);
@@ -313,7 +313,7 @@ function loadIndigenousData() {
                 }
 
                 if(profile.mainAudio) {
-                    panel.find(".main-audio").removeClass('hidden-node');
+                    panel.find(".main-audio").removeClass("hide");
                     panel.find(".audio-name").append(profile.mainAudio.name);
                     panel.find(".audio-attribution").append(profile.mainAudio.attribution);
                     panel.find(".audio-license").append(profile.mainAudio.license);
@@ -387,7 +387,7 @@ function loadExternalSources(){
             if(data.results){
                 $.each(data.results, function(idx, result){
                     var $genbank =  $('#genbankTemplate').clone();
-                    $genbank.removeClass('hidden-node');
+                    $genbank.removeClass('hide');
                     $genbank.find('.externalLink').attr('href', result.link);
                     $genbank.find('.externalLink').html(result.title);
                     $genbank.find('.description').html(result.description);
@@ -530,11 +530,11 @@ function addOverviewImages(imagesArray, hasPreferredImage) {
 }
 
 function addOverviewImage(overviewImageRecord) {
-    $('#noOverviewImages').addClass('hidden-node');
-    $('.main-img').removeClass('hidden-node');
-    $('.thumb-row').removeClass('hidden-node');
+    $('#noOverviewImages').addClass('hide');
+    $('.main-img').removeClass('hide');
+    $('.thumb-row').removeClass('hide');
     var $categoryTmpl = $('#overviewImages');
-    $categoryTmpl.removeClass('hidden-node');
+    $categoryTmpl.removeClass('hide');
 
     var $mainOverviewImage = $('.mainOverviewImage');
     $mainOverviewImage.attr('src',overviewImageRecord.largeImageUrl);
@@ -560,7 +560,7 @@ function addOverviewThumb(record, i) {
 function generateOverviewThumb(occurrence, id){
     var $taxonSummaryThumb = $('#taxon-summary-thumb-template').clone();
     var $taxonSummaryThumbLink = $taxonSummaryThumb.find('a');
-    $taxonSummaryThumb.removeClass('hidden-node');
+    $taxonSummaryThumb.removeClass('hide');
     $taxonSummaryThumb.attr('id', 'taxon-summary-thumb-'+id);
     $taxonSummaryThumb.attr('style', 'background-image:url(' + occurrence.smallImageUrl + ')');
     $taxonSummaryThumbLink.attr('data-title', getImageTitleFromOccurrence(occurrence));
@@ -592,7 +592,7 @@ function loadGalleryType(category, start) {
 
     if (start > 0) {
         $('.loadMore.' + category + ' button').addClass('disabled');
-        $('.loadMore.' + category + ' img').removeClass('hidden-node');
+        $('.loadMore.' + category + ' img').removeClass('hide');
     }
 
     //TODO a toggle between LSID based searches and names searches
@@ -611,13 +611,13 @@ function loadGalleryType(category, start) {
         if (data && data.totalRecords > 0) {
             var br = "<br>";
             var $categoryTmpl = $('#cat_' + category);
-            $categoryTmpl.removeClass('hidden-node');
-            $('#cat_nonavailable').addClass('hidden-node');
+            $categoryTmpl.removeClass('hide');
+            $('#cat_nonavailable').addClass('hide');
 
             $.each(data.occurrences, function(i, el) {
                 // clone template div & populate with metadata
                 var $taxonThumb = $('#taxon-thumb-template').clone();
-                $taxonThumb.removeClass('hidden-node');
+                $taxonThumb.removeClass('hide');
                 $taxonThumb.attr('id','thumb_' + category + i);
                 $taxonThumb.attr('href', el.largeImageUrl);
                 $taxonThumb.find('img').attr('src', el.smallImageUrl);
@@ -643,7 +643,7 @@ function loadGalleryType(category, start) {
                 // add new 'load more images' button if required
                 var spinnerLink = $('img#gallerySpinner').attr('src');
                 var btn = '<div class="loadMore ' + category + '"><br><button class="btn btn-default" onCLick="loadGalleryType(\'' + category + '\','
-                    + (start + pageSize)  + ');">Load more images <img src="' + spinnerLink + '" class='hidden-node'/></button></div>';
+                    + (start + pageSize)  + ');">Load more images <img src="' + spinnerLink + '" class="hide"/></button></div>';
                 $categoryTmpl.find('.taxon-gallery').append(btn);
             }
         }
@@ -877,4 +877,90 @@ function collapseImageGallery(btn) {
 
         $(btn).parents('.image-section').find('.taxon-gallery').slideUp(400)
     }
+}
+
+function loadReferences(containerID, taxonID) {
+    var PAGE_SIZE = 20;
+
+    var $container = $('#' + containerID);
+    var $list = $container.find('.plutof-references__list');
+    var $pagination = $container.find('.plutof-references__pagination');
+
+    var endpoint = '/bie-hub/proxy/plutof/taxonoccurrence/referencebased/occurrences/';
+    var params = {
+        taxon_node: taxonID,
+        page_size: PAGE_SIZE
+    };
+
+    var count = 0;
+    var currentPage = 0;
+    var pageCount = 0;
+
+    function showPage(page) {
+        $list.empty();
+
+        page.forEach(function(occurrence) {
+            var el = $(
+                '<li class="plutof-references__item">' +
+                    '<h3 class="plutof-references__header">' +
+                        '<a href="https://plutof.ut.ee/#/referencebased/view/' + occurrence.id + '">' +
+                            occurrence.reference_name +
+                        '</a>' +
+                    '</h3>' +
+                    '<div class="plutof-references__content">' +
+                        occurrence.area_name + 
+                    '</div>' +
+                '</li>'
+            );
+
+            $list.append(el);
+        });
+    }
+
+    function updatePagination(currentPage) {
+        $pagination.empty();
+
+        if(pageCount <= 1) {
+            return;
+        }
+
+        for(var p = 1; p <= pageCount; p++) {
+            var $el;
+
+            if(p == currentPage) {
+                $el = $('<span class="plutof-references__page plutof-references__page--current">' + p + '</span>');
+            } else {
+                $el = (function(pageNum) {
+                    var el = $('<span class="plutof-references__page">' + pageNum + '</span>')
+
+                    el.on('click', function() {
+                        loadPage(pageNum);
+                    });
+
+                    return el;
+                })(p);
+            }
+
+            $pagination.append($el);
+        }
+    }
+
+    function loadPage(num) {
+        params.page = num;
+
+        $.getJSON(endpoint, params, function(page) {
+            showPage(page);
+            updatePagination(num);
+        });
+    }
+
+    $.getJSON(endpoint + 'count/', params, function(counts) {
+        if(counts.objects_count === 0) {
+            return;
+        }
+
+        pageCount = Math.ceil(counts.objects_count / PAGE_SIZE);
+
+        loadPage(1);
+    });
 }

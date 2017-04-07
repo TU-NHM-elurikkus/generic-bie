@@ -214,3 +214,29 @@ a.nav-link.active {
     margin-bottom: 0;
     padding-bottom: 1rem;
 }
+
+/* plutof-references */
+.plutof-references__list {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.plutof-references__item {
+    list-style-type: none;
+    padding-bottom: 1rem;
+}
+
+.plutof-references__header {
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.plutof-references__page {
+    color: #0587aa;
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+
+.plutof-references__page.plutof-references__page--current {
+    color: inherit;
+    cursor: inherit;
+}

@@ -40,7 +40,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${tc?.taxonConcept?.nameString} ${(tc?.commonNames) ? ' : ' + tc?.commonNames?.get(0)?.nameString : ''} | ${raw(grailsApplication.config.skin.orgNameLong)}</title>
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
-    <r:require modules="show, charts, image-viewer"/>
+    <r:require modules="showOverride, charts, image-viewer"/>
 </head>
 
 <body>
@@ -698,7 +698,7 @@
 
                 <section class="tab-pane" id="records" role="tabpanel">
                     <div class="pull-right">
-                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}">
+                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab_recordsView">
                             <button class="erk-button erk-button--light">
                                 <i class="glyphicon glyphicon-th-list"></i>
                                 View list of all
@@ -725,44 +725,19 @@
                 </section>
 
                 <section class="tab-pane" id="literature" role="tabpanel">
-                    <div class="row">
-                        <!--left-->
-                        <div class="col-md-3 sidebarCol">
-                            <div class="side-menu" id="sidebar">
-                                <nav class="navbar navbar-default" role="navigation">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#bhl-integration">Biodiversity Heritage Library</a>
-                                        </li>
+                    <div id="plutof-references" class="card plutof-references">
+                        <div class="card-header">
+                            <h3>Literature references from PlutoF</h3> 
+                        </div>
 
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#trove-integration">Trove</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div><!--/left-->
+                        <div class="card-block">
+                            <ol class="plutof-references__list">
+                            </ol>
 
-                        <!--right-->
-                        <div class="col-md-9" style="padding-top:14px;">
-
-                            <div id="bhl-integration">
-                                <h3>Name references found in the <a href="http://biodiversityheritagelibrary.com/" target="_blank">Biodiversity Heritage Library</a></h3>
-                                <div id="bhl-results-list" class="results-listZ">
-                                    <a href='http://www.biodiversitylibrary.org/search?SearchTerm=${tc?.taxonConcept?.nameString}&SearchCat=M#/names' target='bhl'>Search BHL for references to ${tc?.taxonConcept?.nameString}</a>
-                                </div>
-                            </div>
-
-                            <div id="trove-integration" class="column-wrap" style="padding-top:50px;">
-                                %{--<h2>&nbsp;</h2>--}%
-                                <hr />
-                                <h3>Name references found in <a href="http://trove.nla.gov.au" target="_blank">Trove - NLA</a></h3>
-
-                                <div id="trove-result-list" class="result-list">
-                                </div>
-                            </div>
-                        </div><!--/right-->
-                    </div><!--/row-->
+                            <nav class="plutof-references__pagination">
+                            </nav>
+                        </div>
+                    </div>
                 </section>
 
                 <section class="tab-pane" id="sequences" role="tabpanel">
