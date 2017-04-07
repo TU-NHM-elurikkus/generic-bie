@@ -727,7 +727,12 @@
                 <section class="tab-pane" id="literature" role="tabpanel">
                     <div id="plutof-references" class="card plutof-references">
                         <div class="card-header">
-                            <h3>Literature references from PlutoF</h3> 
+                            <h3>
+                                Literature references from PlutoF
+
+                                <span class="plutof-references__count">
+                                </span>
+                            </h3> 
                         </div>
 
                         <div class="card-block">
@@ -744,12 +749,12 @@
                     <div id="sequences-plutof" class="card sequences">
                         <a data-toggle="collapse" href="#sequences-plutof-body">
                             <div class="card-header">
-                                <h2>
+                                <h3>
                                     PlutoF
 
                                     <span class="sequences__count">
                                     </span>
-                                </h2>
+                                </h3>
                             </div>
                         </a>
 
@@ -765,12 +770,12 @@
                     <div class="card">
                         <a data-toggle="collapse" href="#sequences-genbank">
                             <div class="card-header">
-                                <h2>
+                                <h3>
                                     Genbank
 
                                     <span id="genbank-header-count">
                                     </span>
-                                </h2>
+                                </h3>
                             </div>
                         </a>
 

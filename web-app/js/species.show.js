@@ -897,15 +897,18 @@ function collapseImageGallery(btn) {
     }
 }
 
+// TODO: Can abstract loadReferences and loadPlutoFSequences more
 function loadReferences(containerID, taxonID) {
     var PAGE_SIZE = 20;
 
     var $container = $('#' + containerID);
+    var $count = $container.find('.plutof-references__count');
     var $list = $container.find('.plutof-references__list');
     var $pagination = $container.find('.plutof-references__pagination');
 
-    var endpoint = '/bie-hub/proxy/plutof/taxonoccurrence/referencebased/occurrences/';
-    var params = {
+    var endpoint = '/bie-hub/proxy/plutof/taxonoccurrence/referencebased/occurrences/search/'
+    var params  = {
+        cn: 47, // Country = Estonia
         taxon_node: taxonID,
         page_size: PAGE_SIZE
     };
@@ -913,8 +916,9 @@ function loadReferences(containerID, taxonID) {
     var count = 0;
     var currentPage = 0;
     var pageCount = 0;
+    var loadPage;
 
-    function showPage(page) {
+    function showPage(pageNumber, page) {
         $list.empty();
 
         page.forEach(function(occurrence) {
@@ -922,37 +926,32 @@ function loadReferences(containerID, taxonID) {
                 '<li class="plutof-references__item">' +
                     '<h3 class="plutof-references__header">' +
                         '<a href="https://plutof.ut.ee/#/referencebased/view/' + occurrence.id + '">' +
-                            occurrence.reference_name +
+                            occurrence.reference +
                         '</a>' +
                     '</h3>' +
                     '<div class="plutof-references__content">' +
-                        occurrence.area_name + 
+                        occurrence.locality_text + 
                     '</div>' +
                 '</li>'
             );
 
             $list.append(el);
         });
+
+        setPlutoFPagination($pagination, pageNumber, pageCount, loadPage);
     }
 
-    function loadPage(num) {
-        params.page = num;
+    function updateCount(count, _pageCount) {
+        pageCount = _pageCount;
 
-        $.getJSON(endpoint, params, function(page) {
-            showPage(page);
-            setPlutoFPagination($pagination, num, pageCount, loadPage);
-        });
+        $count.html('(' + count + ')');
+
+        setPlutoFPagination($pagination, currentPage, pageCount, loadPage);
     }
 
-    $.getJSON(endpoint + 'count/', params, function(counts) {
-        if(counts.objects_count === 0) {
-            return;
-        }
+    loadPage = loadPlutoFSearchResults(endpoint, params, updateCount, showPage);
 
-        pageCount = Math.ceil(counts.objects_count / PAGE_SIZE);
-
-        loadPage(1);
-    });
+    loadPage(1);
 }
 
 function loadPlutoFSequences(containerID, taxonID) {
