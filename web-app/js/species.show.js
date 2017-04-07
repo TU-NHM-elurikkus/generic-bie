@@ -13,7 +13,6 @@
  * rights and limitations under the License.
  */
 function showSpeciesPage() {
-    //console.log("Starting show species page");
     //load content
     loadOverviewImages();
     loadMap();
@@ -23,15 +22,14 @@ function showSpeciesPage() {
     loadSpeciesLists();
     loadDataProviders();
     loadIndigenousData();
-
+    //
     ////setup controls
     addAlerts();
-    // loadBhl(); // now an external link to BHL
-    loadTrove(SHOW_CONF.scientificName,'trove-integration','trove-result-list','previousTrove','nextTrove');
+
+    loadReferences('plutof-references', SHOW_CONF.guid);
 }
 
 function loadSpeciesLists(){
-    //console.log('### loadSpeciesLists #### ' + SHOW_CONF.speciesListUrl + '/ws/species/' + SHOW_CONF.guid);
     $.getJSON(SHOW_CONF.speciesListUrl + '/ws/species/' + SHOW_CONF.guid + '?callback=?', function( data ) {
         for(var i = 0; i < data.length; i++) {
             var specieslist = data[i];
@@ -271,7 +269,7 @@ function loadIndigenousData() {
 
             $.each(data.profiles, function(index, profile) {
                 var panel = $('#indigenous-profile-summary-template').clone();
-                panel.removeClass('hidden-node');
+                panel.removeClass("hidden-node");
                 panel.attr("id", profile.id);
 
                 var logo = profile.collection.logo || SHOW_CONF.noImage100Url;
@@ -299,13 +297,13 @@ function loadIndigenousData() {
                 panel.find(".profile-link").append("<a href='" + profile.url + "' title='Click to view the whole profile' target='_blank'>View the full profile</a>");
 
                 if(profile.thumbnailUrl) {
-                    panel.find(".main-image").removeClass('hidden-node');
+                    panel.find(".main-image").removeClass("hidden-node");
 
                     panel.find(".image-embedded").append("<img src='" + profile.thumbnailUrl + "' alt='" + profile.collection.title + " main image'>");
                 }
 
                 if(profile.mainVideo) {
-                    panel.find(".main-video").removeClass('hidden-node');
+                    panel.find(".main-video").removeClass("hidden-node");
                     panel.find(".video-name").append(profile.mainVideo.name);
                     panel.find(".video-attribution").append(profile.mainVideo.attribution);
                     panel.find(".video-license").append(profile.mainVideo.license);
@@ -313,7 +311,7 @@ function loadIndigenousData() {
                 }
 
                 if(profile.mainAudio) {
-                    panel.find(".main-audio").removeClass('hidden-node');
+                    panel.find(".main-audio").removeClass("hidden-node");
                     panel.find(".audio-name").append(profile.mainAudio.name);
                     panel.find(".audio-attribution").append(profile.mainAudio.attribution);
                     panel.find(".audio-license").append(profile.mainAudio.license);
@@ -382,8 +380,22 @@ function loadExternalSources(){
 
     //load Genbank content
     $.ajax({url: SHOW_CONF.genbankUrl}).done(function ( data ) {
+        var totalNumber = 0;
+
         if(data.total){
             $('.genbankResultCount').html('<a href="' + data.resultsUrl + '">View all results - ' + data.total + '</a>');
+
+            var totalNumber = 0;
+            var totalParts = data.total.split(/\s+/);
+
+            if(totalParts.length > 0) {
+                var lastPart = parseInt(totalParts[totalParts.length - 1]);
+
+                if(!isNaN(lastPart)) {
+                    totalNumber = lastPart;
+                }
+            }
+
             if(data.results){
                 $.each(data.results, function(idx, result){
                     var $genbank =  $('#genbankTemplate').clone();
@@ -396,7 +408,11 @@ function loadExternalSources(){
                 });
             }
         }
+
+        $('#genbank-header-count').html('(' + totalNumber + ')');
     });
+
+    loadPlutoFSequences('sequences-plutof', SHOW_CONF.guid);
 
     //load sound content
     $.ajax({url: SHOW_CONF.soundUrl}).done(function ( data ) {
@@ -642,8 +658,8 @@ function loadGalleryType(category, start) {
             if (data.totalRecords > (start + pageSize)) {
                 // add new 'load more images' button if required
                 var spinnerLink = $('img#gallerySpinner').attr('src');
-                var btn = '<div class="loadMore ' + category + '"><br><button class="btn btn-default" onCLick="loadGalleryType(\'' + category + '\','
-                    + (start + pageSize)  + ');">Load more images <img src="' + spinnerLink + '" class='hidden-node'/></button></div>';
+                var btn = '<div class="loadMore ' + category + '"><br><button class="erk-btn erk-button--light" onCLick="loadGalleryType(\'' + category + '\','
+                    + (start + pageSize)  + ');">Load more images <img src="' + spinnerLink + '" class="hidden-node"/></button></div>';
                 $categoryTmpl.find('.taxon-gallery').append(btn);
             }
         }
@@ -877,4 +893,182 @@ function collapseImageGallery(btn) {
 
         $(btn).parents('.image-section').find('.taxon-gallery').slideUp(400)
     }
+}
+
+// TODO: Can abstract loadReferences and loadPlutoFSequences more
+function loadReferences(containerID, taxonID) {
+    var PAGE_SIZE = 20;
+
+    var $container = $('#' + containerID);
+    var $count = $container.find('.plutof-references__count');
+    var $list = $container.find('.plutof-references__list');
+    var $pagination = $container.find('.plutof-references__pagination');
+
+    var endpoint = '/bie-hub/proxy/plutof/taxonoccurrence/referencebased/occurrences/search/'
+    var params  = {
+        cn: 47, // Country = Estonia
+        taxon_node: taxonID,
+        page_size: PAGE_SIZE
+    };
+
+    var count = 0;
+    var currentPage = 0;
+    var pageCount = 0;
+    var loadPage;
+
+    function showPage(pageNumber, page) {
+        $list.empty();
+
+        page.forEach(function(occurrence) {
+            var el = $(
+                '<li class="plutof-references__item">' +
+                    '<h3 class="plutof-references__header">' +
+                        '<a href="https://plutof.ut.ee/#/referencebased/view/' + occurrence.id + '">' +
+                            occurrence.reference +
+                        '</a>' +
+                    '</h3>' +
+                    '<div class="plutof-references__content">' +
+                        occurrence.locality_text + 
+                    '</div>' +
+                '</li>'
+            );
+
+            $list.append(el);
+        });
+
+        setPlutoFPagination($pagination, pageNumber, pageCount, loadPage);
+    }
+
+    function updateCount(count, _pageCount) {
+        pageCount = _pageCount;
+
+        $count.html('(' + count + ')');
+
+        setPlutoFPagination($pagination, currentPage, pageCount, loadPage);
+    }
+
+    loadPage = loadPlutoFSearchResults(endpoint, params, updateCount, showPage);
+
+    loadPage(1);
+}
+
+function loadPlutoFSequences(containerID, taxonID) {
+    var $container = $('#' + containerID);
+    var $count = $container.find('.sequences__count');
+    var $list = $container.find('.sequences__list');
+    var $pagination = $container.find('.sequences__pagination');
+
+    var endpoint = '/bie-hub/proxy/plutof/taxonoccurrence/sequence/sequences/search/';
+
+    var params = {
+        cn: 47, // country = Estonia
+        taxon_node: taxonID,
+        include_cb: false
+    };
+
+    var pageCount = 0;
+    var currentPage = 1;
+    var loadPage;
+
+    function showPage(pageNumber, page) {
+        currentPage = pageNumber;
+
+        $list.empty();
+
+        page.forEach(function(entry) {
+            var $entry = $('#genbankTemplate').clone();
+
+            $entry.find('.externalLink').attr('href', 'https://plutof.ut.ee/#/sequence/view/' + entry.id);
+            $entry.find('.externalLink').html(entry.name);
+
+            var content = '';
+
+            if(entry.sequence_types) {
+                content += 'Sequenced regions: ' + entry.sequence_types + '<br>';
+            }
+
+            if(entry.gathering_agents && entry.gathering_agents.length > 0) {
+                content += 'Collected by: ' + entry.gathering_agents.join(', ') + '<br>';
+            }
+
+            $entry.find('.description').html(content);
+
+            $entry.removeClass('hidden-node');
+
+            $list.append($entry);
+        });
+
+        setPlutoFPagination($pagination, pageNumber, pageCount, loadPage);
+    }
+
+    function updateCount(count, _pageCount) {
+        pageCount = _pageCount;
+
+        $count.html('(' + count + ')');
+
+        setPlutoFPagination($pagination, currentPage, pageCount, loadPage);
+    }
+
+    loadPage = loadPlutoFSearchResults(endpoint, params, updateCount, showPage);
+
+    loadPage(1);
+}
+
+function setPlutoFPagination($pagination, currentPage, pageCount, loadPage) {
+    $pagination.empty();
+
+    if(pageCount <= 1) {
+        return;
+    }
+    
+    // XXX TODO: not plutof-references__page
+    for(var p = 1; p <= pageCount; p++) {
+        var $el;
+
+        if(p == currentPage) {
+            $el = $('<span class="plutof-pagination__page plutof-pagination__page--current">' + p + '</span>');
+        } else {
+            $el = (function(pageNum) {
+                var el = $('<span class="plutof-pagination__page">' + pageNum + '</span>')
+
+                el.on('click', function() {
+                    loadPage(pageNum);
+                });
+
+                return el;
+            })(p);
+        }
+
+        $pagination.append($el);
+    }
+}
+
+// updateCount :: (count:int, pageCount:int) -> ()
+// showPage :: (pageNumber::int, page::[...] -> ())
+// 
+// Returns a function for loadingPages
+function loadPlutoFSearchResults(endpoint, params, updateCount, showPage) {
+    var PAGE_SIZE = 20;
+
+    params.page_size = PAGE_SIZE;
+
+    var count = undefined;
+    var pageCount = undefined;
+
+    function loadPage(pageNumber) {
+        params.page = pageNumber;
+
+        $.getJSON(endpoint, params, function(data) {
+            if(count != data.count) {
+                count = data.count;
+                pageCount = Math.ceil(data.count / PAGE_SIZE);
+
+                updateCount(count, pageCount);
+            }
+
+            showPage(pageNumber, data.results);
+        });
+    }
+
+    return loadPage;
 }
