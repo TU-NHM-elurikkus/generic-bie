@@ -741,11 +741,45 @@
                 </section>
 
                 <section class="tab-pane" id="sequences" role="tabpanel">
-                    <h2>Genbank</h2>
+                    <div id="sequences-plutof" class="card sequences">
+                        <a data-toggle="collapse" href="#sequences-plutof-body">
+                            <div class="card-header">
+                                <h2>
+                                    PlutoF
 
-                    <p class="genbankResultCount"></p>
+                                    <span class="sequences__count">
+                                    </span>
+                                </h2>
+                            </div>
+                        </a>
 
-                    <div class="genbank-results result-list">
+                        <div id="sequences-plutof-body" class="collapse card-block">
+                            <div class="sequences__list result-list">
+                            </div>
+
+                            <div class="sequences__pagination">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <a data-toggle="collapse" href="#sequences-genbank">
+                            <div class="card-header">
+                                <h2>
+                                    Genbank
+
+                                    <span id="genbank-header-count">
+                                    </span>
+                                </h2>
+                            </div>
+                        </a>
+
+                        <div class="collapse card-block" id="sequences-genbank">
+                            <p class="genbankResultCount"></p>
+
+                            <div class="genbank-results result-list">
+                            </div>
+                        </div>
                     </div>
                 </section>
 

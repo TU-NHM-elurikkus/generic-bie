@@ -382,12 +382,26 @@ function loadExternalSources(){
 
     //load Genbank content
     $.ajax({url: SHOW_CONF.genbankUrl}).done(function ( data ) {
+        var totalNumber = 0;
+
         if(data.total){
             $('.genbankResultCount').html('<a href="' + data.resultsUrl + '">View all results - ' + data.total + '</a>');
+
+            var totalNumber = 0;
+            var totalParts = data.total.split(/\s+/);
+
+            if(totalParts.length > 0) {
+                var lastPart = parseInt(totalParts[totalParts.length - 1]);
+
+                if(!isNaN(lastPart)) {
+                    totalNumber = lastPart;
+                }
+            }
+
             if(data.results){
                 $.each(data.results, function(idx, result){
                     var $genbank =  $('#genbankTemplate').clone();
-                    $genbank.removeClass('hide');
+                    $genbank.removeClass('hidden-node');
                     $genbank.find('.externalLink').attr('href', result.link);
                     $genbank.find('.externalLink').html(result.title);
                     $genbank.find('.description').html(result.description);
@@ -396,7 +410,11 @@ function loadExternalSources(){
                 });
             }
         }
+
+        $('#genbank-header-count').html('(' + totalNumber + ')');
     });
+
+    loadPlutoFSequences('sequences-plutof', SHOW_CONF.guid);
 
     //load sound content
     $.ajax({url: SHOW_CONF.soundUrl}).done(function ( data ) {
@@ -917,40 +935,12 @@ function loadReferences(containerID, taxonID) {
         });
     }
 
-    function updatePagination(currentPage) {
-        $pagination.empty();
-
-        if(pageCount <= 1) {
-            return;
-        }
-
-        for(var p = 1; p <= pageCount; p++) {
-            var $el;
-
-            if(p == currentPage) {
-                $el = $('<span class="plutof-references__page plutof-references__page--current">' + p + '</span>');
-            } else {
-                $el = (function(pageNum) {
-                    var el = $('<span class="plutof-references__page">' + pageNum + '</span>')
-
-                    el.on('click', function() {
-                        loadPage(pageNum);
-                    });
-
-                    return el;
-                })(p);
-            }
-
-            $pagination.append($el);
-        }
-    }
-
     function loadPage(num) {
         params.page = num;
 
         $.getJSON(endpoint, params, function(page) {
             showPage(page);
-            updatePagination(num);
+            setPlutoFPagination($pagination, num, pageCount, loadPage);
         });
     }
 
@@ -963,4 +953,125 @@ function loadReferences(containerID, taxonID) {
 
         loadPage(1);
     });
+}
+
+function loadPlutoFSequences(containerID, taxonID) {
+    var $container = $('#' + containerID);
+    var $count = $container.find('.sequences__count');
+    var $list = $container.find('.sequences__list');
+    var $pagination = $container.find('.sequences__pagination');
+
+    var endpoint = '/bie-hub/proxy/plutof/taxonoccurrence/sequence/sequences/search/';
+
+    var params = {
+        cn: 47, // country = Estonia
+        taxon_node: taxonID,
+        include_cb: false
+    };
+
+    var pageCount = 0;
+    var currentPage = 1;
+    var loadPage;
+
+    function showPage(pageNumber, page) {
+        currentPage = pageNumber;
+
+        $list.empty();
+
+        page.forEach(function(entry) {
+            var $entry = $('#genbankTemplate').clone();
+
+            $entry.find('.externalLink').attr('href', 'https://plutof.ut.ee/#/sequence/view/' + entry.id);
+            $entry.find('.externalLink').html(entry.name);
+
+            var content = '';
+
+            if(entry.sequence_types) {
+                content += 'Sequenced regions: ' + entry.sequence_types + '<br>';
+            }
+
+            if(entry.gathering_agents && entry.gathering_agents.length > 0) {
+                content += 'Collected by: ' + entry.gathering_agents.join(', ') + '<br>';
+            }
+
+            $entry.find('.description').html(content);
+
+            $entry.removeClass('hidden-node');
+
+            $list.append($entry);
+        });
+
+        setPlutoFPagination($pagination, pageNumber, pageCount, loadPage);
+    }
+
+    function updateCount(count, _pageCount) {
+        pageCount = _pageCount;
+
+        $count.html('(' + count + ')');
+
+        setPlutoFPagination($pagination, currentPage, pageCount, loadPage);
+    }
+
+    loadPage = loadPlutoFSearchResults(endpoint, params, updateCount, showPage);
+
+    loadPage(1);
+}
+
+function setPlutoFPagination($pagination, currentPage, pageCount, loadPage) {
+    $pagination.empty();
+
+    if(pageCount <= 1) {
+        return;
+    }
+    
+    // XXX TODO: not plutof-references__page
+    for(var p = 1; p <= pageCount; p++) {
+        var $el;
+
+        if(p == currentPage) {
+            $el = $('<span class="plutof-pagination__page plutof-pagination__page--current">' + p + '</span>');
+        } else {
+            $el = (function(pageNum) {
+                var el = $('<span class="plutof-pagination__page">' + pageNum + '</span>')
+
+                el.on('click', function() {
+                    loadPage(pageNum);
+                });
+
+                return el;
+            })(p);
+        }
+
+        $pagination.append($el);
+    }
+}
+
+// updateCount :: (count:int, pageCount:int) -> ()
+// showPage :: (pageNumber::int, page::[...] -> ())
+// 
+// Returns a function for loadingPages
+function loadPlutoFSearchResults(endpoint, params, updateCount, showPage) {
+    var PAGE_SIZE = 20;
+
+    params.page_size = PAGE_SIZE;
+
+    var count = undefined;
+    var pageCount = undefined;
+
+    function loadPage(pageNumber) {
+        params.page = pageNumber;
+
+        $.getJSON(endpoint, params, function(data) {
+            if(count != data.count) {
+                count = data.count;
+                pageCount = Math.ceil(data.count / PAGE_SIZE);
+
+                updateCount(count, pageCount);
+            }
+
+            showPage(pageNumber, data.results);
+        });
+    }
+
+    return loadPage;
 }

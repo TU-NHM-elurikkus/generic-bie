@@ -230,13 +230,19 @@ a.nav-link.active {
     border-bottom: 1px solid #e2e2e2;
 }
 
-.plutof-references__page {
+/* plutof-pagination */
+.plutof-pagination__page {
     color: #0587aa;
     cursor: pointer;
     margin-right: 0.5rem;
 }
 
-.plutof-references__page.plutof-references__page--current {
+.plutof-pagination__page.plutof-pagination__page--current {
     color: inherit;
     cursor: inherit;
+}
+
+/* sequences */
+.sequences {
+    margin-bottom: 1rem;
 }
