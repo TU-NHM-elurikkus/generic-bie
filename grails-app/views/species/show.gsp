@@ -759,42 +759,20 @@
 
                 <section class="tab-pane" id="sequences" role="tabpanel">
                     <div id="sequences-plutof" class="card sequences">
-                        <a data-toggle="collapse" href="#sequences-plutof-body">
-                            <div class="card-header">
-                                <h3>
-                                    PlutoF
+                        <div class="card-header">
+                            <h3>
+                                PlutoF
 
-                                    <span class="sequences__count">
-                                    </span>
-                                </h3>
-                            </div>
-                        </a>
+                                <span class="sequences__count">
+                                </span>
+                            </h3>
+                        </div>
 
-                        <div id="sequences-plutof-body" class="collapse card-block">
+                        <div id="sequences-plutof-body" class="card-block">
                             <div class="sequences__list result-list">
                             </div>
 
                             <div class="sequences__pagination">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <a data-toggle="collapse" href="#sequences-genbank">
-                            <div class="card-header">
-                                <h3>
-                                    Genbank
-
-                                    <span id="genbank-header-count">
-                                    </span>
-                                </h3>
-                            </div>
-                        </a>
-
-                        <div class="collapse card-block" id="sequences-genbank">
-                            <p class="genbankResultCount"></p>
-
-                            <div class="genbank-results result-list">
                             </div>
                         </div>
                     </div>
@@ -868,15 +846,12 @@
     </div>
 </div>
 
-<!-- genbank -->
-<div id="genbankTemplate" class="result hidden-node">
+<!-- sequence template -->
+<div id="sequenceTemplate" class="result hidden-node">
     <h3><a href="" class="externalLink"></a></h3>
 
     <p class="description"></p>
-
-    <p class="furtherDescription"></p>
 </div>
-
 
 <!-- indigenous-profile-summary template -->
 <div id="indigenous-profile-summary-template" class="hidden-node padding-bottom-2">

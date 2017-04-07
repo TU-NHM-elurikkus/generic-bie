@@ -378,40 +378,6 @@ function loadExternalSources(){
         }
     });
 
-    //load Genbank content
-    $.ajax({url: SHOW_CONF.genbankUrl}).done(function ( data ) {
-        var totalNumber = 0;
-
-        if(data.total){
-            $('.genbankResultCount').html('<a href="' + data.resultsUrl + '">View all results - ' + data.total + '</a>');
-
-            var totalNumber = 0;
-            var totalParts = data.total.split(/\s+/);
-
-            if(totalParts.length > 0) {
-                var lastPart = parseInt(totalParts[totalParts.length - 1]);
-
-                if(!isNaN(lastPart)) {
-                    totalNumber = lastPart;
-                }
-            }
-
-            if(data.results){
-                $.each(data.results, function(idx, result){
-                    var $genbank =  $('#genbankTemplate').clone();
-                    $genbank.removeClass('hidden-node');
-                    $genbank.find('.externalLink').attr('href', result.link);
-                    $genbank.find('.externalLink').html(result.title);
-                    $genbank.find('.description').html(result.description);
-                    $genbank.find('.furtherDescription').html(result.furtherDescription);
-                    $('.genbank-results').append($genbank);
-                });
-            }
-        }
-
-        $('#genbank-header-count').html('(' + totalNumber + ')');
-    });
-
     loadPlutoFSequences('sequences-plutof', SHOW_CONF.guid);
 
     //load sound content
@@ -976,7 +942,7 @@ function loadPlutoFSequences(containerID, taxonID) {
         $list.empty();
 
         page.forEach(function(entry) {
-            var $entry = $('#genbankTemplate').clone();
+            var $entry = $('#sequenceTemplate').clone();
 
             $entry.find('.externalLink').attr('href', 'https://plutof.ut.ee/#/sequence/view/' + entry.id);
             $entry.find('.externalLink').html(entry.name);
