@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <g:render template="/manifest" plugin="elurikkus-commons" />
 
         <title>
             <g:layoutTitle />
@@ -29,7 +30,7 @@
         <div class="wrap">
             <g:layoutBody/>
         </div>
-        
+
         <g:render template="/footer" plugin="elurikkus-commons" />
 
         <!-- Resources -->
