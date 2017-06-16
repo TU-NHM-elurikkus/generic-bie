@@ -7,6 +7,10 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
 /* Panels */
 .panel-footer p {font-size: 12px; line-height: 14px; margin: 0;}
 
+.audio-player-footer {
+    margin-bottom: 1rem;
+}
+
 /* Search header */
 .page-search .pg-header {padding-bottom: 20px;}
 .page-search h1 {font-size: 30px; line-height: 36px;}
@@ -85,7 +89,14 @@ ol.breadcrumb {
 /* Taxon map */
 .taxon-map {margin-bottom: 20px;}
 #leafletMap {height: 550px; border-radius: 4px 4px 0 0; overflow: hidden; background-color: #ebebeb;}
-.map-buttons {border-top: 1px solid #fff; border-radius: 0 0 4px 4px; overflow: hidden;, padding-top: 1rem }
+
+.map-buttons {
+    border-top: 1px solid #fff;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+    padding-top: 1rem;
+}
+
 .map-buttons a.btn-lg {width: 50%; border:0; border-left: 1px solid #fff; float: left; border-radius: 0; font-size: 15px; line-height: 18px;}
 .map-buttons a.btn-lg:first-child {border-left: 0;}
 
@@ -202,10 +213,6 @@ a.nav-link.active {
     border: 1px solid #3dc8d3;
 }
 
-.taxon-map {
-    margin-top: 20px;
-}
-
 #search-results-list {
     text-indent: 0;
 }
@@ -245,4 +252,8 @@ a.nav-link.active {
 /* sequences */
 .sequences {
     margin-bottom: 1rem;
+}
+
+.search-section {
+    margin-bottom: 2rem;
 }

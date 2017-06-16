@@ -42,55 +42,67 @@
     <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
     <r:require modules="showOverride, charts, image-viewer"/>
 </head>
-
 <body>
 <section class="container page-taxon">
-    <header class="pg-header">
-        <g:if test="${taxonHierarchy && taxonHierarchy.size() > 1}">
-            <div class="taxonomy-bcrumb">
-                <ol class="breadcrumb">
-                    <g:each in="${taxonHierarchy}" var="taxon">
-                        <g:if test="${taxon.guid != tc.taxonConcept.guid}">
-                            <li class="breadcrumb-item">
-                                <g:link controller="species" action="show" params="[guid: taxon.guid]">
-                                    ${taxon.scientificName}
-                                </g:link>
-                            </li>
-                        </g:if>
-                        <g:else>
-                            <li class="breadcrumb-item">
-                                ${taxon.scientificName}
-                            </li>
-                        </g:else>
-                    </g:each>
-                </ol>
-            </div>
-        </g:if>
+    <header class="page-header">
+        <h1 class="page-header__title">
+            ${raw(sciNameFormatted)}
 
-        <div class="header-inner">
-            <h5 class="pull-right json">
-                <a href="${jsonLink}" target="data"
-                   title="${message(code:"show.view.json.title")}" class="btn btn-sm btn-default active"
-                   data-toggle="tooltip" data-placement="bottom">
-                   <g:message code="show.json" />
-                </a>
-            </h5>
+            <a href="${jsonLink}" target="data"
+               title="${message(code:"show.view.json.title")}"
+               class="btn btn-sm btn-default float-right"
+               data-toggle="tooltip" data-placement="bottom">
+               <g:message code="show.json" />
+            </a>
+        </h1>
 
-            <h1>${raw(sciNameFormatted)}</h1>
-            <g:set var="commonNameDisplay" value="${(tc?.commonNames) ? tc?.commonNames?.opt(0)?.nameString : ''}"/>
-
+        <div class="page-header__subtitle">
             <g:if test="${commonNameDisplay}">
-                <h2>${raw(commonNameDisplay)}</h2>
+                <div>
+                    ${raw(commonNameDisplay)}
+                </div>
             </g:if>
 
-            <h5 class="inline-head taxon-rank">${tc.taxonConcept.rankString}</h5>
+            <g:set var="commonNameDisplay" value="${(tc?.commonNames) ? tc?.commonNames?.opt(0)?.nameString : ''}" />
 
-            <g:if test="${tc.taxonConcept.taxonomicStatus}"><h5 class="inline-head taxonomic-status" title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}"><g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" default="${tc.taxonConcept.taxonomicStatus}"/></h5></g:if>
+            <div>
+                ${tc.taxonConcept.rankString}
+            </div>
 
-            <h5 class="inline-head name-authority">
-                <strong>Name authority:</strong>
-                <span class="name-authority">${tc?.taxonConcept.nameAuthority ?: grailsApplication.config.defaultNameAuthority}</span>
-            </h5>
+            <g:if test="${tc.taxonConcept.taxonomicStatus}">
+                <div class="inline-head taxonomic-status" title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}">
+                    <g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" default="${tc.taxonConcept.taxonomicStatus}" />
+                </div>
+            </g:if>
+
+            <div class="inline-head name-authority">
+                Name authority:
+
+                <span class="name-authority">
+                    ${tc?.taxonConcept.nameAuthority ?: grailsApplication.config.defaultNameAuthority}
+                </span>
+            </div>
+        </div>
+
+        <div class="page-header-links">
+            <a href="/bie-hub" class="page-header-links__link">
+                Search
+            </a>
+
+            <g:if test="${taxonHierarchy && taxonHierarchy.size() > 1}">
+                <g:each in="${taxonHierarchy}" var="taxon">
+                    <g:if test="${taxon.guid != tc.taxonConcept.guid}">
+                        <g:link controller="species" action="show" params="[guid: taxon.guid]" class="page-header-links__link">
+                            ${taxon.scientificName}
+                        </g:link>
+                    </g:if>
+                    <g:else>
+                        <span class="page-header-links__link">
+                            ${taxon.scientificName}
+                        </span>
+                    </g:else>
+                </g:each>
+            </g:if>
         </div>
     </header>
 
@@ -149,7 +161,7 @@
             <div class="tab-content">
                 <section class="tab-pane active" id="overview" role="tabpanel">
                     <div class="row taxon-row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="taxon-summary-gallery">
                                 <div class="main-img hidden-node">
                                     <a class="lightbox-img"
@@ -186,15 +198,20 @@
                                             <g:each in="${tc.conservationStatuses.entrySet().sort { it.key }}" var="cs">
                                                 <li>
                                                     <g:if test="${cs.value.dr}">
-                                                        <a href="${collectoryUrl}/public/show/${cs.value.dr}"><span
-                                                                class="iucn <bie:colourForStatus
-                                                                        status="${cs.value.status}"/>">${cs.key}</span>${cs.value.status}
-                                                        <!-- cs = ${cs} -->
+                                                        <a href="${collectoryUrl}/public/show/${cs.value.dr}">
+                                                            <span class="iucn <bie:colourForStatus status="${cs.value.status}"/>">
+                                                                ${cs.key}
+                                                            </span>
+
+                                                            ${cs.value.status}
                                                         </a>
                                                     </g:if>
                                                     <g:else>
-                                                        <span class="iucn <bie:colourForStatus
-                                                                status="${cs.value.status}"/>">${cs.key}</span>${cs.value.status}
+                                                        <span class="iucn <bie:colourForStatus status="${cs.value.status}"/>">
+                                                            ${cs.key}
+                                                        </span>
+
+                                                        ${cs.value.status}
                                                     </g:else>
                                                 </li>
                                             </g:each>
@@ -205,7 +222,7 @@
 
                             <div id="descriptiveContent"></div>
 
-                            <div id="sounds" style="padding-bottom:20px;"></div>
+                            <div id="sounds"></div>
 
                             <div class="card bie-card">
                                 <div class="card-header">
@@ -219,7 +236,7 @@
 
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <div id="expertDistroDiv" style="display:none;margin-bottom: 20px;">
                                 <h3>Compiled distribution map</h3>
                                 <img id="distroMapImage" src="${resource(dir: 'images', file: 'noImage.jpg')}" class="distroImg" style="width:316px;" alt="occurrence map" onerror="this.style.display='none'"/>
@@ -828,7 +845,7 @@
 </a>
 
 <!-- description template -->
-<div id="descriptionTemplate" class="card bie-card panel-description" style="display:none;">
+<div id="descriptionTemplate" class="card bie-card panel-description bie-vertical-space" style="display:none;">
     <div class="card-header">
         <h3 class="card-title title"></h3>
     </div>
