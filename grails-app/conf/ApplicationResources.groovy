@@ -19,7 +19,7 @@ modules = {
 
     search {
         resource url: [dir: 'js', file: 'jquery.sortElemets.js', plugin:'bie-plugin']
-        resource url: [dir: 'js', file: 'search.js', plugin:'bie-plugin']
+        resource url: [dir: 'js', file: 'search.js']
     }
 
     showDependencies {

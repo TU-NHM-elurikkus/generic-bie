@@ -416,9 +416,10 @@ function loadExternalSources(){
                 source += "Source: " + data.processed.attribution.dataResourceName
             }
 
-            soundsDiv += '</div><div class="panel-footer"><p>' + source + '<br>';
-            soundsDiv += '<a href="' + SHOW_CONF.biocacheUrl + '/occurrence/'+ data.raw.uuid +'">View more details of this audio</a></p>';
-            soundsDiv += '</div></div>';
+            soundsDiv += '</div><div class="panel-footer audio-player-footer"><p>';
+            soundsDiv += source + '<br>';
+            soundsDiv += '<a href="' + SHOW_CONF.biocacheUrl + '/occurrence/'+ data.raw.uuid +'">View more details of this audio</a>';
+            soundsDiv += '</p></div></div>';
             $('#sounds').append(soundsDiv);
         }
     }).fail(function(jqXHR, textStatus, errorThrown) {

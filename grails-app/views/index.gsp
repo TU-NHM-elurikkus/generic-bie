@@ -7,17 +7,29 @@
 
     <body>
         <section class="container page-search">
-            <header class="pg-header">
-                <h1>Search for taxa</h1>
+            <header class="page-header">
+                <h1 class="page-header__title">
+                    Search for Taxa
+                </h1>
             </header>
 
             <div class="section">
                 <form id="search-inpage" action="search" method="get" name="search-form">
-                    <div class="form-group">
-                        <input id="search" class="form-control ac_input general-search" name="q" type="text" placeholder="Search the Atlas" autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="erk-button erk-button--light" alt="Search" value="Search">
+                    <div class="input-plus">
+                        <input
+                            id="search"
+                            type="text"
+                            name="q"
+                            placeholder="Search the Atlas"
+                            autocomplete="off"
+                            autofocus
+                            onfocus="this.value = this.value;"
+                            class="input-plus__field"
+                        />
+
+                        <button type="submit" class="erk-button erk-button--dark input-plus__addon">
+                            Serach
+                        </button>
                     </div>
                 </form>
             </div>
