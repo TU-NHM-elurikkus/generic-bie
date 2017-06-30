@@ -91,6 +91,17 @@ function removeFacet(facetIdx) {
     window.location.href = window.location.pathname + '?' + paramList.join('&');
 }
 
+function removeAllFacets() {
+    var q = $.getQueryParam('q') ? $.getQueryParam('q') : SEARCH_CONF.query ; //$.query.get('q')[0];
+    var paramList = [];
+
+    if (q != null) {
+        paramList.push("q=" + q);
+    }
+
+    window.location.href = window.location.pathname + '?' + paramList.join('&');
+}
+
 /**
  * Catch sort drop-down and build GET URL manually
  */
