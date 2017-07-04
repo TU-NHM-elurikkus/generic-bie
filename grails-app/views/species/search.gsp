@@ -44,9 +44,7 @@
         </h1>
 
         <div class="page-header__subtitle">
-            Search for <strong>${searchResults.queryTitle == "*:*" ? 'everything' : searchResults.queryTitle}</strong>
-            returned <g:formatNumber number="${searchResults.totalRecords}" type="number"/>
-            results
+            Search for taxa in eElurikkus
         </div>
 
         <div class="page-header-links">
@@ -81,6 +79,26 @@
                 </button>
             </div>
         </form>
+
+        <p>
+            Search for
+
+            <strong>
+                ${searchResults.queryTitle == "*:*" ? 'everything' : searchResults.queryTitle}
+            </strong>
+
+            returned
+
+            <strong>
+                <g:formatNumber number="${searchResults.totalRecords}" type="number" />
+            </strong>
+
+            results
+        </p>
+
+        <g:if test="${facetMap}">
+            <g:render template="activeFilters" />
+        </g:if>
     </section>
 
     <div class="main-content">
@@ -90,17 +108,11 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="card card-block refine-box">
-                        <h2 class="hidden-xs-down">
+                        <h2 class="card-title">
                             Refine results
                         </h2>
 
-                        <h2 class="hidden-sm-up">
-                            <a href="#refine-options" data-toggle="collapse">
-                                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> Refine results
-                            </a>
-                        </h2>
-
-                        <div id="refine-options" class="collapse mobile-collapse">
+                        <div id="refine-options">
                             <g:if test="${query && filterQuery}">
                                 <g:set var="queryParam">q=${query.encodeAsHTML()}<g:if test="${!filterQuery.isEmpty()}">&fq=${filterQuery?.join("&fq=")}</g:if></g:set>
                             </g:if>
@@ -109,36 +121,13 @@
                                 <g:set var="queryParam">q=${query.encodeAsHTML()}<g:if test="${params.fq}">&fq=${fqList?.join("&fq=")}</g:if></g:set>
                             </g:else>
 
-                            <g:if test="${facetMap}">
-                                <div class="current-filters" id="currentFilters">
-                                    <h3>
-                                        Current filters
-                                    </h3>
-
-                                    <ul class="list-unstyled">
-                                        <g:each var="item" in="${facetMap}" status="facetIdx">
-                                            <li>
-                                                <g:if test="${item.key?.contains("uid")}">
-                                                    <g:set var="resourceType">${item.value}_resourceType</g:set>
-                                                    ${collectionsMap?.get(resourceType)}: <strong>&nbsp;${collectionsMap?.get(item.value)}</strong>
-                                                </g:if>
-                                                <g:else>
-                                                    <g:message code="facet.${item.key}" default="${item.key}"/>: <strong><g:message code="${item.key}.${item.value}" default="${item.value}"/></strong>
-                                                </g:else>
-                                                <a href="#" onClick="javascript:removeFacet(${facetIdx}); return true;" title="remove filter"><span class="glyphicon glyphicon-remove-sign"></span></a>
-                                            </li>
-                                        </g:each>
-                                    </ul>
-                                </div>
-                            </g:if>
-
                             <!-- facets -->
                             <g:each var="facetResult" in="${searchResults.facetResults}">
                                 <g:if test="${!facetMap?.get(facetResult.fieldName) && !filterQuery?.contains(facetResult.fieldResult?.opt(0)?.label) && !facetResult.fieldName?.contains('idxtype1') && facetResult.fieldResult.length() > 0 }">
                                     <div class="refine-list" id="facet-${facetResult.fieldName}">
-                                        <h3>
+                                        <h4>
                                             <g:message code="facet.${facetResult.fieldName}" default="${facetResult.fieldName}"/>
-                                        </h3>
+                                        </h4>
 
                                         <ul class="list-unstyled">
                                             <g:set var="lastElement" value="${facetResult.fieldResult?.get(facetResult.fieldResult.length()-1)}"/>
@@ -153,7 +142,7 @@
                                             <g:each var="fieldResult" in="${facetResult.fieldResult}" status="vs">
                                                 <g:if test="${vs == 5}">
                                                     </ul>
-                                                    <ul class="collapse list-unstyled">
+                                                    <ul class="list-unstyled">
                                                 </g:if>
 
                                                 <g:set var="dateRangeTo"><g:if test="${vs == lastElement}">*</g:if><g:else>${facetResult.fieldResult[vs+1]?.label}</g:else></g:set>
@@ -200,18 +189,22 @@
                     <div id="search-results" class="card card-block">
                         <div class="result-options">
                             <g:if test="${idxTypes.contains("TAXON")}">
-                                <g:set var="downloadUrl" value="${grailsApplication.config.bie.index.url}/download?${request.queryString?:''}${grailsApplication.config.bieService.queryContext}"/>
-                                <a class="download-button float-right" href="${downloadUrl}" title="Download a list of taxa for your search">
+                                <g:set var="downloadUrl" value="${grailsApplication.config.bie.index.url}/download?${request.queryString?:''}${grailsApplication.config.bieService.queryContext}" />
+
+                                <%-- XXX XXX XXX --%>
+                                <a class="download-button" href="${downloadUrl}" title="Download a list of taxa for your search">
                                     <button class="erk-button erk-button--light">
-                                        <i class="glyphicon glyphicon-download"></i>
+                                        <span class="glyphicon glyphicon-download"></span>
                                         Download
                                     </button>
                                 </a>
                             </g:if>
 
-                            <form class="form-inline">
+                            <form class="form-inline float-right">
                                 <div class="form-group">
-                                    <label for="per-page">Results per page</label>
+                                    <label for="per-page">
+                                        Results per page
+                                    </label>
 
                                     <select class="input-sm" id="per-page" name="per-page">
                                         <option value="10" ${(params.rows == '10') ? "selected=\"selected\"" : ""}>10</option>
@@ -222,7 +215,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="sort-by">Sort by</label>
+                                    <label for="sort-by">
+                                        Sort by
+                                    </label>
 
                                     <select class="input-sm" id="sort-by" name="sort-by">
                                         <option value="score" ${(params.sortField == 'score') ? "selected=\"selected\"" : ""}>best match</option>
@@ -233,7 +228,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="sort-order">Sort order</label>
+                                    <label for="sort-order">
+                                        Sort order
+                                    </label>
 
                                     <select class="input-sm" id="sort-order" name="sort-order">
                                         <option value="asc" ${(params.dir == 'asc') ? "selected=\"selected\"" : ""}>ascending</option>
@@ -243,7 +240,7 @@
                             </form>
                         </div>
 
-                        <input type="hidden" value="${pageTitle}" name="title"/>
+                        <input type="hidden" value="${pageTitle}" name="title" />
 
                         <ol id="search-results-list" class="search-results-list list-unstyled">
                             <g:each var="result" in="${searchResults.results}">
@@ -268,7 +265,7 @@
                                             </div>
                                         </g:if>
 
-                                        <h3>
+                                        <h4>
                                             ${result.rank}:
                                             <a href="${speciesPageLink}">
                                                 <bie:formatSciName rankId="${result.rankID}" taxonomicStatus="${result.taxonomicStatus}" nameFormatted="${result.nameFormatted}" nameComplete="${result.nameComplete}" name="${result.name}" acceptedName="${result.acceptedConceptName}"/>
@@ -277,7 +274,7 @@
                                             <g:if test="${result.commonNameSingle}">
                                                 <span class="commonNameSummary">&nbsp;&ndash;&nbsp;${result.commonNameSingle}</span>
                                             </g:if>
-                                        </h3>
+                                        </h4>
 
                                         <g:if test="${result.commonName != result.commonNameSingle}">
                                             <p class="alt-names">${result.commonName}</p>

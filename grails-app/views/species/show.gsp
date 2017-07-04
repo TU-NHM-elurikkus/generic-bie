@@ -238,57 +238,63 @@
 
                         <div class="col-md-7">
                             <div id="expertDistroDiv" style="display:none;margin-bottom: 20px;">
-                                <h3>Compiled distribution map</h3>
-                                <img id="distroMapImage" src="${resource(dir: 'images', file: 'noImage.jpg')}" class="distroImg" style="width:316px;" alt="occurrence map" onerror="this.style.display='none'"/>
-                                <p class="mapAttribution">Compiled distribution map provided by <span id="dataResource">[data resource not known]</span></p>
+                                <h3>
+                                    Compiled distribution map
+                                </h3>
+
+                                <img id="distroMapImage" src="${resource(dir: 'images', file: 'noImage.jpg')}" class="distroImg" style="width:316px;" alt="occurrence map" onerror="this.style.display='none'" />
+
+                                <p class="mapAttribution">
+                                    Compiled distribution map provided by <span id="dataResource">[data resource not known]</span>
+                                </p>
                             </div>
 
                             <div class="taxon-map">
-                                <h3>Occurrence records map (<span class="occurrenceRecordCount">0</span> records)</h3>
+                                <h3>
+                                    Occurrence records map (<span class="occurrenceRecordCount">0</span> records)
+                                </h3>
+
                                 <div id="leafletMap"></div>
 
                                 <g:if test="${grailsApplication.config.spatial.baseURL}">
-                                    <g:set var="mapUrl">${grailsApplication.config.spatial.baseURL}?q=lsid:${tc?.taxonConcept?.guid}</g:set>
+                                    <g:set var="mapUrl">
+                                        ${grailsApplication.config.spatial.baseURL}?q=lsid:${tc?.taxonConcept?.guid}
+                                    </g:set>
                                 </g:if>
+
                                 <g:else>
-                                    <g:set var="mapUrl">${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab_mapView</g:set>
+                                    <g:set var="mapUrl">
+                                        ${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab-map
+                                    </g:set>
                                 </g:else>
 
                                 <div class="map-buttons">
-                                    <a href="${mapUrl}"
-                                       title="${g.message(code:'overview.map.button.records.map.title', default:'View interactive map')}"
-                                       role="button"
-                                    >
-                                        <button class="erk-button erk-button--light">
-                                            <g:message code="overview.map.button.records.map" default="View Interactive Map"/>
-                                        </button>
-                                    </a>
-
                                     <g:if test="${grailsApplication.config.map.simpleMapButton.toBoolean()}">
-                                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab_mapView"
+                                        <%-- XXX --%>
+                                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab-map"
                                            title="${g.message(code:'overview.map.button.records.simplemap.title', default:'View map')}"
                                            role="button"
                                         >
                                             <button class="erk-button erk-button--light">
-                                                <g:message code="overview.map.button.records.simplemap" default="View map"/>
+                                                <g:message code="overview.map.button.records.simplemap" default="View map" />
                                             </button>
                                         </a>
                                     </g:if>
 
-                                    <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab_recordsView"
-                                       title="${g.message(code:'overview.map.button.records.list.title', default:'View records')}"
+                                    <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab-map"
+                                       title="View map"
                                        role="button"
                                     >
-                                        <button class="erk-button erk-button--light">
-                                            <g:message code="overview.map.button.records.list" default="View records"/>
-                                       </button>
+                                        View map
                                     </a>
                                 </div>
                             </div>
 
                             <div class="card bie-card panel-data-providers bie-vertical-space">
                                 <div class="card-header">
-                                    <h3 class="card-title">Datasets</h3>
+                                    <h3 class="card-title">
+                                        Datasets
+                                    </h3>
                                 </div>
 
                                 <div class="card-block">
@@ -303,10 +309,13 @@
                                         <a class="tab-link" href="#data-partners">
                                             Browse the list of datasets
                                         </a>
+
                                         &nbsp;and find organisations you can join if you are interested in participating in a survey for
+
                                         <g:if test="${tc.taxonConcept?.rankID > 6000}">
                                             species like ${raw(sciNameFormatted)}
                                         </g:if>
+
                                         <g:else>
                                             species of ${raw(sciNameFormatted)}.
                                         </g:else>
@@ -327,8 +336,13 @@
                                 <g:message code="images.heading.${cat}" default="${cat}"/>&nbsp;
 
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" class="erk-button erk-button--light btn-default collapse-image-gallery" onclick="collapseImageGallery(this)">Collapse</button>
-                                    <button type="button" class="erk-button erk-button--light  btn-default btn-primary expand-image-gallery" onclick="expandImageGallery(this)">Expand</button>
+                                    <button type="button" class="erk-button erk-button--light btn-default collapse-image-gallery" onclick="collapseImageGallery(this)">
+                                        Collapse
+                                    </button>
+
+                                    <button type="button" class="erk-button erk-button--light  btn-default btn-primary expand-image-gallery" onclick="expandImageGallery(this)">
+                                        Expand
+                                    </button>
                                 </div>
                             </h2>
 
@@ -726,28 +740,25 @@
                 </section>
 
                 <section class="tab-pane" id="records" role="tabpanel">
-                    <div class="pull-right">
-                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab_recordsView">
-                            <button class="erk-button erk-button--light">
-                                <i class="glyphicon glyphicon-th-list"></i>
-                                View list of all
-                                occurrence records for this taxon (<span class="occurrenceRecordCount">0</span> records)
-                            </button>
-                        </a>
-
-                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab_mapView">
-                            <button class="erk-button erk-button--light">
-                                <i class="glyphicon glyphicon-map-marker"></i>
-                                View map of all
-                                occurrence records for this taxon (<span class="occurrenceRecordCount">0</span> records)
-                            </button>
-                        </a>
-                    </div>
-
                     <div id="occurrenceRecords">
-                        <div id="recordBreakdowns" style="display: block;">
-                            <h2>Charts showing breakdown of occurrence records (<span class="occurrenceRecordCount">0</span> records)</h2>
+                        <div id="recordBreakdowns">
+                            <h2>
+                                Charts showing breakdown of occurrence records (<span class="occurrenceRecordCount">0</span> records)
+                            </h2>
+
+                            <%-- This is not page header but we can use its classes to lay out links in the sam way. --%>
+                            <div class="page-header-links">
+                                <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-records" class="page-header-links__link">
+                                    View list of all occurrence records for this taxon (<span class="occurrenceRecordCount">0</span> records)
+                                </a>
+
+                                <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-map" class="page-header-links__link">
+                                    View map of all occurrence records for this taxon (<span class="occurrenceRecordCount">0</span> records)
+                                </a>
+                            </div>
+
                             %{--<div id="chartsHint">Hint: click on chart elements to view that subset of records</div>--}%
+
                             <div id="charts"></div>
                         </div>
                     </div>

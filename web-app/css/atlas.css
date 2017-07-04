@@ -1,9 +1,6 @@
 /* Page */
 .main-content {margin-bottom: 80px;}
 
-/* Typography */
-h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {margin-top: 0;}
-
 /* Panels */
 .panel-footer p {font-size: 12px; line-height: 14px; margin: 0;}
 
@@ -15,54 +12,36 @@ h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, 
 .page-search .pg-header {padding-bottom: 20px;}
 .page-search h1 {font-size: 30px; line-height: 36px;}
 
-/* Search result: Refine results */
-.refine-box {padding-left: 0; padding-right: 0;}
-.refine-box h2 {font-size: 24px; line-height: 29px; margin: 0; padding-left: 19px; padding-right: 19px;}
-.refine-box h2 a {display: block;}
-.refine-box h2 a:hover, .refine-box h2 a:focus {text-decoration: none;}
-.refine-box h2 span {font-size: 14px; position: relative; top: -2px;}
-.current-filters {margin-top: 10px; padding: 10px 19px; background-color: #e3e3e3;}
-.current-filters h3 {font-size: 20px; line-height: 24px; margin: 0 0 4px 0;}
-.current-filters ul {margin: 0;}
-.refine-list {padding-left: 19px; padding-right: 19px;}
-.refine-list h3 {font-size: 20px; line-height: 24px; margin: 14px 0 4px 0;}
-.refine-list ul {margin: 0;}
 a.expand-options {border-top: 1px solid #e3e3e3; display: block; padding-top: 2px; margin-top: 6px;}
 
 /* Search result options */
-.result-options {margin-bottom: 20px;}
-.result-options .form-group {margin-right: 10px;}
+.result-options {
+    margin-bottom: 1rem;
+}
+
+.result-options .form-group {
+    margin-left: 1rem;
+}
+
+.result-options label {
+    margin-right: .5rem;
+}
 
 /* Search results list */
 .search-results-list {border-bottom: 1px solid #ddd;}
 .search-result {border-top: 1px solid #ddd; padding-top: 16px; padding-bottom: 15px;}
-.search-result h3 {font-size: 17px; line-height: 21px; margin-bottom: 5px; margin-top: 0;}
-.search-result h4 {font-size: 15px; line-height: 20px; margin-bottom: 5px; margin-top: 0;}
+.search-result h4 {font-size: 17px; line-height: 21px; margin-bottom: 5px; margin-top: 0;}
 .search-result p {margin-bottom: 5px;}
 .result-thumbnail {float: right; margin: 4px 0px 5px 20px;}
 .result-thumbnail a {display: block;}
 .result-thumbnail img {max-height: 150px; max-width: 300px;}
 
-/* Search pagination - DM commented out for now */
-/*.pagination li {margin:0 1px 0 0; padding: 0;}*/
-/*.pagination li.current-pg {padding: 2px 8px; background-color: #616161; border: 1px solid #525252; color: #fff;}*/
-/*.pagination li a {display: inline-block; padding: 2px 8px; background-color: #f5f5f5; border: 1px solid #d8d8d8;}*/
-/*.pagination li a:hover, .pagination li a:focus {text-decoration: none; background-color: #e5e5e5; border: 1px solid #c9c9c9;}*/
-
 /* Taxon header */
 .page-taxon .pg-header {padding-bottom: 20px; margin-top: 20px;}
 .taxonomy-bcrumb li {position: relative; }
 .taxonomy-bcrumb li:first-child {padding-left: 5px;}
-/* .taxonomy-bcrumb li:before {content:"›"; position:absolute; left:2px;} */
 .taxonomy-bcrumb li:first-child:before {content: none;}
 .inline-head {display: inline-block; margin-right: 20px;}
-
-ol.breadcrumb {
-    list-style-position: outside;
-    padding-left: 16px;
-    text-indent: 0;
-    line-height: 21px;
-}
 
 /* Taxon column gutters */
 .taxon-row {margin-left: -10px; margin-right: -10px;}
@@ -88,7 +67,12 @@ ol.breadcrumb {
 
 /* Taxon map */
 .taxon-map {margin-bottom: 20px;}
-#leafletMap {height: 550px; border-radius: 4px 4px 0 0; overflow: hidden; background-color: #ebebeb;}
+
+#leafletMap {
+    height: 550px;
+    overflow: hidden;
+    background-color: #ebebeb;
+}
 
 .map-buttons {
     border-top: 1px solid #fff;
@@ -146,9 +130,7 @@ html, body {height:100%;}
 .wrap {min-height:100%; height:auto !important; height:100%;}
 .push {clear:both;}
 
-
 /* Name formatting */
-
 .scientific-name { font-style: normal; }
 .scientific-name.rank-genus .name { font-style: italic; }
 .scientific-name.rank-species .name { font-style: italic; }
@@ -156,17 +138,6 @@ html, body {height:100%;}
 
 /* Name annotations */
 .annotation { display: inline; background: #C8D0E0; font-size: smaller; padding: 2px 1ex; border: none; border-radius: 2px; }
-
-/* Media Queries
-================================================== */
-
-/* Small devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-	/* Taxon */
-	.map-buttons a.btn-lg {font-size: 18px; line-height: 24px;}
-	/* Search */
-	.mobile-collapse {display: block; visibility: visible;}
-}
 
 /* charts config */
 #charts { margin-top:30px; padding-top:20px; }
@@ -255,5 +226,12 @@ a.nav-link.active {
 }
 
 .search-section {
-    margin-bottom: 2rem;
+    /* Matching the card padding of Bootstrap 4. */
+    margin-bottom: 1.25rem;
+}
+
+/* XXX */
+.refine-box {
+    /* Matching the card padding of Bootstrap 4. */
+    margin-bottom: 1.25rem;
 }
