@@ -14,19 +14,6 @@
 
 a.expand-options {border-top: 1px solid #e3e3e3; display: block; padding-top: 2px; margin-top: 6px;}
 
-/* Search result options */
-.result-options {
-    margin-bottom: 1rem;
-}
-
-.result-options .form-group {
-    margin-left: 1rem;
-}
-
-.result-options label {
-    margin-right: .5rem;
-}
-
 /* Search results list */
 .search-results-list {border-bottom: 1px solid #ddd;}
 .search-result {border-top: 1px solid #ddd; padding-top: 16px; padding-bottom: 15px;}
@@ -223,15 +210,4 @@ a.nav-link.active {
 /* sequences */
 .sequences {
     margin-bottom: 1rem;
-}
-
-.search-section {
-    /* Matching the card padding of Bootstrap 4. */
-    margin-bottom: 1.25rem;
-}
-
-/* XXX */
-.refine-box {
-    /* Matching the card padding of Bootstrap 4. */
-    margin-bottom: 1.25rem;
 }
