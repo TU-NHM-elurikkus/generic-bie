@@ -194,7 +194,7 @@
                                 <%-- XXX XXX XXX --%>
                                 <a class="download-button" href="${downloadUrl}" title="Download a list of taxa for your search">
                                     <button class="erk-button erk-button--light">
-                                        <span class="glyphicon glyphicon-download"></span>
+                                        <span class="fa fa-download"></span>
                                         Download
                                     </button>
                                 </a>

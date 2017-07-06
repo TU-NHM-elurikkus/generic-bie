@@ -10,7 +10,7 @@
             <g:layoutTitle />
         </title>
 
-        <r:require modules="jquery, biefixed, menu"/>
+        <r:require modules="jquery, biefixed, menu, fontawesome" />
 
         <!-- Resources -->
         <r:layoutResources/>
