@@ -642,7 +642,7 @@
                                style="text-align:left;"
                             >
                                 <button class="erk-button erk-button--light">
-                                    <i class="glyphicon glyphicon-arrow-down"></i>
+                                    <span class="fa fa-download"></span>
                                     Download child taxa of ${tc.taxonConcept.nameString}
                                 </button>
                             </a>
@@ -651,7 +651,7 @@
                                style="text-align:left;"
                             >
                                 <button class="erk-button erk-button--light">
-                                    <i class="glyphicon glyphicon-arrow-down"></i>
+                                    <span class="fa fa-download"></span>
                                     Download species of ${tc.taxonConcept.nameString}
                                 </button>
                             </a>

@@ -107,7 +107,7 @@
 
             <div class="row">
                 <div class="col-md-3">
-                    <div class="card card-block refine-box">
+                    <div class="card card-block filters-container">
                         <h2 class="card-title">
                             Refine results
                         </h2>
@@ -187,14 +187,14 @@
 
                 <div class="col-md-9">
                     <div id="search-results" class="card card-block">
-                        <div class="result-options">
+                        <div class="search-controls">
                             <g:if test="${idxTypes.contains("TAXON")}">
                                 <g:set var="downloadUrl" value="${grailsApplication.config.bie.index.url}/download?${request.queryString?:''}${grailsApplication.config.bieService.queryContext}" />
 
                                 <%-- XXX XXX XXX --%>
                                 <a class="download-button" href="${downloadUrl}" title="Download a list of taxa for your search">
                                     <button class="erk-button erk-button--light">
-                                        <span class="glyphicon glyphicon-download"></span>
+                                        <span class="fa fa-download"></span>
                                         Download
                                     </button>
                                 </a>
@@ -206,7 +206,7 @@
                                         Results per page
                                     </label>
 
-                                    <select class="input-sm" id="per-page" name="per-page">
+                                    <select id="per-page" name="per-page">
                                         <option value="10" ${(params.rows == '10') ? "selected=\"selected\"" : ""}>10</option>
                                         <option value="20" ${(params.rows == '20') ? "selected=\"selected\"" : ""}>20</option>
                                         <option value="50" ${(params.rows == '50') ? "selected=\"selected\"" : ""}>50</option>
@@ -219,7 +219,7 @@
                                         Sort by
                                     </label>
 
-                                    <select class="input-sm" id="sort-by" name="sort-by">
+                                    <select id="sort-by" name="sort-by">
                                         <option value="score" ${(params.sortField == 'score') ? "selected=\"selected\"" : ""}>best match</option>
                                         <option value="scientificName" ${(params.sortField == 'scientificName') ? "selected=\"selected\"" : ""}>scientific name</option>
                                         <option value="commonNameSingle" ${(params.sortField == 'commonNameSingle') ? "selected=\"selected\"" : ""}>common name</option>
@@ -232,7 +232,7 @@
                                         Sort order
                                     </label>
 
-                                    <select class="input-sm" id="sort-order" name="sort-order">
+                                    <select id="sort-order" name="sort-order">
                                         <option value="asc" ${(params.dir == 'asc') ? "selected=\"selected\"" : ""}>ascending</option>
                                         <option value="desc" ${(params.dir == 'desc' || !params.dir) ? "selected=\"selected\"" : ""}>descending</option>
                                     </select>
