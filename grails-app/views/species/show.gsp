@@ -43,7 +43,7 @@
     <r:require modules="showOverride, charts, image-viewer"/>
 </head>
 <body>
-<section class="container page-taxon">
+<div class="container page-taxon">
     <header class="page-header">
         <h1 class="page-header__title">
             ${raw(sciNameFormatted)}
@@ -106,7 +106,7 @@
         </div>
     </header>
 
-    <div id="main-content" class="main-content">
+    <div id="main-content">
         <div class="taxon-tabs">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
@@ -825,7 +825,7 @@
             </div>
         </div>
     </div><!-- end main-content -->
-</section>
+</div>
 
 <!-- taxon-summary-thumb template -->
 <div id="taxon-summary-thumb-template"

@@ -1,16 +1,9 @@
-/* Page */
-.main-content {margin-bottom: 80px;}
-
 /* Panels */
 .panel-footer p {font-size: 12px; line-height: 14px; margin: 0;}
 
 .audio-player-footer {
     margin-bottom: 1rem;
 }
-
-/* Search header */
-.page-search .pg-header {padding-bottom: 20px;}
-.page-search h1 {font-size: 30px; line-height: 36px;}
 
 a.expand-options {border-top: 1px solid #e3e3e3; display: block; padding-top: 2px; margin-top: 6px;}
 
@@ -112,9 +105,6 @@ a.expand-options {border-top: 1px solid #e3e3e3; display: block; padding-top: 2p
 .data-providers-list {-webkit-columns: 300px 2; -moz-columns: 300px 2; columns: 300px 2; -webkit-column-gap: 20px; -moz-column-gap: 20px; column-gap: 20px; padding-left: 0; }
 .data-providers-list li {margin-left: 30px; padding-bottom: 4px;}
 
-/* Sticky footer */
-html, body {height:100%;}
-.wrap {min-height:100%; height:auto !important; height:100%;}
 .push {clear:both;}
 
 /* Name formatting */

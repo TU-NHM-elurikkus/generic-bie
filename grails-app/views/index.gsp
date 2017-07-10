@@ -6,7 +6,7 @@
     </head>
 
     <body>
-        <section class="container page-search">
+        <div class="container">
             <header class="page-header">
                 <h1 class="page-header__title">
                     Search for Taxa
@@ -33,6 +33,6 @@
                     </div>
                 </form>
             </div>
-        </section><!--end .inner-->
+        </div>
     </body>
 </html>
