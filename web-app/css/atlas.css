@@ -70,14 +70,56 @@ a.expand-options {border-top: 1px solid #e3e3e3; display: block; padding-top: 2p
 .panel-actions a {padding-left: 21px; display: inline-block; position: relative;}
 .panel-actions a .glyphicon {position: absolute; top:3px; left: 0; color: #777;}
 
+.loadMore {
+    /**
+     * It's nested under .taxon-gallery class, thus needs the same margin as
+     * .taxon-thumb because .taxon-gallery is corrected against it.
+     */
+    margin: 4px
+}
+
 /* Taxon Gallery tab */
-.taxon-gallery {margin: -4px; font-size: 0; line-height: 0; padding-top: 4px;}
-.taxon-thumb {height: 170px; display: inline-block; margin: 4px; overflow: hidden; position: relative;}
-.taxon-thumb img {height: 100%;}
-.thumb-caption {position: absolute; bottom: 0; left: 0; width: 100%; background:rgba(0,0,0,0.5); font-size:12px; line-height:14px; color:#fff; padding:4px 5px;}
-.caption-detail {display: none;}
-.taxon-thumb:hover .caption-brief {display: none;}
-.taxon-thumb:hover .caption-detail {display: block;}
+.taxon-gallery {
+    line-height: 0;
+    margin: 0 -4px;
+    padding: 1rem 0;
+}
+
+.taxon-thumb {
+    display: inline-block;
+    height: 170px;
+    margin: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.taxon-thumb img {
+    height: 100%;
+}
+
+.thumb-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background:rgba(0,0,0,0.5);
+    font-size:12px;
+    line-height:14px;
+    color:#fff;
+    padding:4px 5px; /* oddly specific */
+}
+
+.caption-detail {
+    display: none;
+}
+
+.taxon-thumb:hover .caption-brief {
+    display: none;
+}
+
+.taxon-thumb:hover .caption-detail {
+    display: block;
+}
 
 /* Taxon Names tab */
 .name-table ul {margin: 0; padding-left: 25px;}
@@ -90,10 +132,23 @@ a.expand-options {border-top: 1px solid #e3e3e3; display: block; padding-top: 2p
 .classification-list dd {display: inline-block;}
 
 /* Taxon Literature & Taxon Sequences tabs */
-.result-list {padding-top: 6px;}
-.result {background-color: #ebebeb; padding: 15px; border-radius: 4px; margin-bottom: 10px; color: #3c3c3c;}
-.result h3 {font-size: 16px; line-height: 19px; font-weight: normal; padding-bottom: 8px; border-bottom: 1px solid #fff;}
-.result p {margin-bottom: 0px;}
+.result-list {
+    padding-top: 1rem;
+}
+
+.result {
+    margin-bottom: 1rem;
+}
+
+.result h3 {
+    font-weight: normal;
+    border-bottom: 1px solid #fff;
+}
+
+.result p {
+    margin-bottom: 0px;
+}
+
 .thumbnail-container {margin: -4px; font-size: 0; padding-top: 3px;}
 .page-thumbnail {display: inline-block; margin: 4px; font-size: 14px;}
 .page-thumbnail a {display: block; border: 4px solid #fff;}
@@ -117,26 +172,41 @@ a.expand-options {border-top: 1px solid #e3e3e3; display: block; padding-top: 2p
 .annotation { display: inline; background: #C8D0E0; font-size: smaller; padding: 2px 1ex; border: none; border-radius: 2px; }
 
 /* charts config */
-#charts { margin-top:30px; padding-top:20px; }
-.chart { width:50%;  margin-bottom: 20px; float:left; padding-right: 10px; }
-.chart-legend { font-size:12px; }
+#charts {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 2rem;
+}
+
+.chart {
+    margin-bottom: 1rem;
+    width: 50%;
+}
+
+.chart-legend {
+    font-size:12px;
+}
+
 #data_resource_uid-chart { width:100%; }
 
 /* Hide wikipedia links */
 .mw-editsection { display:none; }
 
 /* Hackz */
+/*
 a.nav-link.active {
     border-bottom: 1px solid white;
-}
-
-.tab-content {
-    padding-top: 1em;
 }
 
 .nav-tabs li.nav-item {
     padding: 0;
     margin-bottom: -2px;
+}
+*/
+
+/* Allow multiple rows of tabs */
+.nav-tabs {
+    flex-wrap: wrap;
 }
 
 .bie-card {
@@ -172,8 +242,8 @@ a.nav-link.active {
 
 /* plutof-references */
 .plutof-references__list {
+    padding-top: 1rem;
     padding-left: 0;
-    margin-bottom: 0;
 }
 
 .plutof-references__item {
@@ -197,7 +267,12 @@ a.nav-link.active {
     cursor: inherit;
 }
 
-/* sequences */
-.sequences {
-    margin-bottom: 1rem;
+/* XXX */
+.tab-pane {
+    margin-bottom: 0;
+}
+
+/* XXX */
+.modal-body img {
+    max-width: 100%;
 }

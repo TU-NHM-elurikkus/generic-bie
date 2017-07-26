@@ -625,7 +625,7 @@ function loadGalleryType(category, start) {
             if (data.totalRecords > (start + pageSize)) {
                 // add new 'load more images' button if required
                 var spinnerLink = $('img#gallerySpinner').attr('src');
-                var btn = '<div class="loadMore ' + category + '"><br><button class="erk-btn erk-button--light" onCLick="loadGalleryType(\'' + category + '\','
+                var btn = '<div class="loadMore ' + category + '"><br><button type="button" class="erk-button erk-button--light" onCLick="loadGalleryType(\'' + category + '\','
                     + (start + pageSize)  + ');">Load more images <img src="' + spinnerLink + '" class="hidden-node"/></button></div>';
                 $categoryTmpl.find('.taxon-gallery').append(btn);
             }
@@ -640,6 +640,7 @@ function loadGalleryType(category, start) {
 function getImageTitleFromOccurrence(el){
     var br = "<br/>";
     var briefHtml = "";
+
     //include sci name when genus or higher taxon
     if(SHOW_CONF.taxonRankID  < 7000) {
         briefHtml += el.raw_scientificName;
@@ -944,24 +945,23 @@ function loadPlutoFSequences(containerID, taxonID) {
 
         page.forEach(function(entry) {
             var $entry = $('#sequenceTemplate').clone();
+            var content = '';
 
+            $entry.attr('id', 'sequence-' + $entry.attr('id'));
+            $entry.removeAttr('id'); // Do not clone the ID.
             $entry.find('.externalLink').attr('href', 'https://plutof.ut.ee/#/sequence/view/' + entry.id);
             $entry.find('.externalLink').html(entry.name);
-
-            var content = '';
 
             if(entry.sequence_types) {
                 content += 'Sequenced regions: ' + entry.sequence_types + '<br>';
             }
 
-            if(entry.gathering_agents && entry.gathering_agents.length > 0) {
-                content += 'Collected by: ' + entry.gathering_agents.join(', ') + '<br>';
+            if(entry.gathering_agents) {
+                content += 'Collected by: ' + [entry.gathering_agents].join(', ') + '<br>';
             }
 
             $entry.find('.description').html(content);
-
             $entry.removeClass('hidden-node');
-
             $list.append($entry);
         });
 
