@@ -2,7 +2,9 @@
 <html>
     <head>
         <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
-        <title>Biodiversity Information Explorer</title>
+        <title>
+            Biodiversity Information Explorer
+        </title>
     </head>
 
     <body>
@@ -28,7 +30,7 @@
                         />
 
                         <button type="submit" class="erk-button erk-button--dark input-plus__addon">
-                            Serach
+                            Search
                         </button>
                     </div>
                 </form>
