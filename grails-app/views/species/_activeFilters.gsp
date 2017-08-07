@@ -19,7 +19,9 @@
                 <g:message code="${item.key}.${item.value}" default="${item.value}" />
             </g:else>
 
-            <span>×</span>
+            <span>
+                ×
+            </span>
         </button>
     </g:each>
 
