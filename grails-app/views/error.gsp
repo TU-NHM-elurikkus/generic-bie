@@ -9,15 +9,15 @@
                 Error
             </g:else>
         </title>
-        <meta name="layout" content="main"/>
+        <meta name="layout" content="main" />
         <g:if env="development">
-            <asset:stylesheet src="errors.css"/>
+            <asset:stylesheet src="errors.css" />
         </g:if>
     </head>
 
     <body>
         <g:if env="development">
-            <g:renderException exception="${exception}"/>
+            <g:renderException exception="${exception}" />
         </g:if>
         <g:else>
             <ul class="errors">

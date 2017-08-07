@@ -1,4 +1,4 @@
-%{--
+<%--
   - Copyright (C) 2014 Atlas of Living Australia
   - All Rights Reserved.
   -
@@ -11,8 +11,10 @@
   - IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
   - implied. See the License for the specific language governing
   - rights and limitations under the License.
-  --}%
+--%>
+
 <%@ page contentType="text/html;charset=UTF-8" %>
+
 <g:set var="alaUrl" value="${grailsApplication.config.ala.baseURL}" />
 <g:set var="biocacheUrl" value="${grailsApplication.config.biocache.baseURL}" />
 <g:set var="speciesListUrl" value="${grailsApplication.config.speciesList.baseURL}" />
@@ -43,8 +45,8 @@
 </g:set>
 
 <g:set var="locale" value="${org.springframework.web.servlet.support.RequestContextUtils.getLocale(request)}" />
-<g:set bean="authService" var="authService"></g:set>
-<g:set var="imageViewerType" value="${grailsApplication.config.imageViewerType?:'LEAFLET'}"></g:set>
+<g:set bean="authService" var="authService" />
+<g:set var="imageViewerType" value="${grailsApplication.config.imageViewerType?:'LEAFLET'}" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -359,7 +361,8 @@
                             <g:each in="${["type","specimen","other","uncertain"]}" var="cat">
                                 <div id="cat_${cat}" class="hidden-node image-section">
                                     <h2>
-                                        <g:message code="images.heading.${cat}" default="${cat}" />&nbsp;
+                                        <g:message code="images.heading.${cat}" default="${cat}" />
+                                        &nbsp;
 
                                         <div class="btn-group btn-group-sm" role="group">
                                             <button type="button" class="erk-button erk-button--light btn-default collapse-image-gallery" onclick="collapseImageGallery(this)">
@@ -873,7 +876,8 @@
                                                     nameFormatted="${taxon.nameFormatted}"
                                                     nameComplete="${taxon.nameComplete}"
                                                     taxonomicStatus="name"
-                                                    name="${taxon.scientificName}" />
+                                                    name="${taxon.scientificName}"
+                                                />
 
                                                 <g:if test="${taxon.commonNameSingle}">
                                                     : ${taxon.commonNameSingle}
@@ -897,7 +901,8 @@
                                                     rankId="${taxon.rankID}" nameFormatted="${taxon.nameFormatted}"
                                                     nameComplete="${taxon.nameComplete}"
                                                     taxonomicStatus="name"
-                                                    name="${taxon.scientificName}" />
+                                                    name="${taxon.scientificName}"
+                                                />
 
                                                 <g:if test="${taxon.commonNameSingle}">
                                                     : ${taxon.commonNameSingle}
@@ -913,7 +918,8 @@
                                                         alt="Recorded in Australia"
                                                         title="Recorded in Australia"
                                                         width="21"
-                                                        height="21" />
+                                                        height="21"
+                                                    />
                                                 </span>
                                             </g:if>
                                         </dd>
@@ -940,7 +946,8 @@
                                             nameFormatted="${child.nameFormatted}"
                                             nameComplete="${child.nameComplete}"
                                             taxonomicStatus="name"
-                                            name="${child.name}" />
+                                            name="${child.name}"
+                                        />
 
                                         <g:if test="${child.commonNameSingle}">
                                             : ${child.commonNameSingle}
@@ -959,7 +966,8 @@
                                                      alt="Recorded in Australia"
                                                      title="Recorded in Australia"
                                                      width="21"
-                                                     height="21" />
+                                                     height="21"
+                                                />
                                             </g:if>
                                             <g:else>
                                                 <g:if test="${child.guid?.startsWith('urn:lsid:catalogueoflife.org:taxon')}">
@@ -1294,7 +1302,7 @@
                 </div>
             </div>
 
-            <hr/>
+            <hr />
         </div>
 
         <div id="imageDialog" class="modal fade" tabindex="-1" role="dialog">
@@ -1370,9 +1378,9 @@
                 userRatingUrl: "${createLink(controller: 'imageClient', action: 'userRating')}",
                 disableLikeDislikeButton: ${authService.getUserId() ? false : true},
                 userRatingHelpText: '<div><b>Up vote (<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>) an image:</b>'+
-                ' Image supports the identification of the species or is representative of the species.  Subject is clearly visible including identifying features.<br/><br/>'+
+                ' Image supports the identification of the species or is representative of the species.  Subject is clearly visible including identifying features.<br /><br />'+
                 '<b>Down vote (<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>) an image:</b>'+
-                ' Image does not support the identification of the species, subject is unclear and identifying features are difficult to see or not visible.<br/><br/></div>',
+                ' Image does not support the identification of the species, subject is unclear and identifying features are difficult to see or not visible.<br /><br /></div>',
                 savePreferredSpeciesListUrl: "${createLink(controller: 'imageClient', action: 'saveImageToSpeciesList')}",
                 getPreferredSpeciesListUrl: "${grailsApplication.config.speciesList.baseURL}",
                 addPreferenceButton: ${authService?.getUserId() ? (authService.getUserForUserId(authService.getUserId())?.roles?.contains("ROLE_ADMIN") ? true : false) : false},

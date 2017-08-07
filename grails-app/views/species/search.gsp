@@ -1,4 +1,4 @@
-%{--
+<%--
   - Copyright (C) 2012 Atlas of Living Australia
   - All Rights Reserved.
   -
@@ -11,18 +11,21 @@
   - IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
   - implied. See the License for the specific language governing
   - rights and limitations under the License.
-  --}%
+--%>
+
 <%@ page import="au.org.ala.bie.BieTagLib" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<g:set var="alaUrl" value="${grailsApplication.config.ala.baseURL}"/>
-<g:set var="biocacheUrl" value="${grailsApplication.config.biocache.baseURL}"/>
+<g:set var="alaUrl" value="${grailsApplication.config.ala.baseURL}" />
+<g:set var="biocacheUrl" value="${grailsApplication.config.biocache.baseURL}" />
 <!doctype html>
 <html>
     <head>
-        <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
-        <title>${query} | Search</title>
-        <r:require modules="search"/>
+        <meta name="layout" content="${grailsApplication.config.skin.layout}" />
+        <title>
+            ${query} | Search
+        </title>
+        <r:require modules="search" />
         <r:script disposition='head'>
             // global var to pass GSP vars into JS file
             SEARCH_CONF = {
@@ -136,19 +139,19 @@
                                     <g:if test="${!facetMap?.get(facetResult.fieldName) && !filterQuery?.contains(facetResult.fieldResult?.opt(0)?.label) && !facetResult.fieldName?.contains('idxtype1') && facetResult.fieldResult.length() > 0 }">
                                         <div class="refine-list" id="facet-${facetResult.fieldName}">
                                             <h4>
-                                                <g:message code="facet.${facetResult.fieldName}" default="${facetResult.fieldName}"/>
+                                                <g:message code="facet.${facetResult.fieldName}" default="${facetResult.fieldName}" />
                                             </h4>
 
                                             <ul class="list-unstyled">
-                                                <g:set var="lastElement" value="${facetResult.fieldResult?.get(facetResult.fieldResult.length()-1)}"/>
+                                                <g:set var="lastElement" value="${facetResult.fieldResult?.get(facetResult.fieldResult.length()-1)}" />
 
                                                 <g:if test="${lastElement.label == 'before'}">
                                                     <li>
-                                                        <g:set var="firstYear" value="${facetResult.fieldResult?.opt(0)?.label.substring(0, 4)}"/>
+                                                        <g:set var="firstYear" value="${facetResult.fieldResult?.opt(0)?.label.substring(0, 4)}" />
                                                         <a href="?${queryParam}${appendQueryParam}&fq=${facetResult.fieldName}:[* TO ${facetResult.fieldResult.opt(0)?.label}]">
                                                             Before ${firstYear}
                                                         </a>
-                                                        (<g:formatNumber number="${lastElement.count}" type="number"/>)
+                                                        (<g:formatNumber number="${lastElement.count}" type="number" />)
                                                     </li>
                                                 </g:if>
 
@@ -169,11 +172,11 @@
 
                                                     <g:if test="${facetResult.fieldName?.contains("occurrence_date") && fieldResult.label?.endsWith("Z")}">
                                                         <li>
-                                                            <g:set var="startYear" value="${fieldResult.label?.substring(0, 4)}"/>
+                                                            <g:set var="startYear" value="${fieldResult.label?.substring(0, 4)}" />
                                                             <a href="?${queryParam}${appendQueryParam}&fq=${facetResult.fieldName}:[${fieldResult.label} TO ${dateRangeTo}]">
                                                                 ${startYear} - ${startYear + 10}
                                                             </a>
-                                                            (<g:formatNumber number="${fieldResult.count}" type="number"/>)
+                                                            (<g:formatNumber number="${fieldResult.count}" type="number" />)
                                                         </li>
                                                     </g:if>
 
@@ -187,9 +190,9 @@
                                                     <g:else>
                                                         <li>
                                                             <a href="?${request.queryString}&fq=${facetResult.fieldName}:%22${fieldResult.label}%22">
-                                                                <g:message code="${facetResult.fieldName}.${fieldResult.label}" default="${fieldResult.label?:"[unknown]"}"/>
+                                                                <g:message code="${facetResult.fieldName}.${fieldResult.label}" default="${fieldResult.label?:"[unknown]"}" />
                                                             </a>
-                                                            (<g:formatNumber number="${fieldResult.count}" type="number"/>)
+                                                            (<g:formatNumber number="${fieldResult.count}" type="number" />)
                                                         </li>
                                                     </g:else>
                                                 </g:each>
@@ -229,10 +232,18 @@
                                         </label>
 
                                         <select id="per-page" name="per-page">
-                                            <option value="10" ${(params.rows == '10') ? "selected=\"selected\"" : ""}>10</option>
-                                            <option value="20" ${(params.rows == '20') ? "selected=\"selected\"" : ""}>20</option>
-                                            <option value="50" ${(params.rows == '50') ? "selected=\"selected\"" : ""}>50</option>
-                                            <option value="100" ${(params.rows == '100') ? "selected=\"selected\"" : ""} >100</option>
+                                            <option value="10" ${(params.rows == '10') ? "selected=\"selected\"" : ""}>
+                                                10
+                                            </option>
+                                            <option value="20" ${(params.rows == '20') ? "selected=\"selected\"" : ""}>
+                                                20
+                                            </option>
+                                            <option value="50" ${(params.rows == '50') ? "selected=\"selected\"" : ""}>
+                                                50
+                                            </option>
+                                            <option value="100" ${(params.rows == '100') ? "selected=\"selected\"" : ""} >
+                                                100
+                                            </option>
                                         </select>
                                     </div>
 
@@ -242,10 +253,18 @@
                                         </label>
 
                                         <select id="sort-by" name="sort-by">
-                                            <option value="score" ${(params.sortField == 'score') ? "selected=\"selected\"" : ""}>best match</option>
-                                            <option value="scientificName" ${(params.sortField == 'scientificName') ? "selected=\"selected\"" : ""}>scientific name</option>
-                                            <option value="commonNameSingle" ${(params.sortField == 'commonNameSingle') ? "selected=\"selected\"" : ""}>common name</option>
-                                            <option value="rank" ${(params.sortField == 'rank') ? "selected=\"selected\"" : ""}>taxon rank</option>
+                                            <option value="score" ${(params.sortField == 'score') ? "selected=\"selected\"" : ""}>
+                                                best match
+                                            </option>
+                                            <option value="scientificName" ${(params.sortField == 'scientificName') ? "selected=\"selected\"" : ""}>
+                                                scientific name
+                                            </option>
+                                            <option value="commonNameSingle" ${(params.sortField == 'commonNameSingle') ? "selected=\"selected\"" : ""}>
+                                                common name
+                                            </option>
+                                            <option value="rank" ${(params.sortField == 'rank') ? "selected=\"selected\"" : ""}>
+                                                taxon rank
+                                            </option>
                                         </select>
                                     </div>
 
@@ -255,8 +274,12 @@
                                         </label>
 
                                         <select id="sort-order" name="sort-order">
-                                            <option value="asc" ${(params.dir == 'asc') ? "selected=\"selected\"" : ""}>ascending</option>
-                                            <option value="desc" ${(params.dir == 'desc' || !params.dir) ? "selected=\"selected\"" : ""}>descending</option>
+                                            <option value="asc" ${(params.dir == 'asc') ? "selected=\"selected\"" : ""}>
+                                                ascending
+                                            </option>
+                                            <option value="desc" ${(params.dir == 'desc' || !params.dir) ? "selected=\"selected\"" : ""}>
+                                                descending
+                                            </option>
                                         </select>
                                     </div>
                                 </form>
@@ -269,15 +292,17 @@
                                     <li class="search-result clearfix">
                                         <g:set var="sectionText">
                                             <g:if test="${!facetMap.idxtype}">
-                                                %{-- XXX Not sure why we have span here. --}%
+                                                <%-- XXX Not sure why we have span here. --%>
                                                 <span>
-                                                    <b>Section:</b> <g:message code="idxType.${result.idxType}"/>
+                                                    <b>Section:</b> <g:message code="idxType.${result.idxType}" />
                                                 </span>
                                             </g:if>
                                         </g:set>
 
                                         <g:if test="${result.has("idxtype") && result.idxtype == 'TAXON'}">
-                                            <g:set var="speciesPageLink">${request.contextPath}/species/${result.linkIdentifier?:result.guid}</g:set>
+                                            <g:set var="speciesPageLink">
+                                                ${request.contextPath}/species/${result.linkIdentifier?:result.guid}
+                                            </g:set>
 
                                             <g:if test="${result.image}">
                                                 <div class="result-thumbnail">
@@ -290,61 +315,85 @@
                                             <h4>
                                                 ${result.rank}:
                                                 <a href="${speciesPageLink}">
-                                                    <bie:formatSciName rankId="${result.rankID}" taxonomicStatus="${result.taxonomicStatus}" nameFormatted="${result.nameFormatted}" nameComplete="${result.nameComplete}" name="${result.name}" acceptedName="${result.acceptedConceptName}"/>
+                                                    <bie:formatSciName
+                                                        rankId="${result.rankID}"
+                                                        taxonomicStatus="${result.taxonomicStatus}"
+                                                        nameFormatted="${result.nameFormatted}"
+                                                        nameComplete="${result.nameComplete}"
+                                                        name="${result.name}"
+                                                        acceptedName="${result.acceptedConceptName}"
+                                                    />
                                                 </a>
 
                                                 <g:if test="${result.commonNameSingle}">
-                                                    <span class="commonNameSummary">&nbsp;&ndash;&nbsp;${result.commonNameSingle}</span>
+                                                    <span class="commonNameSummary">
+                                                        &nbsp;&ndash;&nbsp;${result.commonNameSingle}
+                                                    </span>
                                                 </g:if>
                                             </h4>
 
                                             <g:if test="${result.commonName != result.commonNameSingle}">
-                                                <p class="alt-names">${result.commonName}</p>
+                                                <p class="alt-names">
+                                                    ${result.commonName}
+                                                </p>
                                             </g:if>
 
                                             <g:each var="fieldToDisplay" in="${grailsApplication.config.additionalResultsFields.split(",")}">
                                                 <g:if test='${result."${fieldToDisplay}"}'>
                                                     <p class="summary-info">
-                                                        <strong><g:message code="${fieldToDisplay}" default="${fieldToDisplay}"/>:</strong> ${result."${fieldToDisplay}"}
+                                                        <strong>
+                                                            <g:message code="${fieldToDisplay}" default="${fieldToDisplay}" />:
+                                                        </strong>
+                                                        ${result."${fieldToDisplay}"}
                                                     </p>
                                                 </g:if>
                                             </g:each>
                                         </g:if>
 
                                         <g:elseif test="${result.has("idxtype") && result.idxtype == 'COMMON'}">
-                                            <g:set var="speciesPageLink">${request.contextPath}/species/${result.linkIdentifier?:result.taxonGuid}</g:set>
+                                            <g:set var="speciesPageLink">
+                                            ${request.contextPath}/species/${result.linkIdentifier?:result.taxonGuid}
+                                        </g:set>
 
                                             <h4>
-                                                <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}"/>:
-                                                <a href="${speciesPageLink}">${result.name}</a>
+                                                <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}" />:
+                                                <a href="${speciesPageLink}">
+                                                    ${result.name}
+                                                </a>
                                             </h4>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("idxtype") && result.idxtype == 'IDENTIFIER'}">
-                                            <g:set var="speciesPageLink">${request.contextPath}/species/${result.linkIdentifier?:result.taxonGuid}</g:set>
+                                            <g:set var="speciesPageLink">
+                                                ${request.contextPath}/species/${result.linkIdentifier?:result.taxonGuid}
+                                            </g:set>
 
                                             <h4>
-                                                <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}"/>:
-                                                <a href="${speciesPageLink}">${result.guid}</a>
+                                                <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}" />:
+                                                <a href="${speciesPageLink}">
+                                                    ${result.guid}
+                                                </a>
                                             </h4>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("idxtype") && result.idxtype == 'REGION'}">
                                             <h4>
-                                                <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}"/>:
+                                                <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}" />:
                                                 <a href="${grailsApplication.config.regions.baseURL}/feature/${result.guid}">
                                                     ${result.name}
                                                 </a>
                                             </h4>
 
                                             <p>
-                                                <span>${result?.description &&  result?.description != result?.name ?  result?.description : ""}</span>
+                                                <span>
+                                                    ${result?.description &&  result?.description != result?.name ?  result?.description : ""}
+                                                </span>
                                             </p>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("idxtype") && result.idxtype == 'LOCALITY'}">
                                             <h4>
-                                                <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}"/>:
+                                                <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}" />:
 
                                                 <bie:constructEYALink result="${result}">
                                                     ${result.name}
@@ -352,13 +401,15 @@
                                             </h4>
 
                                             <p>
-                                                <span>${result?.description?:""}</span>
+                                                <span>
+                                                    ${result?.description?:""}
+                                                </span>
                                             </p>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("idxtype") && result.idxtype == 'LAYER'}">
                                             <h4>
-                                                <g:message code="idxtype.${result.idxtype}"/>:
+                                                <g:message code="idxtype.${result.idxtype}" />:
 
                                                 <a href="${grailsApplication.config.spatial.baseURL}?layers=${result.guid}">
                                                     ${result.name}
@@ -366,13 +417,17 @@
                                             </h4>
 
                                             <p>
-                                                <g:if test="${result.dataProviderName}"><strong>Source: ${result.dataProviderName}</strong></g:if>
+                                                <g:if test="${result.dataProviderName}">
+                                                    <strong>
+                                                        Source: ${result.dataProviderName}
+                                                    </strong>
+                                                </g:if>
                                             </p>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("name")}">
                                             <h4>
-                                                <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}"/>:
+                                                <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}" />:
 
                                                 <a href="${result.guid}">
                                                     ${result.name}
@@ -380,13 +435,15 @@
                                             </h4>
 
                                             <p>
-                                                <span>${result?.description?:""}</span>
+                                                <span>
+                                                    ${result?.description?:""}
+                                                </span>
                                             </p>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("acronym") && result.get("acronym")}">
                                             <h4>
-                                                <g:message code="idxtype.${result.idxtype}"/>:
+                                                <g:message code="idxtype.${result.idxtype}" />:
 
                                                 <a href="${result.guid}">
                                                     ${result.name}
@@ -394,13 +451,15 @@
                                             </h4>
 
                                             <p>
-                                                <span>${result.acronym}</span>
+                                                <span>
+                                                    ${result.acronym}
+                                                </span>
                                             </p>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("description") && result.get("description")}">
                                             <h4>
-                                                <g:message code="idxtype.${result.idxtype}"/>:
+                                                <g:message code="idxtype.${result.idxtype}" />:
 
                                                 <a href="${result.guid}">
                                                     ${result.name}
@@ -408,13 +467,15 @@
                                             </h4>
 
                                             <p>
-                                                <span class="searchDescription">${result.description?.trimLength(500)}</span>
+                                                <span class="searchDescription">
+                                                    ${result.description?.trimLength(500)}
+                                                </span>
                                             </p>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("highlight") && result.get("highlight")}">
                                             <h4>
-                                                <g:message code="idxtype.${result.idxtype}"/>:
+                                                <g:message code="idxtype.${result.idxtype}" />:
 
                                                 <a href="${result.guid}">
                                                     ${result.name}
@@ -422,13 +483,15 @@
                                             </h4>
 
                                             <p>
-                                                <span>${result.highlight}</span>
+                                                <span>
+                                                    ${result.highlight}
+                                                </span>
                                             </p>
                                         </g:elseif>
 
                                         <g:else>
                                             <h4>
-                                                <g:message code="idxtype.${result.idxtype}"/> TEST:
+                                                <g:message code="idxtype.${result.idxtype}" /> TEST:
                                                 <a href="${result.guid}">
                                                     ${result.name}
                                                 </a>
@@ -437,7 +500,7 @@
 
                                         <g:if test="${result.has("highlight")}">
                                             <p>
-                                                <bie:displaySearchHighlights highlight="${result.highlight}"/>
+                                                <bie:displaySearchHighlights highlight="${result.highlight}" />
                                             </p>
                                         </g:if>
 
@@ -463,7 +526,7 @@
                                                     <li>
                                                         <a href="${biocacheUrl}/occurrences/search?q=lsid:${result.guid}">
                                                             Occurrences:
-                                                            <g:formatNumber number="${result.occurrenceCount}" type="number"/>
+                                                            <g:formatNumber number="${result.occurrenceCount}" type="number" />
                                                         </a>
                                                     </li>
                                                 </g:if>
@@ -486,7 +549,7 @@
             </g:if>
         </div>
 
-        %{-- TODO --}%
+        <%-- TODO --%>
         <div id="result-template" class="row hidden-node">
             <div class="col-sm-12">
                 <ol class="search-results-list list-unstyled">
@@ -509,14 +572,14 @@
                     console.log(SEARCH_CONF.serverName + "/geo?q=" + SEARCH_CONF.query + ' ' + SEARCH_CONF.geocodeLookupQuerySuffix);
 
                     $.get( SEARCH_CONF.serverName + "/geo?q=" + SEARCH_CONF.query  + ' ' + SEARCH_CONF.geocodeLookupQuerySuffix, function( searchResults ) {
-                        for (var i=0; i< searchResults.length; i++) {
+                        for(var i=0; i< searchResults.length; i++) {
                             var $results = $('#result-template').clone(true);
 
                             $results.attr('id', 'results-lists');
                             $results.removeClass('hidden-node');
                             console.log(searchResults)
 
-                            if (searchResults.length > 0) {
+                            if(searchResults.length > 0) {
                                 $results.find('.exploreYourAreaLink').html(searchResults[i].name);
                                 $results.find('.exploreYourAreaLink').attr('href', '${grailsApplication.config.biocache.baseURL}/explore/your-area#' +
                                         searchResults[0].latitude  +

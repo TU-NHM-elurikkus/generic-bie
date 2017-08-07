@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+
 <html>
     <head>
-        <meta name="layout" content="${grailsApplication.config.skin.layout}"/>
+        <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <title>
             Biodiversity Information Explorer
         </title>
