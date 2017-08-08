@@ -9,7 +9,7 @@
     </head>
 
     <body>
-        <div class="container">
+        <div class="container-fluid">
             <header class="page-header">
                 <h1 class="page-header__title">
                     Search for Taxa

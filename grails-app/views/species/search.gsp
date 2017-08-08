@@ -18,7 +18,8 @@
 
 <g:set var="alaUrl" value="${grailsApplication.config.ala.baseURL}" />
 <g:set var="biocacheUrl" value="${grailsApplication.config.biocache.baseURL}" />
-<!doctype html>
+
+<!DOCTYPE html>
 <html>
     <head>
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
@@ -43,7 +44,7 @@
     </head>
 
     <body>
-        <div class="container">
+        <div class="container-fluid">
             <div class="page-header">
                 <h1 class="page-header__title">
                     Search for Taxa
