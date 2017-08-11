@@ -178,7 +178,7 @@ function fitMapToBounds() {
                     SHOW_CONF.map.setZoom(3);
                 }
             }
-            
+
             SHOW_CONF.map.invalidateSize(true);
         }
     });
@@ -896,7 +896,7 @@ function loadReferences(containerID, taxonID) {
                         '</a>' +
                     '</h3>' +
                     '<div class="plutof-references__content">' +
-                        occurrence.locality_text + 
+                        occurrence.locality_text +
                     '</div>' +
                 '</li>'
             );
@@ -987,7 +987,7 @@ function setPlutoFPagination($pagination, currentPage, pageCount, loadPage) {
     if(pageCount <= 1) {
         return;
     }
-    
+
     // XXX TODO: not plutof-references__page
     for(var p = 1; p <= pageCount; p++) {
         var $el;
@@ -1012,7 +1012,7 @@ function setPlutoFPagination($pagination, currentPage, pageCount, loadPage) {
 
 // updateCount :: (count:int, pageCount:int) -> ()
 // showPage :: (pageNumber::int, page::[...] -> ())
-// 
+//
 // Returns a function for loadingPages
 function loadPlutoFSearchResults(endpoint, params, updateCount, showPage) {
     var PAGE_SIZE = 20;
