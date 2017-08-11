@@ -95,7 +95,6 @@
 
                     <div class="inline-head name-authority">
                         Name authority:
-
                         <span class="name-authority">
                             ${tc?.taxonConcept.nameAuthority ?: grailsApplication.config.defaultNameAuthority}
                         </span>
@@ -1008,10 +1007,9 @@
                                         </a>
                                     </div>
 
-                                    %{--<div id="chartsHint">Hint: click on chart elements to view that subset of records</div>--}%
+                                    <%--<div id="chartsHint">Hint: click on chart elements to view that subset of records</div>--%>
 
-                                    <div id="charts">
-                                    </div>
+                                    <div id="charts"></div>
                                 </div>
                             </div>
                         </section>
@@ -1020,16 +1018,12 @@
                             <div id="plutof-references">
                                 <h2>
                                     Literature references from PlutoF
-
-                                    <span class="plutof-references__count">
-                                    </span>
+                                    <span class="plutof-references__count"></span>
                                 </h2>
 
-                                <ol class="plutof-references__list">
-                                </ol>
+                                <ol class="plutof-references__list"></ol>
 
-                                <nav class="plutof-references__pagination">
-                                </nav>
+                                <nav class="plutof-references__pagination"></nav>
                             </div>
                         </section>
 
@@ -1037,17 +1031,13 @@
                             <div id="sequences-plutof">
                                 <h2>
                                     PlutoF
-
-                                    <span class="sequences__count">
-                                    </span>
+                                    <span class="sequences__count"></span>
                                 </h2>
 
                                 <div id="sequences-plutof-body">
-                                    <div class="sequences__list result-list">
-                                    </div>
+                                    <div class="sequences__list result-list"></div>
 
-                                    <div class="sequences__pagination">
-                                    </div>
+                                    <div class="sequences__pagination"></div>
                                 </div>
                             </div>
                         </section>
@@ -1076,8 +1066,7 @@
                             </div>
                         </section>
 
-                        <section class="tab-pane" id="indigenous-info" roles="tabpanel">
-                        </section>
+                        <section class="tab-pane" id="indigenous-info" roles="tabpanel"></section>
                     </div>
                 </div>
             </div><!-- end main-content -->
