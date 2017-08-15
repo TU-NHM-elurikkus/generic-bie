@@ -57,7 +57,7 @@
             ${tc?.taxonConcept?.nameString} ${(tc?.commonNames) ? ' : ' + tc?.commonNames?.get(0)?.nameString : ''} | ${raw(grailsApplication.config.skin.orgNameLong)}
         </title>
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
-        <r:require modules="showDependencies, charts, image-viewer" />
+        <r:require modules="show, charts, image-viewer" />
     </head>
 
     <body>
