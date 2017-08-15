@@ -4,14 +4,14 @@ $(function(){
 	var imageId, attribution, recordUrl;
 	$(".wrap").css("margin-bottom", -footerHeight);
 	$(".push").height(footerHeight);
-	
+
 	// Tabs
 	var hash = window.location.hash;
 	hash && $(".taxon-tabs a[href=" + hash + "]").tab("show");
 	$(".taxon-tabs a").click(function (e) {
 		window.location.hash = this.hash;
 	});
-	
+
 	// Links to tabs
 	$(".tab-link").click(function (e) {
 		e.preventDefault();
@@ -21,7 +21,7 @@ $(function(){
 	})
 
 	// Lightbox
-	$(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) { 
+	$(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
 		event.preventDefault();
 		switch (SHOW_CONF.imageDialog){
 			case 'MODAL':
