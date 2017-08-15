@@ -10,7 +10,7 @@
             <g:layoutTitle />
         </title>
 
-        <r:require modules="jquery, biefixed" />
+        <r:require modules="jquery, bie" />
         <r:require modules="menu", plugin="elurikkus-commons" />
 
         <r:layoutResources />
