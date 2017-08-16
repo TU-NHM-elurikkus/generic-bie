@@ -125,7 +125,7 @@
 
             <div id="main-content">
                 <div class="taxon-tabs">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs tab-links">
                         <li class="nav-item">
                             <a href="#overview" data-toggle="tab" class="nav-link active" role="tab">
                                 Overview
