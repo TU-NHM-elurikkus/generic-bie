@@ -185,7 +185,6 @@
                                                data-toggle="lightbox"
                                                data-gallery="taxon-summary-gallery"
                                                data-parent=".taxon-summary-gallery"
-                                               data-title=""
                                                data-footer=""
                                                href="">
                                                 <img class="mainOverviewImage img-responsive" src="" />
@@ -1077,7 +1076,6 @@
             <a data-toggle="lightbox"
                data-gallery="taxon-summary-gallery"
                data-parent=".taxon-summary-gallery"
-               data-title=""
                data-footer=""
                href="">
             </a>
@@ -1088,7 +1086,6 @@
            class="taxon-thumb hidden-node"
            data-toggle="lightbox"
            data-gallery="main-image-gallery"
-           data-title=""
            data-footer=""
            href="">
             <img src="" alt="" />
