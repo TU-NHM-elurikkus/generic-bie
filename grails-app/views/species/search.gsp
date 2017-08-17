@@ -432,14 +432,6 @@
 
                                         <g:if test="${result.has("idxtype") && result.idxtype == 'TAXON'}">
                                             <ul class="summary-actions list-inline">
-                                                <g:if test="${result.rankID < 7000}">
-                                                    <li>
-                                                        <g:link controller="species" action="imageSearch" params="[id:result.guid]">
-                                                            <g:message code="search.resultList.field.rank.filter" args="${[result.rank]}" />
-                                                        </g:link>
-                                                    </li>
-                                                </g:if>
-
                                                 <g:if test="${grailsApplication.config.sightings.guidUrl}">
                                                     <li>
                                                         <a href="${grailsApplication.config.sightings.guidUrl}${result.guid}">
