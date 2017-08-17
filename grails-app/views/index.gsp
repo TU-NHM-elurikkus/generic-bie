@@ -4,7 +4,7 @@
     <head>
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <title>
-            Biodiversity Information Explorer
+            <g:message code="index.head.title" />
         </title>
     </head>
 
@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <header class="page-header">
                 <h1 class="page-header__title">
-                    Search for Taxa
+                    <g:message code="index.body.title" />
                 </h1>
             </header>
 
