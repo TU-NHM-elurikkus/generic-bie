@@ -1,32 +1,32 @@
 <ul>
     <li>
-        <a href="${jsonLink}">
-            JSON (data interchange format)
+        <a href="${grailsApplication.config.bie.index.url}/species/${tc?.taxonConcept?.guid}.json">
+            <g:message code="onlineResources.json" />
         </a>
     </li>
     <li>
         <a href="http://www.gbif.org/species/search?q=${tc?.taxonConcept?.nameString}">
-            GBIF
+            <g:message code="onlineResources.gbif" />
         </a>
     </li>
     <li>
         <a href="http://eol.org/search?q=${tc?.taxonConcept?.nameString}&show_all=true">
-            Encyclopaedia of Life
+            <g:message code="onlineResources.eol" />
         </a>
     </li>
     <li>
         <a href="http://www.biodiversitylibrary.org/search?searchTerm=${tc?.taxonConcept?.nameString}#/names">
-            Biodiversity Heritage Library
+            <g:message code="onlineResources.bhl" />
         </a>
     </li>
     <li>
         <a href="http://www.eu-nomen.eu/portal/">
-            PESI
+            <g:message code="onlineResources.pesi" />
         </a>
     </li>
     <li>
         <a href="http://www.arkive.org/explore/species?q=${tc?.taxonConcept?.nameString}">
-            ARKive
+            <g:message code="onlineResources.arkive" />
         </a>
     </li>
 </ul>

@@ -1,18 +1,3 @@
-<%--
-  - Copyright (C) 2014 Atlas of Living Australia
-  - All Rights Reserved.
-  -
-  - The contents of this file are subject to the Mozilla Public
-  - License Version 1.1 (the "License"); you may not use this file
-  - except in compliance with the License. You may obtain a copy of
-  - the License at http://www.mozilla.org/MPL/
-  -
-  - Software distributed under the License is distributed on an "AS
-  - IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
-  - implied. See the License for the specific language governing
-  - rights and limitations under the License.
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <g:set var="alaUrl" value="${grailsApplication.config.ala.baseURL}" />
@@ -23,7 +8,6 @@
 <g:set var="citizenSciUrl" value="${grailsApplication.config.sightings.guidUrl}" />
 <g:set var="alertsUrl" value="${grailsApplication.config.alerts.url}" />
 <g:set var="guid" value="${tc?.previousGuid ?: tc?.taxonConcept?.guid ?: ''}" />
-<g:set var="jsonLink" value="${grailsApplication.config.bie.index.url}/species/${tc?.taxonConcept?.guid}.json" />
 
 <g:set var="sciNameFormatted">
     <bie:formatSciName
@@ -32,7 +16,8 @@
         nameComplete="${tc?.taxonConcept?.nameComplete}"
         name="${tc?.taxonConcept?.name}"
         taxonomicStatus="${tc?.taxonConcept?.taxonomicStatus}"
-        acceptedName="${tc?.taxonConcept?.acceptedConceptName}" />
+        acceptedName="${tc?.taxonConcept?.acceptedConceptName}"
+    />
 </g:set>
 
 <g:set var="synonymsQuery">
@@ -65,13 +50,6 @@
             <header class="page-header">
                 <h1 class="page-header__title">
                     ${raw(sciNameFormatted)}
-
-                    <a href="${jsonLink}" target="data"
-                       title="${message(code:"show.view.json.title")}"
-                       class="btn btn-sm btn-default float-right"
-                       data-toggle="tooltip" data-placement="bottom">
-                       <g:message code="show.json" />
-                    </a>
                 </h1>
 
                 <div class="page-header__subtitle">
@@ -88,13 +66,16 @@
                     </div>
 
                     <g:if test="${tc.taxonConcept.taxonomicStatus}">
-                        <div class="inline-head taxonomic-status" title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}">
+                        <div
+                            class="inline-head taxonomic-status"
+                            title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}"
+                        >
                             <g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" default="${tc.taxonConcept.taxonomicStatus}" />
                         </div>
                     </g:if>
 
                     <div class="inline-head name-authority">
-                        Name authority:
+                        <g:message code="show.details.nameAuthority" />:
                         <span class="name-authority">
                             ${tc?.taxonConcept.nameAuthority ?: grailsApplication.config.defaultNameAuthority}
                         </span>
@@ -103,7 +84,7 @@
 
                 <div class="page-header-links">
                     <a href="/bie-hub" class="page-header-links__link">
-                        Search
+                        <g:message code="search.head.title" />
                     </a>
 
                     <g:if test="${taxonHierarchy && taxonHierarchy.size() > 1}">
@@ -128,49 +109,49 @@
                     <ul class="nav nav-tabs tab-links">
                         <li class="nav-item">
                             <a href="#overview" data-toggle="tab" class="nav-link active" role="tab">
-                                Overview
+                                <g:message code="show.overview.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#gallery" data-toggle="tab" class="nav-link" role="tab">
-                                Gallery
+                                <g:message code="show.gallery.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#names" data-toggle="tab" class="nav-link" role="tab">
-                                Names
+                                <g:message code="show.names.label" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#classification" data-toggle="tab" class="nav-link" role="tab">
-                                Classification
+                                <g:message code="show.classification.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#records" data-toggle="tab" class="nav-link" role="tab">
-                                Records
+                                <g:message code="show.records.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#literature" data-toggle="tab" class="nav-link" role="tab">
-                                Literature
+                                <g:message code="show.literature.label" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#sequences" data-toggle="tab" class="nav-link" role="tab">
-                                Sequences
+                                <g:message code="show.sequences.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#data-partners" data-toggle="tab" class="nav-link" role="tab">
-                                Datasets
+                                <g:message code="show.datasets.title" />
                             </a>
                         </li>
                     </ul>
@@ -181,12 +162,14 @@
                                 <div class="col-md-5">
                                     <div class="taxon-summary-gallery">
                                         <div class="main-img hidden-node">
-                                            <a class="lightbox-img"
-                                               data-toggle="lightbox"
-                                               data-gallery="taxon-summary-gallery"
-                                               data-parent=".taxon-summary-gallery"
-                                               data-footer=""
-                                               href="">
+                                            <a
+                                                class="lightbox-img"
+                                                data-toggle="lightbox"
+                                                data-gallery="taxon-summary-gallery"
+                                                data-parent=".taxon-summary-gallery"
+                                                data-footer=""
+                                                href=""
+                                            >
                                                 <img class="mainOverviewImage img-responsive" src="" />
                                             </a>
 
@@ -197,7 +180,11 @@
                                             <div id="overview-thumbs"></div>
 
                                             <div id="more-photo-thumb-link" class="taxon-summary-thumb" style="">
-                                                <a class="more-photos tab-link" href="#gallery" title="More Photos">
+                                                <a
+                                                    class="more-photos tab-link"
+                                                    href="#gallery"
+                                                    title="${message(code: 'show.gallery.showMore')}"
+                                                >
                                                    <span>
                                                        +
                                                    </span>
@@ -210,7 +197,7 @@
                                         <div class="card">
                                             <div class="card-header">
                                                 <h3 class="card-title">
-                                                    Conservation Status
+                                                    <g:message code="show.overview.conservationStatus" />
                                                 </h3>
                                             </div>
 
@@ -248,7 +235,7 @@
                                     <div class="card bie-card">
                                         <div class="card-header">
                                             <h3 class="card-title">
-                                                Online Resources
+                                                <g:message code="show.overview.onlineResources" />
                                             </h3>
                                         </div>
 
@@ -261,23 +248,32 @@
                                 <div class="col-md-7">
                                     <div id="expertDistroDiv" style="display:none;margin-bottom: 20px;">
                                         <h3>
-                                            Compiled distribution map
+                                            <g:message code="show.map.distroMap.title" />
                                         </h3>
 
-                                        <img id="distroMapImage" src="${resource(dir: 'images', file: 'noImage.jpg')}" class="distroImg" style="width:316px;" alt="occurrence map" onerror="this.style.display='none'" />
+                                        <img
+                                            id="distroMapImage"
+                                            src="${resource(dir: 'images', file: 'noImage.jpg')}"
+                                            class="distroImg"
+                                            style="width:316px;"
+                                            alt="occurrence map"
+                                            onerror="this.style.display='none'"
+                                        />
 
                                         <p class="mapAttribution">
-                                            Compiled distribution map provided by
+                                            <g:message code="show.map.distroMap.providedBy" />
 
                                             <span id="dataResource">
-                                                [data resource not known]
+                                                [<g:message code="show.map.distroMap.dataResource.unknown" />]
                                             </span>
                                         </p>
                                     </div>
 
                                     <div class="taxon-map">
                                         <h3>
-                                            Occurrence records map (<span class="occurrenceRecordCount">0</span> records)
+                                            <g:message code="show.map.occurrencesMap.title" />
+                                            (<span class="occurrenceRecordCount">0</span>
+                                            <g:message code="show.map.occurrencesMap.nrRecords" />)
                                         </h3>
 
                                         <div id="leafletMap"></div>
@@ -298,20 +294,20 @@
                                             <g:if test="${grailsApplication.config.map.simpleMapButton.toBoolean()}">
                                                 <%-- XXX --%>
                                                 <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab-map"
-                                                   title="${g.message(code:'overview.map.button.records.simplemap.title', default:'View map')}"
+                                                   title="${message(code: 'show.map.btn.simpleMap.title')}"
                                                    role="button"
                                                 >
                                                     <button class="erk-button erk-button--light">
-                                                        <g:message code="overview.map.button.records.simplemap" default="View map" />
+                                                        <g:message code="show.map.btn.simpleMap.label" />
                                                     </button>
                                                 </a>
                                             </g:if>
 
                                             <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab-map"
-                                               title="View map"
+                                               title="${message(code: 'show.map.btn.viewMap')}"
                                                role="button"
                                             >
-                                                View map
+                                                <g:message code="show.map.btn.viewMap" />
                                             </a>
                                         </div>
                                     </div>
@@ -319,32 +315,31 @@
                                     <div class="card bie-card panel-data-providers bie-vertical-space">
                                         <div class="card-header">
                                             <h3 class="card-title">
-                                                Datasets
+                                                <g:message code="show.datasets.title" />
                                             </h3>
                                         </div>
 
                                         <div class="card-block">
                                             <p>
                                                 <strong>
-                                                    <span class="datasetCount"></span>
+                                                    <span class="datasetCount">0</span>
                                                 </strong>
-
-                                                &nbsp;datasets have provided data to the ${grailsApplication.config.skin.orgNameShort} for this ${tc.taxonConcept.rankString}.
+                                                <g:message
+                                                    code="show.datasets.summary"
+                                                    args="${[grailsApplication.config.skin.orgNameShort, tc.taxonConcept.rankString]}"
+                                                />
                                             </p>
 
                                             <p>
                                                 <a class="tab-link" href="#data-partners">
-                                                    Browse the list of datasets
+                                                    <g:message code="show.datasets.desc.01" />
                                                 </a>
-
-                                                &nbsp;and find organisations you can join if you are interested in participating in a survey for
-
+                                                <g:message code="show.datasets.desc.02" />
                                                 <g:if test="${tc.taxonConcept?.rankID > 6000}">
-                                                    species like ${raw(sciNameFormatted)}
+                                                    <g:message code="show.datasets.desc.03" args="${[raw(sciNameFormatted)]}" />
                                                 </g:if>
-
                                                 <g:else>
-                                                    species of ${raw(sciNameFormatted)}.
+                                                    <g:message code="show.datasets.desc.04" args="${[raw(sciNameFormatted)]}" />
                                                 </g:else>
                                             </p>
                                         </div>
@@ -356,19 +351,19 @@
                         </section>
 
                         <section class="tab-pane" id="gallery" role="tabpanel">
-                            <g:each in="${["type","specimen","other","uncertain"]}" var="cat">
+                            <g:each in="${["type", "specimen", "other", "uncertain"]}" var="cat">
                                 <div id="cat_${cat}" class="hidden-node image-section">
                                     <h2>
                                         <g:message code="images.heading.${cat}" default="${cat}" />
-                                        &nbsp;
 
                                         <div class="btn-group btn-group-sm" role="group">
-                                            <button type="button" class="erk-button erk-button--light btn-default collapse-image-gallery" onclick="collapseImageGallery(this)">
-                                                Collapse
-                                            </button>
-
-                                            <button type="button" class="erk-button erk-button--light  btn-default btn-primary expand-image-gallery" onclick="expandImageGallery(this)">
-                                                Expand
+                                            <button
+                                                type="button"
+                                                class="erk-button erk-button--light btn-default toggle-image-gallery"
+                                                onclick="toggleImageGallery(this)"
+                                                value=1
+                                            >
+                                                <g:message code="show.gallery.hideGallery" />
                                             </button>
                                         </div>
                                     </h2>
@@ -379,24 +374,30 @@
 
                             <div id="cat_nonavailable">
                                 <h2>
-                                    No images available for this taxon
+                                    <g:message code="show.gallery.noImages" />
                                 </h2>
 
                                 <p>
-                                    If you have images for this taxon that you would like to share
-                                    with ${raw(grailsApplication.config.skin.orgNameLong)},
-                                    please upload using the upload tools.
+                                    <g:message
+                                        code="show.gallery.upload.desc"
+                                        args="${[raw(grailsApplication.config.skin.orgNameLong)]}"
+                                    />
                                 </p>
                             </div>
 
-                            <img src="${resource(dir: 'images', file: 'spinner.gif', plugin: 'biePlugin')}" id="gallerySpinner" class="hidden-node" alt="spinner icon" />
+                            <img
+                                id="gallerySpinner"
+                                src="${resource(dir: 'images', file: 'spinner.gif', plugin: 'biePlugin')}"
+                                class="hidden-node"
+                                alt="spinner icon"
+                            />
                         </section>
 
                         <section class="tab-pane" id="names" rol="tabpanel">
                             <g:set var="acceptedName" value="${tc.taxonConcept.taxonomicStatus == 'accepted'}" />
 
                             <h2>
-                                Names and sources
+                                <g:message code="show.names.title" />
                             </h2>
 
                             <div class="table-responsive">
@@ -405,15 +406,15 @@
                                         <tr>
                                             <th>
                                                 <g:if test="${acceptedName}">
-                                                    Accepted name
+                                                    <g:message code="show.names.field.acceptedName" />
                                                 </g:if>
                                                 <g:else>
-                                                    Name
+                                                    <g:message code="show.names.field.name" />
                                                 </g:else>
                                             </th>
 
                                             <th>
-                                                Source
+                                                <g:message code="show.names.field.source" />
                                             </th>
                                         </tr>
                                     </thead>
@@ -455,7 +456,7 @@
 
                                                         <g:if test="${!acceptedName}">
                                                             <span class="annotation annotation-taxonomic-status" title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}">
-                                                                %{-- FIXME: This seems to have no value. --}%
+                                                                <%-- FIXME: This seems to have no value. --%>
                                                                 <g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}.annotation" default="${tc.taxonConcept.taxonomicStatus}" />
                                                             </span>
                                                         </g:if>
@@ -474,7 +475,7 @@
                                             <tr class="cite">
                                                 <td colspan="2">
                                                     <cite>
-                                                        Published in:&nbsp;
+                                                        <g:message code="show.names.field.publishedIn" />:
                                                         <span class="publishedIn">
                                                             ${tc.taxonName?.namePublishedIn ?: tc.taxonConcept.namePublishedIn}
                                                         </span>
@@ -490,11 +491,11 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    Synonyms
+                                                    <g:message code="show.names.field.synonyms" />
                                                 </th>
 
                                                 <th>
-                                                    Source
+                                                    <g:message code="show.names.field.source" />
                                                 </th>
                                             </tr>
                                         </thead>
@@ -509,7 +510,8 @@
                                                                 nameFormatted="${synonym.nameFormatted}"
                                                                 nameComplete="${synonym.nameComplete}"
                                                                 taxonomicStatus="name"
-                                                                name="${synonym.nameString}" />
+                                                                name="${synonym.nameString}"
+                                                            />
                                                         </g:set>
 
                                                         <g:if test="${synonym.infoSourceURL && synonym.infoSourceURL != synonym.datasetURL}">
@@ -552,8 +554,7 @@
                                                     <tr class="cite">
                                                         <td colspan="2">
                                                             <cite>
-                                                                Published in:
-
+                                                                <g:message code="show.names.field.publishedIn" />:
                                                                 <span class="publishedIn">
                                                                     ${synonym.namePublishedIn}
                                                                 </span>
@@ -566,8 +567,7 @@
                                                     <tr class="cite">
                                                         <td colspan="2">
                                                             <cite>
-                                                                Referenced in:
-
+                                                                <g:message code="show.names.field.referencedIn" />:
                                                                 <span class="publishedIn">
                                                                     ${synonym.referencedIn}
                                                                 </span>
@@ -585,11 +585,11 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    Common name
+                                                    <g:message code="show.names.field.commonName" />
                                                 </th>
 
                                                 <th>
-                                                    Source
+                                                    <g:message code="show.names.field.source" />
                                                 </th>
                                             </tr>
                                         </thead>
@@ -648,11 +648,11 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                Identifier
+                                                <g:message code="show.names.field.identifier" />
                                             </th>
 
                                             <th>
-                                                Source
+                                                <g:message code="show.names.field.source" />
                                             </th>
                                         </tr>
                                     </thead>
@@ -826,7 +826,10 @@
                                     >
                                         <button class="erk-button erk-button--light">
                                             <span class="fa fa-download"></span>
-                                            Download child taxa of ${tc.taxonConcept.nameString}
+                                            <g:message
+                                                code="show.classification.btn.download.childTaxa"
+                                                args="${[tc.taxonConcept.nameString]}"
+                                            />
                                         </button>
                                     </a>
 
@@ -835,24 +838,34 @@
                                     >
                                         <button class="erk-button erk-button--light">
                                             <span class="fa fa-download"></span>
-                                            Download species of ${tc.taxonConcept.nameString}
+                                            <g:message
+                                                code="show.classification.btn.download.species"
+                                                args="${[tc.taxonConcept.nameString]}"
+                                            />
                                         </button>
                                     </a>
 
                                     <a href="${createLink(controller: 'species', action: 'search')}?q=${'rkid_' + tc.taxonConcept.rankString + ':' + tc.taxonConcept.guid}"
                                        style="text-align:left;"
                                     >
-                                        Search for child taxa of ${tc.taxonConcept.nameString}
+                                        <g:message
+                                            code="show.classification.btn.search.childTaxa"
+                                            args="${[tc.taxonConcept.nameString]}"
+                                        />
                                     </a>
                                 </div>
                             </g:if>
 
                             <h2>
                                 <g:if test="${grailsApplication.config.classificationSupplier}">
-                                    ${grailsApplication.config.classificationSupplier} classification
+                                    <g:message
+                                        code="show.classification.field.classificationSupplier"
+                                        args="${[grailsApplication.config.classificationSupplier]}"
+                                    />
+
                                 </g:if>
                                 <g:else>
-                                    Classification
+                                    <g:message code="show.classification.title" />
                                 </g:else>
                             </h2>
 
@@ -868,7 +881,10 @@
                                         </dt>
 
                                         <dd>
-                                            <a href="${request?.contextPath}/species/${taxon.guid}#classification" title="${taxon.rank}">
+                                            <a
+                                                href="${request?.contextPath}/species/${taxon.guid}#classification"
+                                                title="${message(code: 'rank.' + taxon.rank, default: taxon.rank)}"
+                                            >
                                                 <bie:formatSciName
                                                     rankId="${taxon.rankID}"
                                                     nameFormatted="${taxon.nameFormatted}"
@@ -884,9 +900,7 @@
                                         </dd>
                                     <%-- XXX The dl is left open on purpose --%>
                                 </g:if>
-
-                                <%-- XXX Else of what? XXX --%>
-                                <g:elseif test="${taxon.guid == tc.taxonConcept.guid}">
+                                <g:else>
                                     <%-- XXX Intentional unclosed tag. --%>
                                     <dl>
                                         <dt id="currentTaxonConcept">
@@ -896,7 +910,8 @@
                                         <dd>
                                             <span>
                                                 <bie:formatSciName
-                                                    rankId="${taxon.rankID}" nameFormatted="${taxon.nameFormatted}"
+                                                    rankId="${taxon.rankID}"
+                                                    nameFormatted="${taxon.nameFormatted}"
                                                     nameComplete="${taxon.nameComplete}"
                                                     taxonomicStatus="name"
                                                     name="${taxon.scientificName}"
@@ -908,11 +923,11 @@
                                             </span>
 
                                             <g:if test="${taxon.isAustralian || tc.isAustralian}">
-                                                &nbsp;
                                                 <%-- XXX: I do not think span does anything. --%>
                                                 <span>
                                                     <%-- TODO: Not Australia. --%>
-                                                    <img src="${grailsApplication.config.ala.baseURL}/wp-content/themes/ala2011/images/status_native-sm.png"
+                                                    <img
+                                                        src="${grailsApplication.config.ala.baseURL}/wp-content/themes/ala2011/images/status_native-sm.png"
                                                         alt="Recorded in Australia"
                                                         title="Recorded in Australia"
                                                         width="21"
@@ -922,9 +937,6 @@
                                             </g:if>
                                         </dd>
                                     <%-- XXX The dl is left open on purpose --%>
-                                </g:elseif>
-                                <g:else>
-                                    <%-- Taxa ${taxon}) should not be here! --%>
                                 </g:else>
                             </g:each>
 
@@ -961,20 +973,27 @@
                                         <span>
                                             <g:if test="${child.isAustralian}">
                                                 <img src="${grailsApplication.config.ala.baseURL}/wp-content/themes/ala2011/images/status_native-sm.png"
-                                                     alt="Recorded in Australia"
-                                                     title="Recorded in Australia"
+                                                     alt="${message(code: 'show.classification.taxon.isAustralian')}"
+                                                     title="${message(code: 'show.classification.taxon.isAustralian')}"
                                                      width="21"
                                                      height="21"
                                                 />
                                             </g:if>
                                             <g:else>
                                                 <g:if test="${child.guid?.startsWith('urn:lsid:catalogueoflife.org:taxon')}">
-                                                    <span class="inferredPlacement" title="Not recorded in Australia">
-                                                        [inferred placement]
+                                                    <span
+                                                        class="inferredPlacement"
+                                                        title="${message(code: 'show.classification.taxon.notAustralian')}"
+                                                    >
+                                                        [<g:message code="show.classification.taxon.notAustralian.text" />]
                                                     </span>
                                                 </g:if>
                                                 <g:else>
-                                                    <span class="inferredPlacement" title="Not recorded in Australia"></span>
+                                                    <span
+                                                        class="inferredPlacement"
+                                                        title="${message(code: 'show.classification.taxon.notAustralian')}"
+                                                    >
+                                                    </span>
                                                 </g:else>
                                             </g:else>
                                         </span>
@@ -992,17 +1011,23 @@
                             <div id="occurrenceRecords">
                                 <div id="recordBreakdowns">
                                     <h2>
-                                        Charts showing breakdown of occurrence records (<span class="occurrenceRecordCount">0</span> records)
+                                        <g:message code="show.records.chart.title" /> <g:message code="show.records.recordCount.title" />
                                     </h2>
 
-                                    <%-- This is not page header but we can use its classes to lay out links in the sam way. --%>
+                                    <%-- This is not page header but we can use its classes to lay out links in the same way. --%>
                                     <div class="page-header-links">
-                                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-records" class="page-header-links__link">
-                                            View list of all occurrence records for this taxon (<span class="occurrenceRecordCount">0</span> records)
+                                        <a
+                                            href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-records"
+                                            class="page-header-links__link"
+                                        >
+                                            <g:message code="show.records.list.title" /> <g:message code="show.records.recordCount.title" />
                                         </a>
 
-                                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-map" class="page-header-links__link">
-                                            View map of all occurrence records for this taxon (<span class="occurrenceRecordCount">0</span> records)
+                                        <a
+                                            href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-map"
+                                            class="page-header-links__link"
+                                        >
+                                            <g:message code="show.records.map.title" /> <g:message code="show.records.recordCount.title" />
                                         </a>
                                     </div>
 
@@ -1016,7 +1041,7 @@
                         <section class="tab-pane" id="literature" role="tabpanel">
                             <div id="plutof-references">
                                 <h2>
-                                    Literature references from PlutoF
+                                    <g:message code="show.literature.title" />
                                     <span class="plutof-references__count"></span>
                                 </h2>
 
@@ -1047,15 +1072,15 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                Datasets
+                                                <g:message code="show.datasets.label" />
                                             </th>
 
                                             <th>
-                                                Licence
+                                                <g:message code="show.datasets.licence" />
                                             </th>
 
                                             <th>
-                                                Records
+                                                <g:message code="show.map.occurrencesMap.nrRecords" />
                                             </th>
                                         </tr>
                                     </thead>
@@ -1082,16 +1107,16 @@
         </div>
 
         <!-- thumbnail template -->
-        <a id="taxon-thumb-template"
-           class="taxon-thumb hidden-node"
-           data-toggle="lightbox"
-           data-gallery="main-image-gallery"
-           data-footer=""
-           href="">
+        <a
+            id="taxon-thumb-template"
+            class="taxon-thumb hidden-node"
+            data-toggle="lightbox"
+            data-gallery="main-image-gallery"
+            data-footer=""
+            href=""
+        >
             <img src="" alt="" />
-
             <div class="thumb-caption caption-brief"></div>
-
             <div class="thumb-caption caption-detail"></div>
         </a>
 
@@ -1106,17 +1131,25 @@
             </div>
 
             <div class="card-footer">
-                <p class="source">Source: <span class="sourceText"></span></p>
+                <p class="source">
+                    <g:message code="show.names.field.source" />: <span class="sourceText"></span>
+                </p>
 
-                <p class="rights">Rights holder: <span class="rightsText"></span></p>
+                <p class="rights">
+                    <g:message code="show.overview.field.rightsHolder" />: <span class="rightsText"></span>
+                </p>
 
-                <p class="provider">Provided by: <a href="#" class="providedBy"></a></p>
+                <p class="provider">
+                    <g:message code="show.overview.field.providedBy" />: <a href="#" class="providedBy"></a>
+                </p>
             </div>
         </div>
 
         <!-- sequence template -->
         <div id="sequenceTemplate" class="result hidden-node">
-            <h3><a href="" class="externalLink"></a></h3>
+            <h3>
+                <a href="" class="externalLink"></a>
+            </h3>
 
             <p class="description"></p>
         </div>
@@ -1125,11 +1158,9 @@
         <div id="indigenous-profile-summary-template" class="hidden-node padding-bottom-2">
             <div class="indigenous-profile-summary row">
                 <div class="col-md-2">
-                    <div class="collection-logo embed-responsive embed-responsive-16by9 col-xs-11">
-                    </div>
+                    <div class="collection-logo embed-responsive embed-responsive-16by9 col-xs-11"></div>
 
-                    <div class="collection-logo-caption small">
-                    </div>
+                    <div class="collection-logo-caption small"></div>
                 </div>
 
                 <div class="col-md-10 profile-summary">
@@ -1153,15 +1184,14 @@
                     <div class="row">
                         <div class="col-md-8 panel-heading">
                             <h3 class="panel-title">
-                                Main Image
+                                <g:message code="show.overview.media.image" />
                             </h3>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-8 ">
-                            <div class="image-embedded">
-                            </div>
+                            <div class="image-embedded"></div>
                         </div>
                     </div>
                 </div>
@@ -1173,7 +1203,7 @@
                     <div class="row">
                         <div class="col-md-8 panel-heading">
                             <h3 class="panel-title">
-                                Main Audio
+                                <g:message code="show.overview.media.audio" />
                             </h3>
                         </div>
                     </div>
@@ -1190,7 +1220,7 @@
                             <div class="row">
                                 <div class="col-md-5 ">
                                     <strong>
-                                        Name
+                                        <g:message code="show.names.field.name" />
                                     </strong>
                                 </div>
 
@@ -1200,7 +1230,7 @@
                             <div class="row">
                                 <div class="col-md-5 ">
                                     <strong>
-                                        Attribution
+                                        <g:message code="show.datasets.attribution" />
                                     </strong>
                                 </div>
 
@@ -1210,7 +1240,7 @@
                             <div class="row">
                                 <div class="col-md-5 ">
                                     <strong>
-                                        Licence
+                                        <g:message code="show.datasets.licence" />
                                     </strong>
                                 </div>
 
@@ -1234,7 +1264,7 @@
 
                     <div class="col-md-8 panel-heading">
                         <h3 class="panel-title">
-                            Main Video
+                            <g:message code="show.overview.media.video" />
                         </h3>
                     </div>
                 </div>
@@ -1244,8 +1274,7 @@
                     </div>
 
                     <div class="col-md-7 ">
-                        <div class="video-embedded embed-responsive embed-responsive-16by9 col-xs-12 text-center">
-                        </div>
+                        <div class="video-embedded embed-responsive embed-responsive-16by9 col-xs-12 text-center"></div>
                     </div>
                 </div>
 
@@ -1256,7 +1285,7 @@
                         <div class="row">
                             <div class="col-md-2 ">
                                 <strong>
-                                    Name
+                                    <g:message code="show.names.field.name" />
                                 </strong>
                             </div>
 
@@ -1266,7 +1295,7 @@
                         <div class="row">
                             <div class="col-md-2 ">
                                 <strong>
-                                    Attribution
+                                    <g:message code="show.datasets.attribution" />
                                 </strong>
                             </div>
 
@@ -1276,7 +1305,7 @@
                         <div class="row">
                             <div class="col-md-2 ">
                                 <strong>
-                                    Licence
+                                    <g:message code="show.datasets.licence" />
                                 </strong>
                             </div>
 
@@ -1295,32 +1324,31 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <div id="viewerContainerId">
-                        </div>
+                        <div id="viewerContainerId"></div>
                     </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
+                </div>  <%-- /.modal-content --%>
+            </div>  <%-- /.modal-dialog --%>
         </div>
 
         <div id="alertModal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <div id="alertContent">
-                        </div>
-                        <!-- dialog buttons -->
+                        <div id="alertContent"></div>
+                        <%-- dialog buttons --%>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">
-                                OK
+                                <g:message code="general.btn.close" />
                             </button>
                         </div>
                     </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
+                </div>  <%-- /.modal-content --%>
+            </div>  <%-- /.modal-dialog --%>
         </div>
 
         <r:script>
-            // Global var to pass GSP vars into JS file @TODO replace bhl and trove with literatureSource list
+            // Global var to pass GSP vars into JS file
+            // @TODO replace bhl and trove with literatureSource list
             var SHOW_CONF = {
                 biocacheUrl:        "${grailsApplication.config.biocache.baseURL}",
                 biocacheServiceUrl: "${grailsApplication.config.contextPath}/proxy/biocache-service",
@@ -1343,7 +1371,7 @@
                 eolUrl:             "${raw(createLink(controller: 'externalSite', action: 'eol', params: [s: tc?.taxonConcept?.nameString ?: '', f:tc?.classification?.class?:tc?.classification?.phylum?:'']))}",
                 genbankUrl:         "${createLink(controller: 'externalSite', action: 'genbank', params: [s: tc?.taxonConcept?.nameString ?: ''])}",
                 scholarUrl:         "${createLink(controller: 'externalSite', action: 'scholar', params: [s: tc?.taxonConcept?.nameString ?: ''])}",
-                soundUrl:           "${createLink(controller: 'species', action: 'soundSearch', params: [s: tc?.taxonConcept?.nameString ?: ''])}",
+                soundUrl:           "${createLink(controller: 'species', action: 'soundSearch', params: [s: tc?.taxonConcept?.nameString ?: ''])}",  // FixMe: do somthing so that it starts working
                 eolLanguage:        "${grailsApplication.config.eol.lang}",
                 defaultDecimalLatitude: ${grailsApplication.config.defaultDecimalLatitude},
                 defaultDecimalLongitude: ${grailsApplication.config.defaultDecimalLongitude},
@@ -1382,14 +1410,15 @@
                 var target = $(e.target).attr("href");
 
                 if(target == "#records") {
-                    $('#charts').html(''); //prevent multiple loads
+                    $('#charts').html('');  //prevent multiple loads
 
                     <charts:biocache
                         biocacheServiceUrl="${grailsApplication.config.biocacheService.baseURL}"
                         biocacheWebappUrl="${grailsApplication.config.biocache.baseURL}"
                         q="lsid:${guid}"
                         qc="${grailsApplication.config.biocacheService.queryContext ?: ''}"
-                        fq="" />
+                        fq=""
+                    />
                 }
 
                 if(target == '#overview'){

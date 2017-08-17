@@ -1,6 +1,6 @@
 <p class="activeFilters">
     <b>
-        Active filters:
+        <g:message code="activefilters.title" />
     </b>
 
     <g:each var="item" in="${facetMap}" status="facetIdx">
@@ -30,7 +30,7 @@
     --%>
     <g:if test="${facetMap?.size() > 1}">
         <button class="erk-button erk-button--light erk-button--inline" onclick="removeAllFacets();">
-            Clear all
+            <g:message code="general.btn.clearAll" />
         </button>
     </g:if>
 </p>

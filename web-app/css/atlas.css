@@ -37,6 +37,10 @@ a.expand-options {
     margin-top: 0;
 }
 
+.step .currentStep {
+    padding-right: 0.5em;
+}
+
 .search-result p {
     margin-bottom: 5px;
 }
@@ -58,7 +62,6 @@ a.expand-options {
 .page-taxon {
     width: 100%;
 }
-
 
 /* Taxon header */
 
