@@ -812,7 +812,6 @@ function loadExpertDistroMap() {
     });
 }
 
-<<<<<<< HEAD
 function toggleImageGallery(btn) {
     if($(btn).val() == 1) {
         $(btn).parent().find('.toggle-image-gallery').removeClass('btn-primary');
@@ -826,23 +825,6 @@ function toggleImageGallery(btn) {
         $(btn).parents('.image-section').find('.taxon-gallery').slideDown(400);
         $(btn).val(1);
         $(btn).text("Hide gallery");  // ToDo: translation key == show.gallery.hideGallery
-=======
-function expandImageGallery(btn) {
-    if(!$(btn).hasClass('.expand-image-gallery')) {
-        $(btn).parent().find('.collapse-image-gallery').removeClass('btn-primary');
-        $(btn).addClass('btn-primary');
-
-        $(btn).parents('.image-section').find('.taxon-gallery').slideDown(400);
-    }
-}
-
-function collapseImageGallery(btn) {
-    if(!$(btn).hasClass('.collapse-image-gallery')) {
-        $(btn).parent().find('.expand-image-gallery').removeClass('btn-primary');
-        $(btn).addClass('btn-primary');
-
-        $(btn).parents('.image-section').find('.taxon-gallery').slideUp(400);
->>>>>>> master
     }
 }
 

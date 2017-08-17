@@ -59,10 +59,6 @@ a.expand-options {
     width: 100%;
 }
 
-.step, .currentStep {
-    padding-right: 0.5em;
-}
-
 /* Taxon header */
 
 .pg-header {
