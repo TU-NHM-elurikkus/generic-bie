@@ -573,3 +573,7 @@ a.nav-link.active {
 .modal-body img {
     max-width: 100%;
 }
+
+.modal-header {
+    display: none;
+}

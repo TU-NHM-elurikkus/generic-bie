@@ -106,7 +106,7 @@
 
             <div id="main-content">
                 <div class="taxon-tabs">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs tab-links">
                         <li class="nav-item">
                             <a href="#overview" data-toggle="tab" class="nav-link active" role="tab">
                                 <g:message code="show.navTab.overview.title" />
@@ -167,7 +167,6 @@
                                                 data-toggle="lightbox"
                                                 data-gallery="taxon-summary-gallery"
                                                 data-parent=".taxon-summary-gallery"
-                                                data-title=""
                                                 data-footer=""
                                                 href=""
                                             >
@@ -1078,7 +1077,6 @@
             <a data-toggle="lightbox"
                data-gallery="taxon-summary-gallery"
                data-parent=".taxon-summary-gallery"
-               data-title=""
                data-footer=""
                href="">
             </a>
@@ -1089,7 +1087,6 @@
            class="taxon-thumb hidden-node"
            data-toggle="lightbox"
            data-gallery="main-image-gallery"
-           data-title=""
            data-footer=""
            href="">
             <img src="" alt="" />
