@@ -12,7 +12,7 @@
 <g:set var="sciNameFormatted">
     <bie:formatSciName
         rankId="${tc?.taxonConcept?.rankID}"
-        nameFormatted="${tc?.taxonConcept?.nameFormatted}"
+        nameFormatted="${tc?.taxonConcept?.nameString}"
         nameComplete="${tc?.taxonConcept?.nameComplete}"
         name="${tc?.taxonConcept?.name}"
         taxonomicStatus="${tc?.taxonConcept?.taxonomicStatus}"
@@ -91,7 +91,13 @@
                         <g:each in="${taxonHierarchy}" var="taxon">
                             <g:if test="${taxon.guid != tc.taxonConcept.guid}">
                                 <g:link controller="species" action="show" params="[guid: taxon.guid]" class="page-header-links__link">
-                                    ${taxon.scientificName}
+                                    <bie:formatSciName
+                                        rankId="${taxon.rankID}"
+                                        nameFormatted="${taxon.nameFormatted}"
+                                        nameComplete="${taxon.nameComplete}"
+                                        taxonomicStatus="name"
+                                        name="${taxon.scientificName}"
+                                    />
                                 </g:link>
                             </g:if>
                             <g:else>
