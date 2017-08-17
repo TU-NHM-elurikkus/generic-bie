@@ -208,6 +208,11 @@ a.expand-options {
     margin-bottom: 20px;
 }
 
+.taxon-map h3 {
+    font-size: 24px;
+    padding-bottom: 1rem;
+}
+
 #leafletMap {
     height: 550px;
     overflow: hidden;
@@ -219,20 +224,8 @@ a.expand-options {
     border-radius: 0 0 4px 4px;
     overflow: hidden;
     padding-top: 1rem;
-}
-
-.map-buttons a.btn-lg {
-    width: 50%;
-    border: 0;
-    border-left: 1px solid #fff;
-    float: left;
-    border-radius: 0;
-    font-size: 15px;
-    line-height: 18px;
-}
-
-.map-buttons a.btn-lg:first-child {
-    border-left: 0;
+    text-align: center;
+    font-size: 20px;
 }
 
 
@@ -531,10 +524,6 @@ a.nav-link.active {
     margin-bottom: 20px;
 }
 
-.map-buttons>a.btn.btn-lg {
-    border: 1px solid #3dc8d3;
-}
-
 #search-results-list {
     text-indent: 0;
 }
@@ -591,4 +580,18 @@ a.nav-link.active {
 
 .modal-header {
     display: none;
+}
+
+.subtitle-row {
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+
+.btn-group a {
+    width: 100%;
+}
+
+.btn-group a button {
+    width: 100%;
+    text-align: left;
 }

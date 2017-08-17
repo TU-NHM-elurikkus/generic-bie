@@ -12,7 +12,7 @@
 <g:set var="sciNameFormatted">
     <bie:formatSciName
         rankId="${tc?.taxonConcept?.rankID}"
-        nameFormatted="${tc?.taxonConcept?.nameFormatted}"
+        nameFormatted="${tc?.taxonConcept?.nameString}"
         nameComplete="${tc?.taxonConcept?.nameComplete}"
         name="${tc?.taxonConcept?.name}"
         taxonomicStatus="${tc?.taxonConcept?.taxonomicStatus}"
@@ -52,29 +52,29 @@
                     ${raw(sciNameFormatted)}
                 </h1>
 
-                <div class="page-header__subtitle">
+                <div class="page-header__subtitle row subtitle-row">
                     <g:if test="${commonNameDisplay}">
-                        <div>
+                        <div class="col-md-2">
                             ${raw(commonNameDisplay)}
                         </div>
                     </g:if>
 
                     <g:set var="commonNameDisplay" value="${(tc?.commonNames) ? tc?.commonNames?.opt(0)?.nameString : ''}" />
 
-                    <div>
+                    <div class="col-md-1">
                         ${tc.taxonConcept.rankString}
                     </div>
 
                     <g:if test="${tc.taxonConcept.taxonomicStatus}">
                         <div
-                            class="inline-head taxonomic-status"
+                            class="inline-head taxonomic-status col-md-1"
                             title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}"
                         >
                             <g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" default="${tc.taxonConcept.taxonomicStatus}" />
                         </div>
                     </g:if>
 
-                    <div class="inline-head name-authority">
+                    <div class="inline-head name-authority col-md-2">
                         <g:message code="show.details.nameAuthority" />:
                         <span class="name-authority">
                             ${tc?.taxonConcept.nameAuthority ?: grailsApplication.config.defaultNameAuthority}
@@ -91,7 +91,13 @@
                         <g:each in="${taxonHierarchy}" var="taxon">
                             <g:if test="${taxon.guid != tc.taxonConcept.guid}">
                                 <g:link controller="species" action="show" params="[guid: taxon.guid]" class="page-header-links__link">
-                                    ${taxon.scientificName}
+                                    <bie:formatSciName
+                                        rankId="${taxon.rankID}"
+                                        nameFormatted="${taxon.nameFormatted}"
+                                        nameComplete="${taxon.nameComplete}"
+                                        taxonomicStatus="name"
+                                        name="${taxon.scientificName}"
+                                    />
                                 </g:link>
                             </g:if>
                             <g:else>
@@ -278,17 +284,15 @@
 
                                         <div id="leafletMap"></div>
 
-                                        <g:if test="${grailsApplication.config.spatial.baseURL}">
-                                            <g:set var="mapUrl">
+                                        <g:set var="mapUrl">
+                                            <g:if test="${grailsApplication.config.spatial.baseURL}">
                                                 ${grailsApplication.config.spatial.baseURL}?q=lsid:${tc?.taxonConcept?.guid}
-                                            </g:set>
-                                        </g:if>
+                                            </g:if>
 
-                                        <g:else>
-                                            <g:set var="mapUrl">
+                                            <g:else>
                                                 ${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab-map
-                                            </g:set>
-                                        </g:else>
+                                            </g:else>
+                                        </g:set>
 
                                         <div class="map-buttons">
                                             <g:if test="${grailsApplication.config.map.simpleMapButton.toBoolean()}">
@@ -307,7 +311,7 @@
                                                title="${message(code: 'show.map.btn.viewMap')}"
                                                role="button"
                                             >
-                                                <g:message code="show.map.btn.viewMap" />
+                                                <g:message code="show.map.btn.viewMap" /> (<span class="occurrenceRecordCount">0</span>)
                                             </a>
                                         </div>
                                     </div>
@@ -818,11 +822,11 @@
                             </div>
                         </section>
 
-                        <section class="tab-pane fade" id="classification" role="tabpanel">
+                        <section class="tab-pane" id="classification" role="tabpanel">
                             <g:if test="${tc.taxonConcept.rankID < 7000}">
                                 <div class="pull-right btn-group btn-group-vertical">
-                                    <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&${grailsApplication.config.bieService.queryContext}"
-                                       style="text-align:left;"
+                                    <a
+                                        href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&${grailsApplication.config.bieService.queryContext}"
                                     >
                                         <button class="erk-button erk-button--light">
                                             <span class="fa fa-download"></span>
@@ -834,7 +838,6 @@
                                     </a>
 
                                     <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&fq=rank:species&${grailsApplication.config.bieService.queryContext}"
-                                       style="text-align:left;"
                                     >
                                         <button class="erk-button erk-button--light">
                                             <span class="fa fa-download"></span>
@@ -845,13 +848,16 @@
                                         </button>
                                     </a>
 
-                                    <a href="${createLink(controller: 'species', action: 'search')}?q=${'rkid_' + tc.taxonConcept.rankString + ':' + tc.taxonConcept.guid}"
-                                       style="text-align:left;"
+                                    <a
+                                        href="${createLink(controller: 'species', action: 'search')}?q=${'rkid_' + tc.taxonConcept.rankString + ':' + tc.taxonConcept.guid}"
                                     >
-                                        <g:message
-                                            code="show.classification.btn.search.childTaxa"
-                                            args="${[tc.taxonConcept.nameString]}"
-                                        />
+                                        <button class="erk-button erk-button--light">
+                                            <span class="fa fa-search"></span>
+                                            <g:message
+                                                code="show.classification.btn.search.childTaxa"
+                                                args="${[tc.taxonConcept.nameString]}"
+                                            />
+                                        </button>
                                     </a>
                                 </div>
                             </g:if>
