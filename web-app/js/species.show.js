@@ -349,12 +349,11 @@ function loadExternalSources() {
     // load sound content
     $.ajax({ url: SHOW_CONF.soundUrl }).done(function(data) {
         if(data.sounds) {
-            var soundsDiv = '<div class=\'panel panel-default \'><div class=\'panel-heading\'>';
+            var soundsDiv = '<div class="panel panel-default"><div class="panel-heading">';
             soundsDiv += '<h3 class="panel-title">Sounds</h3></div><div class="panel-body">';
-            soundsDiv += '<audio src="' + data.sounds[0].alternativeFormats['audio/mpeg'] + '" preload="auto" />';
-            audiojs.events.ready(function() {
-                var as = audiojs.createAll();
-            });
+            soundsDiv += '<audio controls class="audio-player">';
+            soundsDiv += '<source src="' + data.sounds[0].alternativeFormats['audio/mpeg'] + '">';
+            soundsDiv += "Your browser doesn't support playing audio</audio>"
             var source = '';
 
             if(data.processed.attribution.collectionName) {

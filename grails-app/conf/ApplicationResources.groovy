@@ -31,7 +31,6 @@ modules = {
         resource url: [dir: 'js', file: 'species.show.js', disposition: 'head']
         resource url: [dir: 'js', file: 'jquery.qtip.min.js', plugin:'elurikkus-bie', disposition: 'head']
         resource url: [dir: 'js', file: 'moment.min.js', plugin:'elurikkus-bie', disposition: 'head']
-        resource url: [dir: 'js', file: 'audio.min.js', plugin:'elurikkus-bie', disposition: 'head']
 
         // Note: this should be last, because it doesn't end with color or newline. Grails resource
         // plugin just smacks everything together, leading to the return value of jquery.json module
