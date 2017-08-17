@@ -448,17 +448,27 @@ a.expand-options {
 /* charts config */
 
 #charts {
-    display: flex;
-    flex-wrap: wrap;
     padding-top: 2rem;
 }
 
 .chart {
+    display: block;
+    position: relative;
+
+    width: 100%;
+    max-width: 1200px;
+
     margin-bottom: 1rem;
-    width: 50%;
+    padding-right: 250px;
 }
 
 .chart-legend {
+    position: absolute;
+    top: 1rem;
+    right: 0;
+
+    width: 250px;
+
     font-size: 12px;
 }
 
