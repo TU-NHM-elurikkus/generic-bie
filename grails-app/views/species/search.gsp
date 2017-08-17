@@ -450,13 +450,15 @@
 
                                         <g:if test="${result.has("idxtype") && result.idxtype == 'TAXON'}">
                                             <ul class="summary-actions list-inline">
+                                                <%-- TODO - We don't currently support imageSearch
+
                                                 <g:if test="${result.rankID < 7000}">
                                                     <li>
                                                         <g:link controller="species" action="imageSearch" params="[id:result.guid]">
                                                             View images of species within this ${result.rank}
                                                         </g:link>
                                                     </li>
-                                                </g:if>
+                                                </g:if> --%>
 
                                                 <g:if test="${grailsApplication.config.sightings.guidUrl}">
                                                     <li>
