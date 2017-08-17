@@ -74,26 +74,29 @@
                     </a>
                 </h1>
 
-                <div class="page-header__subtitle">
+                <div class="page-header__subtitle row subtitle-row">
                     <g:if test="${commonNameDisplay}">
-                        <div>
+                        <div class="col-md-2">
                             ${raw(commonNameDisplay)}
                         </div>
                     </g:if>
 
                     <g:set var="commonNameDisplay" value="${(tc?.commonNames) ? tc?.commonNames?.opt(0)?.nameString : ''}" />
 
-                    <div>
+                    <div class="col-md-1">
                         ${tc.taxonConcept.rankString}
                     </div>
 
                     <g:if test="${tc.taxonConcept.taxonomicStatus}">
-                        <div class="inline-head taxonomic-status" title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}">
+                        <div
+                            class="inline-head taxonomic-status col-md-1"
+                            title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}"
+                        >
                             <g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" default="${tc.taxonConcept.taxonomicStatus}" />
                         </div>
                     </g:if>
 
-                    <div class="inline-head name-authority">
+                    <div class="inline-head name-authority col-md-2">
                         Name authority:
                         <span class="name-authority">
                             ${tc?.taxonConcept.nameAuthority ?: grailsApplication.config.defaultNameAuthority}
@@ -804,11 +807,11 @@
                             </div>
                         </section>
 
-                        <section class="tab-pane fade" id="classification" role="tabpanel">
+                        <section class="tab-pane" id="classification" role="tabpanel">
                             <g:if test="${tc.taxonConcept.rankID < 7000}">
                                 <div class="pull-right btn-group btn-group-vertical">
-                                    <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&${grailsApplication.config.bieService.queryContext}"
-                                       style="text-align:left;"
+                                    <a
+                                        href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&${grailsApplication.config.bieService.queryContext}"
                                     >
                                         <button class="erk-button erk-button--light">
                                             <span class="fa fa-download"></span>
@@ -817,7 +820,6 @@
                                     </a>
 
                                     <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&fq=rank:species&${grailsApplication.config.bieService.queryContext}"
-                                       style="text-align:left;"
                                     >
                                         <button class="erk-button erk-button--light">
                                             <span class="fa fa-download"></span>
@@ -825,10 +827,13 @@
                                         </button>
                                     </a>
 
-                                    <a href="${createLink(controller: 'species', action: 'search')}?q=${'rkid_' + tc.taxonConcept.rankString + ':' + tc.taxonConcept.guid}"
-                                       style="text-align:left;"
+                                    <a
+                                        href="${createLink(controller: 'species', action: 'search')}?q=${'rkid_' + tc.taxonConcept.rankString + ':' + tc.taxonConcept.guid}"
                                     >
-                                        Search for child taxa of ${tc.taxonConcept.nameString}
+                                        <button class="erk-button erk-button--light">
+                                            <span class="fa fa-search"></span>
+                                            Search for child taxa of ${tc.taxonConcept.nameString}
+                                        </button>
                                     </a>
                                 </div>
                             </g:if>

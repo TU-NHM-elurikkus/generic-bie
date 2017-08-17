@@ -573,3 +573,17 @@ a.nav-link.active {
 .modal-header {
     display: none;
 }
+
+.subtitle-row {
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+
+.btn-group a {
+    width: 100%;
+}
+
+.btn-group a button {
+    width: 100%;
+    text-align: left;
+}
