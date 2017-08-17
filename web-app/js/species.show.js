@@ -436,7 +436,7 @@ function loadGalleries() {
     loadGalleryType('type', 0)
     loadGalleryType('specimen', 0)
     loadGalleryType('other', 0)
-    loadGalleryType('uncertain',0)
+    loadGalleryType('uncertain', 0)
 }
 
 var entityMap = {
@@ -625,8 +625,9 @@ function loadGalleryType(category, start) {
             if (data.totalRecords > (start + pageSize)) {
                 // add new 'load more images' button if required
                 var spinnerLink = $('img#gallerySpinner').attr('src');
+                btnLabel = 'Load more photos';  // ToDo: translation key == show.gallery.loadMore
                 var btn = '<div class="loadMore ' + category + '"><br><button type="button" class="erk-button erk-button--light" onCLick="loadGalleryType(\'' + category + '\','
-                    + (start + pageSize)  + ');">Load more images <img src="' + spinnerLink + '" class="hidden-node"/></button></div>';
+                    + (start + pageSize) + ');">' + btnLabel + ' <img src="' + spinnerLink + '" class="hidden-node"/></button></div>';
                 $categoryTmpl.find('.taxon-gallery').append(btn);
             }
         }
@@ -845,21 +846,19 @@ function loadExpertDistroMap() {
     })
 }
 
-function expandImageGallery(btn) {
-    if(!$(btn).hasClass('.expand-image-gallery')){
-        $(btn).parent().find('.collapse-image-gallery').removeClass('btn-primary');
+function toggleImageGallery(btn) {
+    if($(btn).val() == 1) {
+        $(btn).parent().find('.toggle-image-gallery').removeClass('btn-primary');
         $(btn).addClass('btn-primary');
-
-        $(btn).parents('.image-section').find('.taxon-gallery').slideDown(400)
-    }
-}
-
-function collapseImageGallery(btn) {
-    if(!$(btn).hasClass('.collapse-image-gallery')){
-        $(btn).parent().find('.expand-image-gallery').removeClass('btn-primary');
-        $(btn).addClass('btn-primary');
-
         $(btn).parents('.image-section').find('.taxon-gallery').slideUp(400)
+        $(btn).val(0);
+        $(btn).text("Show gallery");  // ToDo: translation key == show.gallery.showGallery
+    } else {
+        $(btn).parent().find('.toggle-image-gallery').removeClass('btn-primary');
+        $(btn).addClass('btn-primary');
+        $(btn).parents('.image-section').find('.taxon-gallery').slideDown(400);
+        $(btn).val(1);
+        $(btn).text("Hide gallery");  // ToDo: translation key == show.gallery.hideGallery
     }
 }
 

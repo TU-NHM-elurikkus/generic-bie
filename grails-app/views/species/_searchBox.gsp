@@ -5,7 +5,7 @@
             type="text"
             name="q"
             value="${request.query == "*:*" ? '' : request.query}"
-            placeholder="Search the Atlas"
+            placeholder="${message(code: 'searchBox.btn.placeholder')}"
             autocomplete="off"
             autofocus
             onfocus="this.value = this.value;"
@@ -13,7 +13,7 @@
         />
 
         <button type="submit" class="erk-button erk-button--dark input-plus__addon">
-            Search
+            <g:message code="general.btn.search" />
         </button>
     </div>
 </form>

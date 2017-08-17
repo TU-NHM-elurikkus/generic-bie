@@ -1,18 +1,3 @@
-<%--
-  - Copyright (C) 2012 Atlas of Living Australia
-  - All Rights Reserved.
-  -
-  - The contents of this file are subject to the Mozilla Public
-  - License Version 1.1 (the "License"); you may not use this file
-  - except in compliance with the License. You may obtain a copy of
-  - the License at http://www.mozilla.org/MPL/
-  -
-  - Software distributed under the License is distributed on an "AS
-  - IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
-  - implied. See the License for the specific language governing
-  - rights and limitations under the License.
---%>
-
 <%@ page import="au.org.ala.bie.BieTagLib" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -22,8 +7,9 @@
 <html>
     <head>
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
+        <g:set var="searchQuery" value="${!searchResults.queryTitle || searchResults.queryTitle == '*:*' ? message(code: 'search.query.allRecords') : searchResults.queryTitle}" />
         <title>
-            ${query} | Search
+            ${searchQuery} | <g:message code="search.head.title" />
         </title>
         <r:require modules="search" />
         <r:script disposition='head'>
@@ -46,37 +32,22 @@
         <div id="main-content">
             <div id="listHeader" class="page-header">
                 <h1 class="page-header__title">
-                    Search for Taxa
+                    <g:message code="index.body.title" />
                 </h1>
 
                 <div class="page-header__subtitle">
-                    Search for taxa in eElurikkus
+                    <g:message code="search.body.subTitle" />
                 </div>
 
                 <div class="page-header-links">
-                    <div id="related-searches" class="related-searches">
-
-                    </div>
+                    <div id="related-searches" class="related-searches"></div>
                 </div>
             </div>
 
             <section class="search-section">
                 <g:render template="searchBox" />
-
                 <p>
-                    Search for
-
-                    <strong>
-                        ${searchResults.queryTitle == "*:*" ? 'everything' : searchResults.queryTitle}
-                    </strong>
-
-                    returned
-
-                    <strong>
-                        <g:formatNumber number="${searchResults.totalRecords}" />
-                    </strong>
-
-                    results
+                    <g:message code="search.results.overview" args="${[searchQuery, formatNumber(number: searchResults.totalRecords)] }" />
                 </p>
 
                 <g:if test="${facetMap}">
@@ -91,7 +62,7 @@
                     <div class="col-md-3">
                         <div class="card card-block filters-container">
                             <h2 class="card-title">
-                                Refine results
+                                <g:message code="search.facets.refine" />
                             </h2>
 
                             <div id="refine-options">
@@ -120,30 +91,25 @@
                                             </h4>
 
                                             <ul class="list-unstyled">
-                                                <g:set var="lastElement" value="${facetResult.fieldResult?.get(facetResult.fieldResult.length()-1)}" />
+                                                <g:set var="lastElement" value="${facetResult.fieldResult?.get(facetResult.fieldResult.length() - 1)}" />
 
                                                 <g:if test="${lastElement.label == 'before'}">
                                                     <li>
                                                         <g:set var="firstYear" value="${facetResult.fieldResult?.opt(0)?.label.substring(0, 4)}" />
                                                         <a href="?${queryParam}${appendQueryParam}&fq=${facetResult.fieldName}:[* TO ${facetResult.fieldResult.opt(0)?.label}]">
-                                                            Before ${firstYear}
+                                                            <g:message code="search.facets.beforeYear" args="${[firstYear]}" />
                                                         </a>
                                                         (<g:formatNumber number="${lastElement.count}" />)
                                                     </li>
                                                 </g:if>
 
                                                 <g:each var="fieldResult" in="${facetResult.fieldResult}" status="vs">
-                                                    <g:if test="${vs == 5}">
-                                                        </ul>
-                                                        <ul class="list-unstyled">  <%-- WTF --%>
-                                                    </g:if>
-
                                                     <g:set var="dateRangeTo">
                                                         <g:if test="${vs == lastElement}">
                                                             *
                                                         </g:if>
                                                         <g:else>
-                                                            ${facetResult.fieldResult[vs+1]?.label}
+                                                            ${facetResult.fieldResult[vs + 1]?.label}
                                                         </g:else>
                                                     </g:set>
 
@@ -177,7 +143,13 @@
 
                                             <g:if test="${facetResult.fieldResult.size() > 5}">
                                                 <a class="expand-options" href="javascript:void(0)">
-                                                    More
+                                                    <%-- Sounds good, doesn't work...
+                                                    ToDo: The point of this part is to show maximum of 5 result per
+                                                    facet and 'show more' button after that which, when clicked, shows
+                                                    others as well. Not sure if it is needed functionality, but
+                                                    currently the link-button does nothing
+                                                    --%>
+                                                    <g:message code="search.facets.showMore" />
                                                 </a>
                                             </g:if>
                                         </div>
@@ -197,7 +169,7 @@
                                     <a class="download-button" href="${downloadUrl}" title="Download a list of taxa for your search">
                                         <button class="erk-button erk-button--light">
                                             <span class="fa fa-download"></span>
-                                            Download
+                                            <g:message code="general.btn.download" />
                                         </button>
                                     </a>
                                 </g:if>
@@ -205,35 +177,45 @@
                                 <form class="form-inline float-right">
                                     <div class="form-group">
                                         <label for="per-page">
-                                            Results per page
+                                            <g:message code="search.controls.pageSize" />
                                         </label>
                                         <g:set var="pageSize" value="${params.rows ? params.rows : 25}" />
-                                        <g:select id="per-page" name="per-page" value="${pageSize}" from="${[10,25,50,100]}" />
+                                        <g:select
+                                            id="per-page"
+                                            name="per-page"
+                                            value="${pageSize}"
+                                            from="${[10, 25, 50, 100]}"
+                                        />
                                     </div>
 
                                     <div class="form-group">
                                         <label for="sort-by">
-                                            Sort by
+                                            <g:message code="search.controls.sortBy.label" />
                                         </label>
 
-                                        <g:set var="sortFields" value="${['score', 'scientificName', 'commonNameSingle', 'rank']}" />
-                                        <g:set var="sortFieldLabels" value="${['Best match', 'Scientific name', 'Common name', 'Taxon rank']}" />
-
-                                        <g:select id="sort-by" name="sort-by" value="${params.sortField}"
-                                            keys="${sortFields}"
-                                            from="${sortFieldLabels}"
+                                        <g:select
+                                            id="sort-by"
+                                            name="sort-by"
+                                            value="${params.sortField}"
+                                            from="${['score', 'scientificName', 'commonNameSingle', 'rank']}"
+                                            optionValue="${{opt -> message(code: "search.controls.sortBy.${opt}")}}"
                                         />
+
                                     </div>
 
                                     <div class="form-group">
                                         <label for="sort-order">
-                                            Sort order
+                                            <g:message code="search.controls.sortOrder.label" />
                                         </label>
 
-                                        <g:select id="sort-order" name="sort-order" value="${params.dir}"
-                                            keys="${['asc', 'desc']}"
-                                            from="${['Ascending', 'Descending']}"
-                                        />
+                                        <g:select
+                                            id="sort-order"
+                                            name="sort-order"
+                                            value="${params.dir}"
+                                            from="${['asc', 'desc']}"
+                                            optionValue="${{opt -> message(code: "search.controls.sortOrder.${opt}")}}"
+                                        >
+                                        </g:select>
                                     </div>
                                 </form>
                             </div>
@@ -330,7 +312,7 @@
 
                                             <p>
                                                 <span>
-                                                    ${result?.description &&  result?.description != result?.name ?  result?.description : ""}
+                                                    ${result?.description && result?.description != result?.name ? result?.description : ""}
                                                 </span>
                                             </p>
                                         </g:elseif>
@@ -363,7 +345,7 @@
                                             <p>
                                                 <g:if test="${result.dataProviderName}">
                                                     <strong>
-                                                        Source: ${result.dataProviderName}
+                                                        <g:message code="search.resultList.field.source" />: ${result.dataProviderName}
                                                     </strong>
                                                 </g:if>
                                             </p>
@@ -453,7 +435,7 @@
                                                 <g:if test="${result.rankID < 7000}">
                                                     <li>
                                                         <g:link controller="species" action="imageSearch" params="[id:result.guid]">
-                                                            View images of species within this ${result.rank}
+                                                            <g:message code="search.resultList.field.rank.filter" args="${[result.rank]}" />
                                                         </g:link>
                                                     </li>
                                                 </g:if>
@@ -461,7 +443,7 @@
                                                 <g:if test="${grailsApplication.config.sightings.guidUrl}">
                                                     <li>
                                                         <a href="${grailsApplication.config.sightings.guidUrl}${result.guid}">
-                                                            Record a sighting/share a photo
+                                                            <g:message code="search.resultList.field.recordNew" />
                                                         </a>
                                                     </li>
                                                 </g:if>
@@ -469,7 +451,7 @@
                                                 <g:if test="${grailsApplication.config.occurrenceCounts.enabled.toBoolean() && result?.occurrenceCount?:0 > 0}">
                                                     <li>
                                                         <a href="${biocacheUrl}/occurrences/search?q=lsid:${result.guid}">
-                                                            Occurrences:
+                                                            <g:message code="search.resultList.field.occurrenceCount" />:
                                                             <g:formatNumber number="${result.occurrenceCount}" />
                                                         </a>
                                                     </li>
@@ -481,10 +463,13 @@
                             </ol>
 
                             <div>
-                                <tb:paginate
-                                    total="${searchResults?.totalRecords}"
+                                <g:paginate
                                     action="search"
-                                    params="${[q: params.q, fq: params.fq, dir: params.dir]}"
+                                    omitLast="true"
+                                    params="${[q: params.q, fq: params.fq, sortField: params.sortField, dir: params.dir, rows: params.rows ? params.rows : 25]}"
+                                    total="${searchResults?.totalRecords}"
+                                    next="${message(code: 'search.controls.paginate.next')}"
+                                    prev="${message(code: 'search.controls.paginate.prev')}&nbsp;"
                                 />
                             </div>
                         </div>
@@ -502,7 +487,7 @@
                             <g:message code="idxtype.LOCALITY" /> :
 
                             <a class="exploreYourAreaLink" href="">
-                                Address here
+                                <g:message code="search.areaSearch.label" />
                             </a>
                         </h4>
                     </li>
@@ -513,22 +498,20 @@
         <g:if test="${searchResults.totalRecords == 0}">
             <script>
                 $(function() {
-                    console.log(SEARCH_CONF.serverName + "/geo?q=" + SEARCH_CONF.query + ' ' + SEARCH_CONF.geocodeLookupQuerySuffix);
-
-                    $.get( SEARCH_CONF.serverName + "/geo?q=" + SEARCH_CONF.query  + ' ' + SEARCH_CONF.geocodeLookupQuerySuffix, function( searchResults ) {
-                        for(var i=0; i< searchResults.length; i++) {
+                    $.get(SEARCH_CONF.serverName + "/geo?q=" + SEARCH_CONF.query  + ' ' + SEARCH_CONF.geocodeLookupQuerySuffix, function(searchResults) {
+                        for(var i=0; i < searchResults.length; i++) {
                             var $results = $('#result-template').clone(true);
 
                             $results.attr('id', 'results-lists');
                             $results.removeClass('hidden-node');
-                            console.log(searchResults)
 
                             if(searchResults.length > 0) {
                                 $results.find('.exploreYourAreaLink').html(searchResults[i].name);
-                                $results.find('.exploreYourAreaLink').attr('href', '${grailsApplication.config.biocache.baseURL}/explore/your-area#' +
-                                        searchResults[0].latitude  +
-                                        '|' +  searchResults[0].longitude +
-                                        '|12|ALL_SPECIES'
+                                $results.find('.exploreYourAreaLink').attr('href',
+                                    '${grailsApplication.config.biocache.baseURL}/explore/your-area#' +
+                                    searchResults[0].latitude +
+                                    '|' + searchResults[0].longitude +
+                                    '|12|ALL_SPECIES'
                                 );
                                 $('#search-results').append($results.html());
                             }

@@ -1,18 +1,3 @@
-<%--
-  - Copyright (C) 2014 Atlas of Living Australia
-  - All Rights Reserved.
-  -
-  - The contents of this file are subject to the Mozilla Public
-  - License Version 1.1 (the "License"); you may not use this file
-  - except in compliance with the License. You may obtain a copy of
-  - the License at http://www.mozilla.org/MPL/
-  -
-  - Software distributed under the License is distributed on an "AS
-  - IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
-  - implied. See the License for the specific language governing
-  - rights and limitations under the License.
---%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <g:set var="alaUrl" value="${grailsApplication.config.ala.baseURL}" />
@@ -23,7 +8,6 @@
 <g:set var="citizenSciUrl" value="${grailsApplication.config.sightings.guidUrl}" />
 <g:set var="alertsUrl" value="${grailsApplication.config.alerts.url}" />
 <g:set var="guid" value="${tc?.previousGuid ?: tc?.taxonConcept?.guid ?: ''}" />
-<g:set var="jsonLink" value="${grailsApplication.config.bie.index.url}/species/${tc?.taxonConcept?.guid}.json" />
 
 <g:set var="sciNameFormatted">
     <bie:formatSciName
@@ -32,7 +16,8 @@
         nameComplete="${tc?.taxonConcept?.nameComplete}"
         name="${tc?.taxonConcept?.name}"
         taxonomicStatus="${tc?.taxonConcept?.taxonomicStatus}"
-        acceptedName="${tc?.taxonConcept?.acceptedConceptName}" />
+        acceptedName="${tc?.taxonConcept?.acceptedConceptName}"
+    />
 </g:set>
 
 <g:set var="synonymsQuery">
@@ -65,13 +50,6 @@
             <header class="page-header">
                 <h1 class="page-header__title">
                     ${raw(sciNameFormatted)}
-
-                    <a href="${jsonLink}" target="data"
-                       title="${message(code:"show.view.json.title")}"
-                       class="btn btn-sm btn-default float-right"
-                       data-toggle="tooltip" data-placement="bottom">
-                       <g:message code="show.json" />
-                    </a>
                 </h1>
 
                 <div class="page-header__subtitle">
@@ -88,13 +66,16 @@
                     </div>
 
                     <g:if test="${tc.taxonConcept.taxonomicStatus}">
-                        <div class="inline-head taxonomic-status" title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}">
+                        <div
+                            class="inline-head taxonomic-status"
+                            title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}"
+                        >
                             <g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" default="${tc.taxonConcept.taxonomicStatus}" />
                         </div>
                     </g:if>
 
                     <div class="inline-head name-authority">
-                        Name authority:
+                        <g:message code="show.details.nameAuthority" />:
                         <span class="name-authority">
                             ${tc?.taxonConcept.nameAuthority ?: grailsApplication.config.defaultNameAuthority}
                         </span>
@@ -103,7 +84,7 @@
 
                 <div class="page-header-links">
                     <a href="/bie-hub" class="page-header-links__link">
-                        Search
+                        <g:message code="search.head.title" />
                     </a>
 
                     <g:if test="${taxonHierarchy && taxonHierarchy.size() > 1}">
@@ -128,49 +109,49 @@
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a href="#overview" data-toggle="tab" class="nav-link active" role="tab">
-                                Overview
+                                <g:message code="show.navTab.overview.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#gallery" data-toggle="tab" class="nav-link" role="tab">
-                                Gallery
+                                <g:message code="show.navTab.gallery.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#names" data-toggle="tab" class="nav-link" role="tab">
-                                Names
+                                <g:message code="show.navTab.names.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#classification" data-toggle="tab" class="nav-link" role="tab">
-                                Classification
+                                <g:message code="show.navTab.classification.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#records" data-toggle="tab" class="nav-link" role="tab">
-                                Records
+                                <g:message code="show.navTab.records.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#literature" data-toggle="tab" class="nav-link" role="tab">
-                                Literature
+                                <g:message code="show.navTab.literature.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#sequences" data-toggle="tab" class="nav-link" role="tab">
-                                Sequences
+                                <g:message code="show.navTab.sequences.title" />
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="#data-partners" data-toggle="tab" class="nav-link" role="tab">
-                                Datasets
+                                <g:message code="show.datasets.title" />
                             </a>
                         </li>
                     </ul>
@@ -181,13 +162,15 @@
                                 <div class="col-md-5">
                                     <div class="taxon-summary-gallery">
                                         <div class="main-img hidden-node">
-                                            <a class="lightbox-img"
-                                               data-toggle="lightbox"
-                                               data-gallery="taxon-summary-gallery"
-                                               data-parent=".taxon-summary-gallery"
-                                               data-title=""
-                                               data-footer=""
-                                               href="">
+                                            <a
+                                                class="lightbox-img"
+                                                data-toggle="lightbox"
+                                                data-gallery="taxon-summary-gallery"
+                                                data-parent=".taxon-summary-gallery"
+                                                data-title=""
+                                                data-footer=""
+                                                href=""
+                                            >
                                                 <img class="mainOverviewImage img-responsive" src="" />
                                             </a>
 
@@ -198,7 +181,11 @@
                                             <div id="overview-thumbs"></div>
 
                                             <div id="more-photo-thumb-link" class="taxon-summary-thumb" style="">
-                                                <a class="more-photos tab-link" href="#gallery" title="More Photos">
+                                                <a
+                                                    class="more-photos tab-link"
+                                                    href="#gallery"
+                                                    title="${message(code: 'show.gallery.showMore')}"
+                                                >
                                                    <span>
                                                        +
                                                    </span>
@@ -211,7 +198,7 @@
                                         <div class="card">
                                             <div class="card-header">
                                                 <h3 class="card-title">
-                                                    Conservation Status
+                                                    <g:message code="show.overview.conservationStatus" />
                                                 </h3>
                                             </div>
 
@@ -249,7 +236,7 @@
                                     <div class="card bie-card">
                                         <div class="card-header">
                                             <h3 class="card-title">
-                                                Online Resources
+                                                <g:message code="show.overview.onlineResources" />
                                             </h3>
                                         </div>
 
@@ -262,23 +249,32 @@
                                 <div class="col-md-7">
                                     <div id="expertDistroDiv" style="display:none;margin-bottom: 20px;">
                                         <h3>
-                                            Compiled distribution map
+                                            <g:message code="show.map.distroMap.title" />
                                         </h3>
 
-                                        <img id="distroMapImage" src="${resource(dir: 'images', file: 'noImage.jpg')}" class="distroImg" style="width:316px;" alt="occurrence map" onerror="this.style.display='none'" />
+                                        <img
+                                            id="distroMapImage"
+                                            src="${resource(dir: 'images', file: 'noImage.jpg')}"
+                                            class="distroImg"
+                                            style="width:316px;"
+                                            alt="occurrence map"
+                                            onerror="this.style.display='none'"
+                                        />
 
                                         <p class="mapAttribution">
-                                            Compiled distribution map provided by
+                                            <g:message code="show.map.distroMap.providedBy" />
 
                                             <span id="dataResource">
-                                                [data resource not known]
+                                                [<g:message code="show.map.distroMap.dataResource.unknown" />]
                                             </span>
                                         </p>
                                     </div>
 
                                     <div class="taxon-map">
                                         <h3>
-                                            Occurrence records map (<span class="occurrenceRecordCount">0</span> records)
+                                            <g:message code="show.map.occurrencesMap.title" />
+                                            (<span class="occurrenceRecordCount">0</span>
+                                            <g:message code="show.map.occurrencesMap.nrRecords" />)
                                         </h3>
 
                                         <div id="leafletMap"></div>
@@ -299,20 +295,20 @@
                                             <g:if test="${grailsApplication.config.map.simpleMapButton.toBoolean()}">
                                                 <%-- XXX --%>
                                                 <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab-map"
-                                                   title="${g.message(code:'overview.map.button.records.simplemap.title', default:'View map')}"
+                                                   title="${message(code: 'show.map.btn.simpleMap.title')}"
                                                    role="button"
                                                 >
                                                     <button class="erk-button erk-button--light">
-                                                        <g:message code="overview.map.button.records.simplemap" default="View map" />
+                                                        <g:message code="show.map.btn.simpleMap.label" />
                                                     </button>
                                                 </a>
                                             </g:if>
 
                                             <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab-map"
-                                               title="View map"
+                                               title="${message(code: 'show.map.btn.viewMap')}"
                                                role="button"
                                             >
-                                                View map
+                                                <g:message code="show.map.btn.viewMap" />
                                             </a>
                                         </div>
                                     </div>
@@ -320,7 +316,7 @@
                                     <div class="card bie-card panel-data-providers bie-vertical-space">
                                         <div class="card-header">
                                             <h3 class="card-title">
-                                                Datasets
+                                                <g:message code="show.datasets.title" />
                                             </h3>
                                         </div>
 
@@ -329,23 +325,22 @@
                                                 <strong>
                                                     <span class="datasetCount"></span>
                                                 </strong>
-
-                                                &nbsp;datasets have provided data to the ${grailsApplication.config.skin.orgNameShort} for this ${tc.taxonConcept.rankString}.
+                                                <g:message
+                                                    code="show.overview.datasets.summary"
+                                                    args="${[grailsApplication.config.skin.orgNameShort, tc.taxonConcept.rankString]}"
+                                                />
                                             </p>
 
                                             <p>
                                                 <a class="tab-link" href="#data-partners">
-                                                    Browse the list of datasets
+                                                    <g:message code="show.datasets.desc.01" />
                                                 </a>
-
-                                                &nbsp;and find organisations you can join if you are interested in participating in a survey for
-
+                                                <g:message code="show.datasets.desc.02" />
                                                 <g:if test="${tc.taxonConcept?.rankID > 6000}">
-                                                    species like ${raw(sciNameFormatted)}
+                                                    <g:message code="show.datasets.desc.03" args="${[raw(sciNameFormatted)]}" />
                                                 </g:if>
-
                                                 <g:else>
-                                                    species of ${raw(sciNameFormatted)}.
+                                                    <g:message code="show.datasets.desc.04" args="${[raw(sciNameFormatted)]}" />
                                                 </g:else>
                                             </p>
                                         </div>
@@ -357,19 +352,19 @@
                         </section>
 
                         <section class="tab-pane" id="gallery" role="tabpanel">
-                            <g:each in="${["type","specimen","other","uncertain"]}" var="cat">
+                            <g:each in="${["type", "specimen", "other", "uncertain"]}" var="cat">
                                 <div id="cat_${cat}" class="hidden-node image-section">
                                     <h2>
                                         <g:message code="images.heading.${cat}" default="${cat}" />
-                                        &nbsp;
 
                                         <div class="btn-group btn-group-sm" role="group">
-                                            <button type="button" class="erk-button erk-button--light btn-default collapse-image-gallery" onclick="collapseImageGallery(this)">
-                                                Collapse
-                                            </button>
-
-                                            <button type="button" class="erk-button erk-button--light  btn-default btn-primary expand-image-gallery" onclick="expandImageGallery(this)">
-                                                Expand
+                                            <button
+                                                type="button"
+                                                class="erk-button erk-button--light btn-default toggle-image-gallery"
+                                                onclick="toggleImageGallery(this)"
+                                                value=1
+                                            >
+                                                <g:message code="show.gallery.hideGallery" />
                                             </button>
                                         </div>
                                     </h2>
@@ -380,17 +375,23 @@
 
                             <div id="cat_nonavailable">
                                 <h2>
-                                    No images available for this taxon
+                                    <g:message code="show.gallery.noImages" />
                                 </h2>
 
                                 <p>
-                                    If you have images for this taxon that you would like to share
-                                    with ${raw(grailsApplication.config.skin.orgNameLong)},
-                                    please upload using the upload tools.
+                                    <g:message
+                                        code="show.gallery.upload.desc"
+                                        args="${[raw(grailsApplication.config.skin.orgNameLong)]}"
+                                    />
                                 </p>
                             </div>
 
-                            <img src="${resource(dir: 'images', file: 'spinner.gif', plugin: 'biePlugin')}" id="gallerySpinner" class="hidden-node" alt="spinner icon" />
+                            <img
+                                id="gallerySpinner"
+                                src="${resource(dir: 'images', file: 'spinner.gif', plugin: 'biePlugin')}"
+                                class="hidden-node"
+                                alt="spinner icon"
+                            />
                         </section>
 
                         <section class="tab-pane" id="names" rol="tabpanel">
