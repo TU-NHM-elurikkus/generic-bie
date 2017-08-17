@@ -91,21 +91,22 @@ function addAlerts() {
 
 function loadMap() {
 
-    if(SHOW_CONF.map != null){
+    if(SHOW_CONF.map !== null) {
         return;
     }
 
-    //add an occurrence layer for this taxon
+    // add an occurrence layer for this taxon
     var taxonLayer = L.tileLayer.wms(SHOW_CONF.biocacheServiceUrl + '/mapping/wms/reflect?q=lsid:' +
         SHOW_CONF.guid + '&qc=' + SHOW_CONF.mapQueryContext, {
-        layers: 'ALA:occurrences',
-        format: 'image/png',
-        transparent: true,
-        attribution: SHOW_CONF.mapAttribution,
-        bgcolor: '0x000000',
-        outline: SHOW_CONF.mapOutline,
-        ENV: SHOW_CONF.mapEnvOptions
-    });
+            layers: 'ALA:occurrences',
+            format: 'image/png',
+            transparent: true,
+            attribution: SHOW_CONF.mapAttribution,
+            bgcolor: '0x000000',
+            outline: SHOW_CONF.mapOutline,
+            ENV: SHOW_CONF.mapEnvOptions
+        }
+    );
 
     var speciesLayers = new L.LayerGroup();
     taxonLayer.addTo(speciesLayers);
@@ -137,7 +138,6 @@ function loadMap() {
 
     L.control.layers(baseLayers, overlays).addTo(SHOW_CONF.map);
 
-    //SHOW_CONF.map.on('click', onMapClick);
     SHOW_CONF.map.invalidateSize(false);
 
     updateOccurrenceCount();
@@ -148,10 +148,10 @@ function loadMap() {
  * Update the total records count for the occurrence map in heading text
  */
 function updateOccurrenceCount() {
-    $.getJSON(SHOW_CONF.biocacheServiceUrl + '/occurrences/taxaCount?guids=' + SHOW_CONF.guid + '&fq=' + SHOW_CONF.mapQueryContext, function( data ) {
-        if (data) {
-            $.each( data, function( key, value ) {
-                if (value && typeof value == 'number') {
+    $.getJSON(SHOW_CONF.biocacheServiceUrl + '/occurrences/taxaCount?guids=' + SHOW_CONF.guid + '&fq=' + SHOW_CONF.mapQueryContext, function(data) {
+        if(data) {
+            $.each(data, function(key, value) {
+                if(value && typeof value === 'number') {
                     $('.occurrenceRecordCount').html(value.toLocaleString());
                     return false;
                 }
@@ -163,18 +163,15 @@ function updateOccurrenceCount() {
 function fitMapToBounds() {
     var jsonUrl = SHOW_CONF.biocacheServiceUrl + '/mapping/bounds.json?q=lsid:' + SHOW_CONF.guid + '&callback=?';
     $.getJSON(jsonUrl, function(data) {
-        if (data.length == 4) {
-            //console.log('data', data);
-            var sw = L.latLng(data[1],data[0]);
-            var ne = L.latLng(data[3],data[2]);
-            //console.log('sw', sw.toString());
+        if(data.length === 4) {
+            var sw = L.latLng(data[1], data[0]);
+            var ne = L.latLng(data[3], data[2]);
             var dataBounds = L.latLngBounds(sw, ne);
-            //var centre = dataBounds.getCenter();
             var mapBounds = SHOW_CONF.map.getBounds();
 
-            if (!mapBounds.contains(dataBounds) && !mapBounds.intersects(dataBounds)) {
+            if(!mapBounds.contains(dataBounds) && !mapBounds.intersects(dataBounds)) {
                 SHOW_CONF.map.fitBounds(dataBounds);
-                if (SHOW_CONF.map.getZoom() > 3) {
+                if(SHOW_CONF.map.getZoom() > 3) {
                     SHOW_CONF.map.setZoom(3);
                 }
             }
@@ -184,69 +181,44 @@ function fitMapToBounds() {
     });
 }
 
-//function onMapClick(e) {
-//    $.ajax({
-//        url: SHOW_CONF.biocacheServiceUrl + '/occurrences/info',
-//        jsonp: 'callback',
-//        dataType: 'jsonp',
-//        data: {
-//            q: SHOW_CONF.scientificName,
-//            zoom: '6',
-//            lat: e.latlng.lat,
-//            lon: e.latlng.lng,
-//            radius: 20,
-//            format: 'json'
-//        },
-//        success: function (response) {
-//            var popup = L.popup()
-//                .setLatLng(e.latlng)
-//                .setContent('Occurrences at this point: ' + response.count)
-//                .openOn(SHOW_CONF.map);
-//        }
-//    });
-//}
+function loadDataProviders() {
 
-function loadDataProviders(){
-
-    var url = SHOW_CONF.biocacheServiceUrl  +
+    var url = SHOW_CONF.biocacheServiceUrl +
         '/occurrences/search.json?q=lsid:' +
         SHOW_CONF.guid +
         '&pageSize=0&flimit=-1';
 
-    if(SHOW_CONF.mapQueryContext){
-       url = url + '&fq=' + SHOW_CONF.mapQueryContext;
+    if(SHOW_CONF.mapQueryContext) {
+        url = url + '&fq=' + SHOW_CONF.mapQueryContext;
     }
 
-    url = url + '&facet=on&facets=data_resource_uid&callback=?';
+    url += '&facet=on&facets=data_resource_uid&callback=?';
 
-    var uiUrl = SHOW_CONF.biocacheUrl  +
+    var uiUrl = SHOW_CONF.biocacheUrl +
         '/occurrences/search?q=lsid:' +
         SHOW_CONF.guid;
 
-    $.getJSON(url, function(data){
+    $.getJSON(url, function(data) {
 
         if(data.totalRecords > 0) {
             $('.datasetCount').html(data.facetResults[0].fieldResult.length);
-            $.each(data.facetResults[0].fieldResult, function (idx, facetValue) {
-                //console.log(data.facetResults[0].fieldResult);
-                if(facetValue.count > 0){
+            $.each(data.facetResults[0].fieldResult, function(idx, facetValue) {
+                if(facetValue.count > 0) {
 
                     var uid = facetValue.fq.replace(/data_resource_uid:/, '').replace(/[\\"]*/, '').replace(/[\\"]/, '');
                     var dataResourceUrl =  SHOW_CONF.collectoryUrl + '/public/show/' + uid;
                     var tableRow = '<tr><td><a href="' + dataResourceUrl + '"><span class="data-provider-name">' + facetValue.label + '</span></a>';
 
-                    //console.log(uid);
                     $.getJSON(SHOW_CONF.collectoryUrl + '/ws/dataResource/' + uid, function(collectoryData) {
 
-
-                        if(collectoryData.provider){
+                        if(collectoryData.provider) {
                             tableRow += '<br/><small><a href="' + SHOW_CONF.collectoryUrl + '/public/show/' + uid + '">' + collectoryData.provider.name + '</a></small>';
                         }
                         tableRow += '</td>';
                         tableRow += '<td>' + collectoryData.licenseType + '</td>';
 
                         var queryUrl = uiUrl + '&fq=' + facetValue.fq;
-                        tableRow += '</td><td><a href="' + queryUrl + '"><span class="record-count">' + facetValue.count + '</span></a></td>'
+                        tableRow += '</td><td><a href="' + queryUrl + '"><span class="record-count">' + facetValue.count + '</span></a></td>';
                         tableRow += '</tr>';
                         $('#data-providers-list tbody').append(tableRow);
                     });
@@ -258,13 +230,13 @@ function loadDataProviders(){
 
 function loadIndigenousData() {
 
-    if(!SHOW_CONF.profileServiceUrl || SHOW_CONF.profileServiceUrl == ''){
+    if(!SHOW_CONF.profileServiceUrl || SHOW_CONF.profileServiceUrl === '') {
         return;
     }
 
     var url = SHOW_CONF.profileServiceUrl + '/api/v1/profiles?summary=true&tags=IEK&guids=' + SHOW_CONF.guid;
-    $.getJSON(url, function (data) {
-        if (data.total > 0) {
+    $.getJSON(url, function(data) {
+        if(data.total > 0) {
             $('#indigenous-info-tab').parent().removeClass('hidden-node');
 
             $.each(data.profiles, function(index, profile) {
@@ -273,105 +245,99 @@ function loadIndigenousData() {
                 panel.attr('id', profile.id);
 
                 var logo = profile.collection.logo || SHOW_CONF.noImage100Url;
-                panel.find('.collection-logo').append("<img src='" + logo + "' alt='" + profile.collection.title + " logo'>");
-                panel.find(".collection-logo-caption").append(profile.collection.title);
+                panel.find('.collection-logo').append('<img src=\'' + logo + '\' alt=\'' + profile.collection.title + ' logo\'>');
+                panel.find('.collection-logo-caption').append(profile.collection.title);
 
-
-                panel.find(".profile-name").append(profile.name);
-                panel.find(".collection-name").append("(" + profile.collection.title + ")");
-                var otherNames = "";
-                var summary = "";
-                $.each(profile.attributes, function (index, attribute) {
-                    if (attribute.name) {
+                panel.find('.profile-name').append(profile.name);
+                panel.find('.collection-name').append('(' + profile.collection.title + ')');
+                var otherNames = '';
+                var summary = '';
+                $.each(profile.attributes, function(index, attribute) {
+                    if(attribute.name) {
                         otherNames += attribute.text;
-                        if (index < profile.attributes.length - 2) {
-                            otherNames += ", ";
+                        if(index < profile.attributes.length - 2) {
+                            otherNames += ', ';
                         }
                     }
-                    if (attribute.summary) {
+                    if(attribute.summary) {
                         summary = attribute.text;
                     }
                 });
-                panel.find(".other-names").append(otherNames);
-                panel.find(".summary-text").append(summary);
-                panel.find(".profile-link").append("<a href='" + profile.url + "' title='Click to view the whole profile' target='_blank'>View the full profile</a>");
+                panel.find('.other-names').append(otherNames);
+                panel.find('.summary-text').append(summary);
+                panel.find('.profile-link').append('<a href=\'' + profile.url + '\' title=\'Click to view the whole profile\' target=\'_blank\'>View the full profile</a>');
 
                 if(profile.thumbnailUrl) {
-                    panel.find(".main-image").removeClass("hidden-node");
+                    panel.find('.main-image').removeClass('hidden-node');
 
-                    panel.find(".image-embedded").append("<img src='" + profile.thumbnailUrl + "' alt='" + profile.collection.title + " main image'>");
+                    panel.find('.image-embedded').append('<img src=\'' + profile.thumbnailUrl + '\' alt=\'' + profile.collection.title + ' main image\'>');
                 }
 
                 if(profile.mainVideo) {
-                    panel.find(".main-video").removeClass("hidden-node");
-                    panel.find(".video-name").append(profile.mainVideo.name);
-                    panel.find(".video-attribution").append(profile.mainVideo.attribution);
-                    panel.find(".video-license").append(profile.mainVideo.license);
-                    panel.find(".video-embedded").append(profile.mainVideo.embeddedVideo);
+                    panel.find('.main-video').removeClass('hidden-node');
+                    panel.find('.video-name').append(profile.mainVideo.name);
+                    panel.find('.video-attribution').append(profile.mainVideo.attribution);
+                    panel.find('.video-license').append(profile.mainVideo.license);
+                    panel.find('.video-embedded').append(profile.mainVideo.embeddedVideo);
                 }
 
                 if(profile.mainAudio) {
-                    panel.find(".main-audio").removeClass("hidden-node");
-                    panel.find(".audio-name").append(profile.mainAudio.name);
-                    panel.find(".audio-attribution").append(profile.mainAudio.attribution);
-                    panel.find(".audio-license").append(profile.mainAudio.license);
-                    panel.find(".audio-embedded").append(profile.mainAudio.embeddedAudio);
+                    panel.find('.main-audio').removeClass('hidden-node');
+                    panel.find('.audio-name').append(profile.mainAudio.name);
+                    panel.find('.audio-attribution').append(profile.mainAudio.attribution);
+                    panel.find('.audio-license').append(profile.mainAudio.license);
+                    panel.find('.audio-embedded').append(profile.mainAudio.embeddedAudio);
                 }
 
-                panel.appendTo("#indigenous-info");
+                panel.appendTo('#indigenous-info');
             });
         }
     });
 }
 
-function loadExternalSources(){
-    //load EOL content
-    //console.log('####### Loading EOL content - ' + SHOW_CONF.eolUrl);
-    $.ajax({url: SHOW_CONF.eolUrl}).done(function ( data ) {
-        //console.log(data);
-        //clone a description template...
-        if(data.dataObjects){
-            //console.log('Loading EOL content - ' + data.dataObjects.length);
-            $.each(data.dataObjects, function(idx, dataObject){
-                //console.log('Loading EOL content -> ' + dataObject.description);
-                if(dataObject.language == SHOW_CONF.eolLanguage || !dataObject.language){
+function loadExternalSources() {
+    // load EOL content
+    $.ajax({ url: SHOW_CONF.eolUrl }).done(function(data) {
+        // clone a description template...
+        if(data.dataObjects) {
+            $.each(data.dataObjects, function(idx, dataObject) {
+                if(dataObject.language == SHOW_CONF.eolLanguage || !dataObject.language) {
                     var $description = $('#descriptionTemplate').clone();
-                    $description.css({'display':'block'});
+                    $description.css({ 'display': 'block' });
                     $description.attr('id', dataObject.id);
-                    $description.find(".title").html(dataObject.title ?  dataObject.title : 'Description');
+                    $description.find('.title').html(dataObject.title ? dataObject.title : 'Description');
 
-                    var descriptionDom = $.parseHTML( dataObject.description );
+                    var descriptionDom = $.parseHTML(dataObject.description);
                     var body = $(descriptionDom).find('#bodyContent > p:lt(2)').html(); // for really long EOL blocks
 
-                    if (body) {
-                        $description.find(".content").html(body);
+                    if(body) {
+                        $description.find('.content').html(body);
                     } else {
-                        $description.find(".content").html(dataObject.description);
+                        $description.find('.content').html(dataObject.description);
                     }
 
-
-                    if(dataObject.source && dataObject.source.trim().length != 0){
+                    if(dataObject.source && dataObject.source.trim().length !== 0) {
                         var sourceText = dataObject.source;
-                        var sourceHtml = "";
+                        var sourceHtml = '';
 
-                        if (sourceText.match("^http")) {
-                            sourceHtml = "<a href='" + sourceText + "' target='eol'>"  + sourceText + "</a>"
+                        if(sourceText.match('^http')) {
+                            sourceHtml = '<a href=\'' + sourceText + '\' target=\'eol\'>' + sourceText + '</a>'
                         } else {
                             sourceHtml = sourceText;
                         }
 
-                        $description.find(".sourceText").html(sourceHtml);
+                        $description.find('.sourceText').html(sourceHtml);
                     } else {
-                        $description.find(".source").css({'display':'none'});
+                        $description.find('.source').css({ 'display': 'none' });
                     }
-                    if(dataObject.rightsHolder && dataObject.rightsHolder.trim().length != 0){
-                        $description.find(".rightsText").html(dataObject.rightsHolder);
+                    if(dataObject.rightsHolder && dataObject.rightsHolder.trim().length !== 0) {
+                        $description.find('.rightsText').html(dataObject.rightsHolder);
                     } else {
-                        $description.find(".rights").css({'display':'none'});
+                        $description.find('.rights').css({ 'display': 'none' });
                     }
 
-                    $description.find(".providedBy").attr('href', 'http://eol.org/pages/' + data.identifier);
-                    $description.find(".providedBy").html("Encyclopedia of Life");
+                    $description.find('.providedBy').attr('href', 'http://eol.org/pages/' + data.identifier);
+                    $description.find('.providedBy').html('Encyclopedia of Life');
                     $description.appendTo('#descriptiveContent');
                 }
             });
@@ -380,50 +346,49 @@ function loadExternalSources(){
 
     loadPlutoFSequences('sequences-plutof', SHOW_CONF.guid);
 
-    //load sound content
-    $.ajax({url: SHOW_CONF.soundUrl}).done(function ( data ) {
-        if(data.sounds){
-            var soundsDiv = "<div class='panel panel-default '><div class='panel-heading'>";
+    // load sound content
+    $.ajax({ url: SHOW_CONF.soundUrl }).done(function(data) {
+        if(data.sounds) {
+            var soundsDiv = '<div class=\'panel panel-default \'><div class=\'panel-heading\'>';
             soundsDiv += '<h3 class="panel-title">Sounds</h3></div><div class="panel-body">';
             soundsDiv += '<audio src="' + data.sounds[0].alternativeFormats['audio/mpeg'] + '" preload="auto" />';
             audiojs.events.ready(function() {
                 var as = audiojs.createAll();
             });
-            var source = "";
+            var source = '';
 
-            if (data.processed.attribution.collectionName) {
-                var attrUrl = "";
-                var attrUrlPrefix = SHOW_CONF.collectoryUrl + "/public/show/";
-                if (data.raw.attribution.dataResourceUid) {
+            if(data.processed.attribution.collectionName) {
+                var attrUrl = '';
+                var attrUrlPrefix = SHOW_CONF.collectoryUrl + '/public/show/';
+                if(data.raw.attribution.dataResourceUid) {
                     attrUrl = attrUrlPrefix + data.raw.attribution.dataResourceUid;
-                } else if (data.processed.attribution.collectionUid) {
+                } else if(data.processed.attribution.collectionUid) {
                     attrUrl = attrUrlPrefix + data.processed.attribution.collectionUid;
                 }
 
-                if (data.raw.attribution.dataResourceUid == "dr341") {
+                if(data.raw.attribution.dataResourceUid === 'dr341') {
                     // hard-coded copyright as most sounds are from ANWC and are missing attribution data fields
-                    source += "&copy; " + data.processed.attribution.collectionName + " " + data.processed.event.year + "<br>";
+                    source += '&copy; ' + data.processed.attribution.collectionName + ' ' + data.processed.event.year + '<br>';
                 }
 
-                if (attrUrl) {
-                    source += "Source: <a href='" + attrUrl + "' target='biocache'>" + data.processed.attribution.collectionName + "</a>";
+                if(attrUrl) {
+                    source += 'Source: <a href=\'' + attrUrl + '\' target=\'biocache\'>' + data.processed.attribution.collectionName + '</a>';
                 } else {
                     source += data.processed.attribution.collectionName;
                 }
 
-
             } else {
-                source += "Source: " + data.processed.attribution.dataResourceName
+                source += 'Source: ' + data.processed.attribution.dataResourceName;
             }
 
             soundsDiv += '</div><div class="panel-footer audio-player-footer"><p>';
             soundsDiv += source + '<br>';
-            soundsDiv += '<a href="' + SHOW_CONF.biocacheUrl + '/occurrence/'+ data.raw.uuid +'">View more details of this audio</a>';
+            soundsDiv += '<a href="' + SHOW_CONF.biocacheUrl + '/occurrence/' + data.raw.uuid + '">View more details of this audio</a>';
             soundsDiv += '</p></div></div>';
             $('#sounds').append(soundsDiv);
         }
     }).fail(function(jqXHR, textStatus, errorThrown) {
-        console.warn("AUDIO Error", errorThrown, textStatus);
+        console.warn('AUDIO Error', errorThrown, textStatus);
     });
 }
 
@@ -833,34 +798,34 @@ function cancelSearch(msg) {
 }
 
 function loadExpertDistroMap() {
-    var url = SHOW_CONF.layersServiceUrl + "/distribution/map/" + SHOW_CONF.guid + "?callback=?";
-    $.getJSON(url, function(data){
-        if (data.available) {
-            $("#expertDistroDiv img").attr("src", data.url);
-            if (data.dataResourceName && data.dataResourceUrl) {
+    var url = SHOW_CONF.layersServiceUrl + '/distribution/map/' + SHOW_CONF.guid + '?callback=?';
+    $.getJSON(url, function(data) {
+        if(data.available) {
+            $('#expertDistroDiv img').attr('src', data.url);
+            if(data.dataResourceName && data.dataResourceUrl) {
                 var attr = $('<a>').attr('href', data.dataResourceUrl).text(data.dataResourceName)
-                $("#expertDistroDiv #dataResource").html(attr);
+                $('#expertDistroDiv #dataResource').html(attr);
             }
-            $("#expertDistroDiv").show();
+            $('#expertDistroDiv').show();
         }
-    })
+    });
 }
 
 function expandImageGallery(btn) {
-    if(!$(btn).hasClass('.expand-image-gallery')){
+    if(!$(btn).hasClass('.expand-image-gallery')) {
         $(btn).parent().find('.collapse-image-gallery').removeClass('btn-primary');
         $(btn).addClass('btn-primary');
 
-        $(btn).parents('.image-section').find('.taxon-gallery').slideDown(400)
+        $(btn).parents('.image-section').find('.taxon-gallery').slideDown(400);
     }
 }
 
 function collapseImageGallery(btn) {
-    if(!$(btn).hasClass('.collapse-image-gallery')){
+    if(!$(btn).hasClass('.collapse-image-gallery')) {
         $(btn).parent().find('.expand-image-gallery').removeClass('btn-primary');
         $(btn).addClass('btn-primary');
 
-        $(btn).parents('.image-section').find('.taxon-gallery').slideUp(400)
+        $(btn).parents('.image-section').find('.taxon-gallery').slideUp(400);
     }
 }
 
@@ -873,8 +838,8 @@ function loadReferences(containerID, taxonID) {
     var $list = $container.find('.plutof-references__list');
     var $pagination = $container.find('.plutof-references__pagination');
 
-    var endpoint = '/bie-hub/proxy/plutof/taxonoccurrence/referencebased/occurrences/search/'
-    var params  = {
+    var endpoint = '/bie-hub/proxy/plutof/taxonoccurrence/referencebased/occurrences/search/';
+    var params = {
         cn: 47, // Country = Estonia
         taxon_node: taxonID,
         page_size: PAGE_SIZE
@@ -993,11 +958,11 @@ function setPlutoFPagination($pagination, currentPage, pageCount, loadPage) {
     for(var p = 1; p <= pageCount; p++) {
         var $el;
 
-        if(p == currentPage) {
+        if(p === currentPage) {
             $el = $('<span class="plutof-pagination__page plutof-pagination__page--current">' + p + '</span>');
         } else {
             $el = (function(pageNum) {
-                var el = $('<span class="plutof-pagination__page">' + pageNum + '</span>')
+                var el = $('<span class="plutof-pagination__page">' + pageNum + '</span>');
 
                 el.on('click', function() {
                     loadPage(pageNum);
@@ -1020,14 +985,14 @@ function loadPlutoFSearchResults(endpoint, params, updateCount, showPage) {
 
     params.page_size = PAGE_SIZE;
 
-    var count = undefined;
-    var pageCount = undefined;
+    var count;
+    var pageCount;
 
     function loadPage(pageNumber) {
         params.page = pageNumber;
 
         $.getJSON(endpoint, params, function(data) {
-            if(count != data.count) {
+            if(count !== data.count) {
                 count = data.count;
                 pageCount = Math.ceil(data.count / PAGE_SIZE);
 
