@@ -89,22 +89,13 @@
 
                     <g:if test="${taxonHierarchy && taxonHierarchy.size() > 1}">
                         <g:each in="${taxonHierarchy}" var="taxon">
-                            <g:if test="${taxon.guid != tc.taxonConcept.guid}">
-                                <g:link controller="species" action="show" params="[guid: taxon.guid]" class="page-header-links__link">
-                                    <bie:formatSciName
-                                        rankId="${taxon.rankID}"
-                                        nameFormatted="${taxon.nameFormatted}"
-                                        nameComplete="${taxon.nameComplete}"
-                                        taxonomicStatus="name"
-                                        name="${taxon.scientificName}"
-                                    />
-                                </g:link>
-                            </g:if>
-                            <g:else>
-                                <span class="page-header-links__link">
-                                    ${taxon.scientificName}
-                                </span>
-                            </g:else>
+                            <g:link controller="species" action="show" params="[guid: taxon.guid]" class="page-header-links__link">
+                                <bie:formatSciName
+                                    rankId="${taxon.rankID}"
+                                    name="${taxon.scientificName}"
+                                    simpleName="${true}"
+                                />
+                            </g:link>
                         </g:each>
                     </g:if>
                 </div>
@@ -893,10 +884,8 @@
                                             >
                                                 <bie:formatSciName
                                                     rankId="${taxon.rankID}"
-                                                    nameFormatted="${taxon.nameFormatted}"
-                                                    nameComplete="${taxon.nameComplete}"
-                                                    taxonomicStatus="name"
                                                     name="${taxon.scientificName}"
+                                                    simpleName="${true}"
                                                 />
 
                                                 <g:if test="${taxon.commonNameSingle}">
@@ -917,10 +906,8 @@
                                             <span>
                                                 <bie:formatSciName
                                                     rankId="${taxon.rankID}"
-                                                    nameFormatted="${taxon.nameFormatted}"
-                                                    nameComplete="${taxon.nameComplete}"
-                                                    taxonomicStatus="name"
                                                     name="${taxon.scientificName}"
+                                                    simpleName="${true}"
                                                 />
 
                                                 <g:if test="${taxon.commonNameSingle}">
@@ -959,12 +946,9 @@
                                     <g:set var="taxonLabel">
                                         <bie:formatSciName
                                             rankId="${child.rankID}"
-                                            nameFormatted="${child.nameFormatted}"
-                                            nameComplete="${child.nameComplete}"
-                                            taxonomicStatus="name"
                                             name="${child.name}"
+                                            simpleName="${true}"
                                         />
-
                                         <g:if test="${child.commonNameSingle}">
                                             : ${child.commonNameSingle}
                                         </g:if>
@@ -974,35 +958,6 @@
                                         <a href="${request?.contextPath}/species/${child.guid}#classification">
                                             ${raw(taxonLabel.trim())}
                                         </a>
-
-                                        <%-- XXX: I do not think span does anything. --%>
-                                        <span>
-                                            <g:if test="${child.isAustralian}">
-                                                <img src="${grailsApplication.config.ala.baseURL}/wp-content/themes/ala2011/images/status_native-sm.png"
-                                                     alt="${message(code: 'show.classification.taxon.isAustralian')}"
-                                                     title="${message(code: 'show.classification.taxon.isAustralian')}"
-                                                     width="21"
-                                                     height="21"
-                                                />
-                                            </g:if>
-                                            <g:else>
-                                                <g:if test="${child.guid?.startsWith('urn:lsid:catalogueoflife.org:taxon')}">
-                                                    <span
-                                                        class="inferredPlacement"
-                                                        title="${message(code: 'show.classification.taxon.notAustralian')}"
-                                                    >
-                                                        [<g:message code="show.classification.taxon.notAustralian.text" />]
-                                                    </span>
-                                                </g:if>
-                                                <g:else>
-                                                    <span
-                                                        class="inferredPlacement"
-                                                        title="${message(code: 'show.classification.taxon.notAustralian')}"
-                                                    >
-                                                    </span>
-                                                </g:else>
-                                            </g:else>
-                                        </span>
                                     </dd>
                                 </g:each>
                             </dl>
@@ -1017,7 +972,8 @@
                             <div id="occurrenceRecords">
                                 <div id="recordBreakdowns">
                                     <h2>
-                                        <g:message code="show.records.chart.title" /> <g:message code="show.records.recordCount.title" />
+                                        <g:message code="show.records.chart.title" />
+                                        <g:message code="show.records.recordCount.title" />
                                     </h2>
 
                                     <%-- This is not page header but we can use its classes to lay out links in the same way. --%>
@@ -1026,14 +982,16 @@
                                             href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-records"
                                             class="page-header-links__link"
                                         >
-                                            <g:message code="show.records.list.title" /> <g:message code="show.records.recordCount.title" />
+                                            <g:message code="show.records.list.title" />
+                                            <g:message code="show.records.recordCount.title" />
                                         </a>
 
                                         <a
                                             href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-map"
                                             class="page-header-links__link"
                                         >
-                                            <g:message code="show.records.map.title" /> <g:message code="show.records.recordCount.title" />
+                                            <g:message code="show.records.map.title" />
+                                            <g:message code="show.records.recordCount.title" />
                                         </a>
                                     </div>
 

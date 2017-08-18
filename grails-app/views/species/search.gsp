@@ -1,4 +1,4 @@
-<%@ page import="au.org.ala.bie.BieTagLib" %>
+<%@ page import="au.org.ala.BieTagLib" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <g:set var="biocacheUrl" value="${grailsApplication.config.biocache.baseURL}" />
