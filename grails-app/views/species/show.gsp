@@ -275,34 +275,27 @@
 
                                         <div id="leafletMap"></div>
 
-                                        <g:set var="mapUrl">
-                                            <g:if test="${grailsApplication.config.spatial.baseURL}">
-                                                ${grailsApplication.config.spatial.baseURL}?q=lsid:${tc?.taxonConcept?.guid}
-                                            </g:if>
+                                        <div class="map-buttons row">
+                                            <g:set
+                                                var="recordSearchUrl"
+                                                value="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}"
+                                            />
 
-                                            <g:else>
-                                                ${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab-map
-                                            </g:else>
-                                        </g:set>
-
-                                        <div class="map-buttons">
-                                            <g:if test="${grailsApplication.config.map.simpleMapButton.toBoolean()}">
-                                                <%-- XXX --%>
-                                                <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab-map"
-                                                   title="${message(code: 'show.map.btn.simpleMap.title')}"
-                                                   role="button"
-                                                >
-                                                    <button class="erk-button erk-button--light">
-                                                        <g:message code="show.map.btn.simpleMap.label" />
-                                                    </button>
-                                                </a>
-                                            </g:if>
-
-                                            <a href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}#tab-map"
-                                               title="${message(code: 'show.map.btn.viewMap')}"
-                                               role="button"
+                                            <a
+                                                class="col-md-6"
+                                                href="${recordSearchUrl}#tab-map"
+                                                title="${message(code: 'show.map.btn.viewMap')}"
+                                                role="button"
                                             >
-                                                <g:message code="show.map.btn.viewMap" /> (<span class="occurrenceRecordCount">0</span>)
+                                                <g:message code="show.map.btn.viewMap" />
+                                            </a>
+                                            <a
+                                                class="col-md-6"
+                                                href="${recordSearchUrl}#tab-records"
+                                                title="${message(code: 'show.map.btn.viewRecords')}"
+                                                role="button"
+                                            >
+                                                <g:message code="show.map.btn.viewRecords" />
                                             </a>
                                         </div>
                                     </div>
