@@ -295,6 +295,7 @@
                                                 title="${message(code: 'show.map.btn.viewRecords')}"
                                                 role="button"
                                             >
+                                                <span class="fa fa-list"></span>
                                                 <g:message code="show.map.btn.viewRecords" />
                                             </a>
                                         </div>
