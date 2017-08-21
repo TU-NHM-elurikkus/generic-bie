@@ -345,16 +345,7 @@
                                     <h2>
                                         <g:message code="images.heading.${cat}" default="${cat}" />
 
-                                        <div class="btn-group btn-group-sm" role="group">
-                                            <button
-                                                type="button"
-                                                class="erk-button erk-button--light btn-default toggle-image-gallery"
-                                                onclick="toggleImageGallery(this)"
-                                                value=1
-                                            >
-                                                <g:message code="show.gallery.hideGallery" />
-                                            </button>
-                                        </div>
+                                        <span class="fa fa-caret-square-o-up" onclick="toggleImageGallery(this)" ></span>
                                     </h2>
 
                                     <div class="taxon-gallery"></div>
