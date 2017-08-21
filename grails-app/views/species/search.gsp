@@ -11,7 +11,7 @@
         <title>
             ${searchQuery} | <g:message code="search.head.title" />
         </title>
-        <r:require modules="search" />
+        <r:require modules="search, filters" />
         <r:script disposition='head'>
             // global var to pass GSP vars into JS file
             SEARCH_CONF = {
