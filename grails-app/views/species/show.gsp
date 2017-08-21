@@ -46,7 +46,7 @@
     </head>
 
     <body>
-        <div class="container-fluid page-taxon">
+        <div class="page-taxon">
             <header class="page-header">
                 <h1 class="page-header__title">
                     ${raw(sciNameFormatted)}
