@@ -595,3 +595,14 @@ a.nav-link.active {
     width: 100%;
     text-align: left;
 }
+
+.classification-actions {
+    text-align: left;
+}
+
+/* 576px is Bootstrap "sm" breakpoint */
+@media(min-width: 576px) {
+    .classification-actions {
+        text-align: right;
+    }
+}
