@@ -395,7 +395,6 @@ function loadExternalSources() {
  * Trigger loading of the 3 gallery sections
  */
 function loadGalleries() {
-    //console.log('loading galleries');
     $('#gallerySpinner').show();
     loadGalleryType('type', 0)
     loadGalleryType('specimen', 0)
@@ -558,7 +557,7 @@ function loadGalleryType(category, start) {
                 $taxonThumb.attr('href', el.largeImageUrl);
                 $taxonThumb.find('img').attr('src', el.smallImageUrl);
                 // turned off 'onerror' below as IE11 hides all images
-                //$taxonThumb.find('img').attr('onerror',"$(this).parent().hide();"); // hide broken images
+                // $taxonThumb.find('img').attr('onerror',"$(this).parent().hide();"); // hide broken images
 
                 // brief metadata
                 var briefHtml = getImageTitleFromOccurrence(el);
@@ -592,33 +591,14 @@ function loadGalleryType(category, start) {
 }
 
 function getImageTitleFromOccurrence(el) {
-    var br = '<br />';
-    var briefHtml = '';
-
-    // include sci name when genus or higher taxon
-    if(SHOW_CONF.taxonRankID < 7000) {
-        briefHtml += el.raw_scientificName;
-    }
+    var briefHtml = el.raw_scientificName;
 
     if(el.typeStatus) {
-        if(briefHtml.length > 0) { briefHtml += br; }
-        briefHtml += el.typeStatus;
+        briefHtml += '<br />' + el.typeStatus;
     }
 
     if(el.institutionName) {
-        if(briefHtml.length > 0) { briefHtml += br; }
-        briefHtml += ((el.typeStatus) ? ' | ' : br) + el.institutionName;
-    }
-
-    if(el.imageMetadata && el.imageMetadata.length > 0 && el.imageMetadata[0].creator !== null) {
-        if(briefHtml.length > 0) { briefHtml += br; }
-        briefHtml += 'Photographer: ' + el.imageMetadata[0].creator;
-    } else if(el.imageMetadata && el.imageMetadata.length > 0 && el.imageMetadata[0].rightsHolder !== null) {
-        if(briefHtml.length > 0) { briefHtml += br; }
-        briefHtml += 'Rights holder: ' + el.imageMetadata[0].rightsHolder;
-    } else if(el.collector) {
-        if(briefHtml.length > 0) { briefHtml += br; }
-        briefHtml += 'Supplied by: ' + el.collector;
+        briefHtml += ((el.typeStatus) ? ' | ' : '<br />') + el.institutionName;
     }
 
     return briefHtml;
@@ -631,9 +611,9 @@ function getImageFooterFromOccurrence(el) {
     if(el.collector) { rightDetail += br + '<b>By: </b>' + el.collector; }
     if(el.eventDate) { rightDetail += br + '<b>Date: </b>' + moment(el.eventDate).format('YYYY-MM-DD'); }
     if(el.institutionName && el.institutionName !== undefined) {
-        rightDetail += br + '<b>Supplied by: </b>' + el.institutionName;
-    } else if(el.dataResourceName && el.dataResourceName !== undefined) {
-        rightDetail += br + '<b>Supplied by: </b>' + el.dataResourceName;
+        rightDetail += br + '<b>Source: </b>' + el.institutionName;
+    } else if(el.dataResourceName) {
+        rightDetail += br + '<b>Source: </b>' + el.dataResourceName;
     }
     if(el.imageMetadata && el.imageMetadata.length > 0 && el.imageMetadata[0].rightsHolder !== null) {
         rightDetail += br + '<b>Rights holder: </b>' + el.imageMetadata[0].rightsHolder;
