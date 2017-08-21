@@ -578,7 +578,7 @@ function loadGalleryType(category, start) {
             if(data.totalRecords > (start + pageSize)) {
                 // add new 'load more images' button if required
                 var spinnerLink = $('img#gallerySpinner').attr('src');
-                btnLabel = 'Load more photos';  // ToDo: translation key == show.gallery.loadMore
+                btnLabel = 'Load more';  // ToDo: translation key == general.btn.loadMore
                 var btn = '<div class="loadMore ' + category + '"><br><button type="button" class="erk-button erk-button--light" onCLick="loadGalleryType(\'' + category + '\','
                     + (start + pageSize) + ');">' + btnLabel + ' <img src="' + spinnerLink + '" class="hidden-node"/></button></div>';
                 $categoryTmpl.find('.taxon-gallery').append(btn);
@@ -812,18 +812,14 @@ function loadExpertDistroMap() {
 }
 
 function toggleImageGallery(btn) {
-    if($(btn).val() == 1) {
-        $(btn).parent().find('.toggle-image-gallery').removeClass('btn-primary');
-        $(btn).addClass('btn-primary');
+    if($(btn).hasClass('fa-caret-square-o-up')) {
+        $(btn).removeClass('fa-caret-square-o-up');
+        $(btn).addClass('fa-caret-square-o-down');
         $(btn).parents('.image-section').find('.taxon-gallery').slideUp(400)
-        $(btn).val(0);
-        $(btn).text("Show gallery");  // ToDo: translation key == show.gallery.showGallery
     } else {
-        $(btn).parent().find('.toggle-image-gallery').removeClass('btn-primary');
-        $(btn).addClass('btn-primary');
+        $(btn).removeClass('fa-caret-square-o-down');
+        $(btn).addClass('fa-caret-square-o-up');
         $(btn).parents('.image-section').find('.taxon-gallery').slideDown(400);
-        $(btn).val(1);
-        $(btn).text("Hide gallery");  // ToDo: translation key == show.gallery.hideGallery
     }
 }
 
