@@ -1,40 +1,42 @@
 $(document).ready(function() {
     // set the search input to the current q param value
-    var query = SEARCH_CONF.query;
+    if(typeof SEARCH_CONF !== 'undefined') {
+        var query = SEARCH_CONF.query;
 
-    if(query) {
-        $(':input#search-2011').val(query);
-    }
-
-    // listeners for sort widgets
-    $('select#sort-by').change(function() {
-        var val = $('option:selected', this).val();
-        reloadWithParam('sortField', val);
-    });
-
-    $('select#sort-order').change(function() {
-        var val = $('option:selected', this).val();
-        reloadWithParam('dir', val);
-    });
-
-    $('select#per-page').change(function() {
-        var val = $('option:selected', this).val();
-        reloadWithParam('rows', val);
-    });
-
-    // AJAX search results
-    injectBiocacheResults();
-
-    // in mobile view toggle display of facets
-    $('#toggleFacetDisplay').click(function() {
-        $(this).find('i').toggleClass('icon-chevron-down icon-chevron-right');
-
-        if($('#accordion').is(':visible')) {
-            $('#accordion').removeClass('overrideHide');
-        } else {
-            $('#accordion').addClass('overrideHide');
+        if(query) {
+            $(':input#search-2011').val(query);
         }
-    });
+
+        // listeners for sort widgets
+        $('select#sort-by').change(function() {
+            var val = $('option:selected', this).val();
+            reloadWithParam('sortField', val);
+        });
+
+        $('select#sort-order').change(function() {
+            var val = $('option:selected', this).val();
+            reloadWithParam('dir', val);
+        });
+
+        $('select#per-page').change(function() {
+            var val = $('option:selected', this).val();
+            reloadWithParam('rows', val);
+        });
+
+        // AJAX search results
+        injectBiocacheResults();
+
+        // in mobile view toggle display of facets
+        $('#toggleFacetDisplay').click(function() {
+            $(this).find('i').toggleClass('icon-chevron-down icon-chevron-right');
+
+            if($('#accordion').is(':visible')) {
+                $('#accordion').removeClass('overrideHide');
+            } else {
+                $('#accordion').addClass('overrideHide');
+            }
+        });
+    }
 });
 
 /**

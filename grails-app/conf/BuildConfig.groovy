@@ -18,16 +18,16 @@ grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
         // specify dependency exclusions here; for example, uncomment this to disable ehcache:
-        // excludes 'ehcache'
+        // excludes "ehcache"
     }
-    log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    log "error" // log level of Ivy resolver, either "error", "warn", "info", "debug" or "verbose"
     checksums true // Whether to verify checksums on resolve
     legacyResolve false // whether to do a secondary resolve on plugin installation, not advised and here for backwards compatibility
 
     repositories {
         mavenLocal()
         mavenRepo ("http://nexus.ala.org.au/content/groups/public/") {
-            updatePolicy 'daily'
+            updatePolicy "daily"
         }
     }
 
@@ -41,8 +41,13 @@ grails.project.dependency.resolution = {
         }
         // plugins for the build system only
         build ":tomcat:7.0.55"
-        compile ':elurikkus-bie:1.3.0-SNAPSHOT'
-        compile ':cache:1.1.8'
+
+        compile ":elurikkus-bie:1.3.0-SNAPSHOT"
+        compile ":elurikkus-charts:1.3"
+        compile ":cache:1.1.8"
+        compile ":asset-pipeline:2.13.1"
+
+        runtime ":jquery:1.11.1"
         runtime ":elurikkus-commons:0.2-SNAPSHOT"
         runtime ":resources:1.2.14"
     }
