@@ -61,20 +61,20 @@
 
                     <g:set var="commonNameDisplay" value="${(tc?.commonNames) ? tc?.commonNames?.opt(0)?.nameString : ''}" />
 
-                    <div class="col-md-1">
+                    <div class="col-sm-2">
                         ${tc.taxonConcept.rankString}
                     </div>
 
                     <g:if test="${tc.taxonConcept.taxonomicStatus}">
                         <div
-                            class="inline-head taxonomic-status col-md-1"
+                            class="inline-head taxonomic-status col-sm-2"
                             title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}"
                         >
                             <g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" default="${tc.taxonConcept.taxonomicStatus}" />
                         </div>
                     </g:if>
 
-                    <div class="inline-head name-authority col-md-2">
+                    <div class="inline-head name-authority col-sm-8">
                         <g:message code="show.details.nameAuthority" />:
                         <span class="name-authority">
                             ${tc?.taxonConcept.nameAuthority ?: grailsApplication.config.defaultNameAuthority}
