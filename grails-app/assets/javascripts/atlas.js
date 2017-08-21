@@ -6,7 +6,7 @@
 //= require leaflet
 //= require tether.min
 //= require bootstrap.min
-//= require ekko-lightbox.min
+//= require ekko-lightbox-5.2.0
 //= require moment.min
 //= require common
 //= require ala-charts
