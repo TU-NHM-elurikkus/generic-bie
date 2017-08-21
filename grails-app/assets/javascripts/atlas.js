@@ -4,7 +4,9 @@
 //= require jquery.qtip.min
 //= require jquery.jsonp-2.3.1.min
 //= require leaflet
-//= require ekko-lighbox.min
+//= require tether.min
+//= require bootstrap.min
+//= require ekko-lightbox.min
 //= require moment.min
 //= require common
 //= require ala-charts

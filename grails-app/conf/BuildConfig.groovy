@@ -49,6 +49,5 @@ grails.project.dependency.resolution = {
 
         runtime ":jquery:1.11.1"
         runtime ":elurikkus-commons:0.2-SNAPSHOT"
-        runtime ":resources:1.2.14"
     }
 }
