@@ -181,6 +181,7 @@
                                                     class="more-photos tab-link"
                                                     href="#gallery"
                                                     title="${message(code: 'show.gallery.showMore')}"
+                                                    onclick="openTab('#gallery')"
                                                 >
                                                    <span>
                                                        +
@@ -1351,27 +1352,37 @@
                 mapEnvOptions: "${grailsApplication.config.map.env?.options?:'color:' + grailsApplication.config.map.records.colour+ ';name:circle;size:4;opacity:0.8'}"
             };
 
+            function openTab(anchor) {
+                $('a[href="' + anchor + '"]').tab('show');
+            }
+
             $(function(){
                 showSpeciesPage();
-            });
 
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                var target = $(e.target).attr("href");
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    var target = $(e.target).attr("href");
 
-                if(target == "#records") {
-                    $('#charts').html('');  //prevent multiple loads
+                    window.location.hash = target;
 
-                    <charts:biocache
-                        biocacheServiceUrl="${grailsApplication.config.biocacheService.baseURL}"
-                        biocacheWebappUrl="${grailsApplication.config.biocache.baseURL}"
-                        q="lsid:${guid}"
-                        qc="${grailsApplication.config.biocacheService.queryContext ?: ''}"
-                        fq=""
-                    />
-                }
+                    if(target == "#records") {
+                        $('#charts').html('');  //prevent multiple loads
 
-                if(target == '#overview'){
-                    loadMap();
+                        <charts:biocache
+                            biocacheServiceUrl="${grailsApplication.config.biocacheService.baseURL}"
+                            biocacheWebappUrl="${grailsApplication.config.biocache.baseURL}"
+                            q="lsid:${guid}"
+                            qc="${grailsApplication.config.biocacheService.queryContext ?: ''}"
+                            fq=""
+                        />
+                    }
+
+                    if(target == '#overview'){
+                        loadMap();
+                    }
+                });
+
+                if(window.location.hash) {
+                    openTab(window.location.hash);
                 }
             });
         </r:script>
