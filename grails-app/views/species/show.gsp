@@ -46,7 +46,7 @@
     </head>
 
     <body>
-        <div class="container-fluid page-taxon">
+        <div class="page-taxon">
             <header class="page-header">
                 <h1 class="page-header__title">
                     ${raw(sciNameFormatted)}
@@ -61,20 +61,20 @@
 
                     <g:set var="commonNameDisplay" value="${(tc?.commonNames) ? tc?.commonNames?.opt(0)?.nameString : ''}" />
 
-                    <div class="col-md-1">
+                    <div class="col-sm-2">
                         ${tc.taxonConcept.rankString}
                     </div>
 
                     <g:if test="${tc.taxonConcept.taxonomicStatus}">
                         <div
-                            class="inline-head taxonomic-status col-md-1"
+                            class="inline-head taxonomic-status col-sm-2"
                             title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}"
                         >
                             <g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" default="${tc.taxonConcept.taxonomicStatus}" />
                         </div>
                     </g:if>
 
-                    <div class="inline-head name-authority col-md-2">
+                    <div class="inline-head name-authority col-sm-8">
                         <g:message code="show.details.nameAuthority" />:
                         <span class="name-authority">
                             ${tc?.taxonConcept.nameAuthority ?: grailsApplication.config.defaultNameAuthority}
@@ -181,6 +181,7 @@
                                                     class="more-photos tab-link"
                                                     href="#gallery"
                                                     title="${message(code: 'show.gallery.showMore')}"
+                                                    onclick="openTab('#gallery')"
                                                 >
                                                    <span>
                                                        +
@@ -799,45 +800,6 @@
                         </section>
 
                         <section class="tab-pane" id="classification" role="tabpanel">
-                            <g:if test="${tc.taxonConcept.rankID < 7000}">
-                                <div class="pull-right btn-group btn-group-vertical">
-                                    <a
-                                        href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&${grailsApplication.config.bieService.queryContext}"
-                                    >
-                                        <button class="erk-button erk-button--light">
-                                            <span class="fa fa-download"></span>
-                                            <g:message
-                                                code="show.classification.btn.download.childTaxa"
-                                                args="${[tc.taxonConcept.nameString]}"
-                                            />
-                                        </button>
-                                    </a>
-
-                                    <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&fq=rank:species&${grailsApplication.config.bieService.queryContext}"
-                                    >
-                                        <button class="erk-button erk-button--light">
-                                            <span class="fa fa-download"></span>
-                                            <g:message
-                                                code="show.classification.btn.download.species"
-                                                args="${[tc.taxonConcept.nameString]}"
-                                            />
-                                        </button>
-                                    </a>
-
-                                    <a
-                                        href="${createLink(controller: 'species', action: 'search')}?q=${'rkid_' + tc.taxonConcept.rankString + ':' + tc.taxonConcept.guid}"
-                                    >
-                                        <button class="erk-button erk-button--light">
-                                            <span class="fa fa-search"></span>
-                                            <g:message
-                                                code="show.classification.btn.search.childTaxa"
-                                                args="${[tc.taxonConcept.nameString]}"
-                                            />
-                                        </button>
-                                    </a>
-                                </div>
-                            </g:if>
-
                             <h2>
                                 <g:if test="${grailsApplication.config.classificationSupplier}">
                                     <g:message
@@ -851,106 +813,151 @@
                                 </g:else>
                             </h2>
 
-                            <g:each in="${taxonHierarchy}" var="taxon">
-                                <!-- taxon = ${taxon} -->
-                                <g:if test="${taxon.guid != tc.taxonConcept.guid}">
-                                    <%-- XXX Intentional unclosed tag. --%>
-                                    <dl>
-                                        <dt>
-                                            <g:if test="${taxon.rankID ?: 0 != 0}">
-                                                ${taxon.rank}
-                                            </g:if>
-                                        </dt>
+                            <div class="row">
+                                <div class="col-sm-6 col-xs-12">
+                                    <g:each in="${taxonHierarchy}" var="taxon">
+                                        <!-- taxon = ${taxon} -->
+                                        <g:if test="${taxon.guid != tc.taxonConcept.guid}">
+                                            <%-- XXX Intentional unclosed tag. --%>
+                                            <dl>
+                                                <dt>
+                                                    <g:if test="${taxon.rankID ?: 0 != 0}">
+                                                        ${taxon.rank}
+                                                    </g:if>
+                                                </dt>
 
-                                        <dd>
-                                            <a
-                                                href="${request?.contextPath}/species/${taxon.guid}#classification"
-                                                title="${message(code: 'rank.' + taxon.rank, default: taxon.rank)}"
-                                            >
-                                                <bie:formatSciName
-                                                    rankId="${taxon.rankID}"
-                                                    name="${taxon.scientificName}"
-                                                    simpleName="${true}"
-                                                />
+                                                <dd>
+                                                    <a
+                                                        href="${request?.contextPath}/species/${taxon.guid}#classification"
+                                                        title="${message(code: 'rank.' + taxon.rank, default: taxon.rank)}"
+                                                    >
+                                                        <bie:formatSciName
+                                                            rankId="${taxon.rankID}"
+                                                            name="${taxon.scientificName}"
+                                                            simpleName="${true}"
+                                                        />
 
-                                                <g:if test="${taxon.commonNameSingle}">
-                                                    : ${taxon.commonNameSingle}
-                                                </g:if>
-                                            </a>
-                                        </dd>
-                                    <%-- XXX The dl is left open on purpose --%>
-                                </g:if>
-                                <g:else>
-                                    <%-- XXX Intentional unclosed tag. --%>
-                                    <dl>
-                                        <dt id="currentTaxonConcept">
-                                            ${taxon.rank}
-                                        </dt>
-
-                                        <dd>
-                                            <span>
-                                                <bie:formatSciName
-                                                    rankId="${taxon.rankID}"
-                                                    name="${taxon.scientificName}"
-                                                    simpleName="${true}"
-                                                />
-
-                                                <g:if test="${taxon.commonNameSingle}">
-                                                    : ${taxon.commonNameSingle}
-                                                </g:if>
-                                            </span>
-
-                                            <g:if test="${taxon.isAustralian || tc.isAustralian}">
-                                                <%-- XXX: I do not think span does anything. --%>
-                                                <span>
-                                                    <%-- TODO: Not Australia. --%>
-                                                    <img
-                                                        src="${grailsApplication.config.ala.baseURL}/wp-content/themes/ala2011/images/status_native-sm.png"
-                                                        alt="Recorded in Australia"
-                                                        title="Recorded in Australia"
-                                                        width="21"
-                                                        height="21"
-                                                    />
-                                                </span>
-                                            </g:if>
-                                        </dd>
-                                    <%-- XXX The dl is left open on purpose --%>
-                                </g:else>
-                            </g:each>
-
-                            <dl class="child-taxa">
-                                <g:set var="currentRank" value="" />
-
-                                <g:each in="${childConcepts}" var="child" status="i">
-                                    <g:set var="currentRank" value="${child.rank}" />
-
-                                    <dt>
-                                        ${child.rank}
-                                    </dt>
-
-                                    <g:set var="taxonLabel">
-                                        <bie:formatSciName
-                                            rankId="${child.rankID}"
-                                            name="${child.name}"
-                                            simpleName="${true}"
-                                        />
-                                        <g:if test="${child.commonNameSingle}">
-                                            : ${child.commonNameSingle}
+                                                        <g:if test="${taxon.commonNameSingle}">
+                                                            : ${taxon.commonNameSingle}
+                                                        </g:if>
+                                                    </a>
+                                                </dd>
+                                            <%-- XXX The dl is left open on purpose --%>
                                         </g:if>
-                                    </g:set>
+                                        <g:else>
+                                            <%-- XXX Intentional unclosed tag. --%>
+                                            <dl>
+                                                <dt id="currentTaxonConcept">
+                                                    ${taxon.rank}
+                                                </dt>
 
-                                    <dd>
-                                        <a href="${request?.contextPath}/species/${child.guid}#classification">
-                                            ${raw(taxonLabel.trim())}
-                                        </a>
-                                    </dd>
-                                </g:each>
-                            </dl>
+                                                <dd>
+                                                    <span>
+                                                        <bie:formatSciName
+                                                            rankId="${taxon.rankID}"
+                                                            name="${taxon.scientificName}"
+                                                            simpleName="${true}"
+                                                        />
 
-                            <%-- XXX Close tags previously left open. --%>
-                            <g:each in="${taxonHierarchy}" var="taxon">
-                                </dl>
-                            </g:each>
+                                                        <g:if test="${taxon.commonNameSingle}">
+                                                            : ${taxon.commonNameSingle}
+                                                        </g:if>
+                                                    </span>
+
+                                                    <g:if test="${taxon.isAustralian || tc.isAustralian}">
+                                                        <%-- XXX: I do not think span does anything. --%>
+                                                        <span>
+                                                            <%-- TODO: Not Australia. --%>
+                                                            <img
+                                                                src="${grailsApplication.config.ala.baseURL}/wp-content/themes/ala2011/images/status_native-sm.png"
+                                                                alt="Recorded in Australia"
+                                                                title="Recorded in Australia"
+                                                                width="21"
+                                                                height="21"
+                                                            />
+                                                        </span>
+                                                    </g:if>
+                                                </dd>
+                                            <%-- XXX The dl is left open on purpose --%>
+                                        </g:else>
+                                    </g:each>
+
+                                    <dl class="child-taxa">
+                                        <g:set var="currentRank" value="" />
+
+                                        <g:each in="${childConcepts}" var="child" status="i">
+                                            <g:set var="currentRank" value="${child.rank}" />
+
+                                            <dt>
+                                                ${child.rank}
+                                            </dt>
+
+                                            <g:set var="taxonLabel">
+                                                <bie:formatSciName
+                                                    rankId="${child.rankID}"
+                                                    name="${child.name}"
+                                                    simpleName="${true}"
+                                                />
+                                                <g:if test="${child.commonNameSingle}">
+                                                    : ${child.commonNameSingle}
+                                                </g:if>
+                                            </g:set>
+
+                                            <dd>
+                                                <a href="${request?.contextPath}/species/${child.guid}#classification">
+                                                    ${raw(taxonLabel.trim())}
+                                                </a>
+                                            </dd>
+                                        </g:each>
+                                    </dl>
+
+                                    <%-- XXX Close tags previously left open. --%>
+                                    <g:each in="${taxonHierarchy}" var="taxon">
+                                        </dl>
+                                    </g:each>
+                                </div>
+
+                                <g:if test="${tc.taxonConcept.rankID < 7000}">
+                                    <div class="col-sm-6 col-xs-12 classification-actions">
+                                        <div class="btn-group btn-group-vertical">
+                                            <a
+                                                href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&${grailsApplication.config.bieService.queryContext}"
+                                            >
+                                                <button class="erk-button erk-button--light">
+                                                    <span class="fa fa-download"></span>
+                                                    <g:message
+                                                        code="show.classification.btn.download.childTaxa"
+                                                        args="${[tc.taxonConcept.nameString]}"
+                                                    />
+                                                </button>
+                                            </a>
+
+                                            <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&fq=rank:species&${grailsApplication.config.bieService.queryContext}"
+                                            >
+                                                <button class="erk-button erk-button--light">
+                                                    <span class="fa fa-download"></span>
+                                                    <g:message
+                                                        code="show.classification.btn.download.species"
+                                                        args="${[tc.taxonConcept.nameString]}"
+                                                    />
+                                                </button>
+                                            </a>
+
+                                            <a
+                                                href="${createLink(controller: 'species', action: 'search')}?q=${'rkid_' + tc.taxonConcept.rankString + ':' + tc.taxonConcept.guid}"
+                                            >
+                                                <button class="erk-button erk-button--light">
+                                                    <span class="fa fa-search"></span>
+                                                    <g:message
+                                                        code="show.classification.btn.search.childTaxa"
+                                                        args="${[tc.taxonConcept.nameString]}"
+                                                    />
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </g:if>
+                            </div>
                         </section>
 
                         <section class="tab-pane" id="records" role="tabpanel">
@@ -1351,27 +1358,37 @@
                 mapEnvOptions: "${grailsApplication.config.map.env?.options?:'color:' + grailsApplication.config.map.records.colour+ ';name:circle;size:4;opacity:0.8'}"
             };
 
+            function openTab(anchor) {
+                $('a[href="' + anchor + '"]').tab('show');
+            }
+
             $(function(){
                 showSpeciesPage();
-            });
 
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                var target = $(e.target).attr("href");
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    var target = $(e.target).attr("href");
 
-                if(target == "#records") {
-                    $('#charts').html('');  //prevent multiple loads
+                    window.location.hash = target;
 
-                    <charts:biocache
-                        biocacheServiceUrl="${grailsApplication.config.biocacheService.baseURL}"
-                        biocacheWebappUrl="${grailsApplication.config.biocache.baseURL}"
-                        q="lsid:${guid}"
-                        qc="${grailsApplication.config.biocacheService.queryContext ?: ''}"
-                        fq=""
-                    />
-                }
+                    if(target == "#records") {
+                        $('#charts').html('');  //prevent multiple loads
 
-                if(target == '#overview'){
-                    loadMap();
+                        <charts:biocache
+                            biocacheServiceUrl="${grailsApplication.config.biocacheService.baseURL}"
+                            biocacheWebappUrl="${grailsApplication.config.biocache.baseURL}"
+                            q="lsid:${guid}"
+                            qc="${grailsApplication.config.biocacheService.queryContext ?: ''}"
+                            fq=""
+                        />
+                    }
+
+                    if(target == '#overview'){
+                        loadMap();
+                    }
+                });
+
+                if(window.location.hash) {
+                    openTab(window.location.hash);
                 }
             });
         </r:script>

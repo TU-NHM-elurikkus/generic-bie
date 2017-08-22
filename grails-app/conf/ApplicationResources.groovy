@@ -1,11 +1,4 @@
 modules = {
-    bootstrap {
-        dependsOn 'jquery'
-
-        resource url: [dir: 'bootstrap3/js', file: 'bootstrap.js', plugin:'elurikkus-bie'], disposition: 'head'
-        resource url: [dir: 'bootstrap3/css', file: 'bootstrap.min.css', plugin:'elurikkus-bie'], attrs: [media: 'screen, print']
-    }
-
     bie {
         dependsOn 'bootstrap', 'ekko'
 

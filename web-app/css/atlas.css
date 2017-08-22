@@ -42,7 +42,7 @@ a.expand-options {
     margin-top: 0;
 }
 
-.step .currentStep {
+.step, .currentStep {
     padding-right: 0.5em;
 }
 
@@ -595,4 +595,15 @@ a.nav-link.active {
 .btn-group a button {
     width: 100%;
     text-align: left;
+}
+
+.classification-actions {
+    text-align: left;
+}
+
+/* 576px is Bootstrap "sm" breakpoint */
+@media(min-width: 576px) {
+    .classification-actions {
+        text-align: right;
+    }
 }

@@ -5,19 +5,6 @@ $(function() {
     $('.wrap').css('margin-bottom', -footerHeight);
     $('.push').height(footerHeight);
 
-    // Tabs
-    $('.taxon-tabs .nav-tabs a').on('click', function(e) {
-        var currentAttrValue = $(this).attr('href');
-
-        // Show/Hide Tabs
-        $('.taxon-tabs ' + currentAttrValue).show().siblings().hide();
-
-        // Change/remove current tab to active
-        $(this).addClass('active').parent('li').siblings().children().removeClass('active');
-
-        e.preventDefault();
-    });
-
     // Lightbox
     $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
         event.preventDefault();
