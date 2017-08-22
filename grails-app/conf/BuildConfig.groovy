@@ -3,8 +3,8 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.work.dir = "target/work"
-grails.project.target.level = 1.6
-grails.project.source.level = 1.6
+grails.project.target.level = 1.8
+grails.project.source.level = 1.8
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 //grails.plugin.location."bie-plugin" = "../bie-plugin"
 
@@ -40,14 +40,13 @@ grails.project.dependency.resolution = {
             export = false
         }
         // plugins for the build system only
-        build ":tomcat:7.0.55"
+        build ":tomcat:7.0.70"
 
+        compile ":asset-pipeline:2.13.1"
+        compile ":cache:1.1.8"
+        compile ":jquery:1.11.1"
         compile ":elurikkus-bie:1.3.0-SNAPSHOT"
         compile ":elurikkus-charts:1.3"
-        compile ":cache:1.1.8"
-        compile ":asset-pipeline:2.13.1"
-
-        runtime ":jquery:1.11.1"
-        runtime ":elurikkus-commons:0.2-SNAPSHOT"
+        compile ":elurikkus-commons:0.2-SNAPSHOT"
     }
 }
