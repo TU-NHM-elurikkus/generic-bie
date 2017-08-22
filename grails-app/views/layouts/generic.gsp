@@ -10,10 +10,8 @@
             <g:layoutTitle />
         </title>
 
-        <r:require modules="jquery, bie" />
-        <r:require modules="menu", plugin="elurikkus-commons" />
-
-        <r:layoutResources />
+        <asset:stylesheet src="atlas.css"/>
+        <asset:javascript src="atlas.js"/>
 
         <g:layoutHead />
     </head>
@@ -27,7 +25,7 @@
 
         <g:render template="/footer" plugin="elurikkus-commons" />
 
-        <!-- Resources -->
-        <r:layoutResources />
+        <asset:deferredScripts />
     </body>
+
 </html>

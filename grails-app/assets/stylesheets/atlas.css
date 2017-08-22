@@ -1,3 +1,12 @@
+/*
+*= require jquery.qtip.min
+*= require leaflet
+*= require ekko-lightbox-5.2.0
+*= require elurikkus-common
+*= require species
+*= require ala-charts
+*/
+
 .audio-player {
     width: 100%;
 }
@@ -42,7 +51,7 @@ a.expand-options {
     margin-top: 0;
 }
 
-.step, .currentStep {
+.step .currentStep {
     padding-right: 0.5em;
 }
 
@@ -290,12 +299,11 @@ a.expand-options {
     bottom: 0;
     left: 0;
     width: 100%;
+    background: rgba(0, 0, 0, 0.5);
     font-size: 12px;
     line-height: 14px;
+    color: #fff;
     padding: 4px 5px;
-    color: black;
-    background-color: white;
-    opacity: 0.8;
     /* oddly specific */
 }
 
@@ -595,15 +603,4 @@ a.nav-link.active {
 .btn-group a button {
     width: 100%;
     text-align: left;
-}
-
-.classification-actions {
-    text-align: left;
-}
-
-/* 576px is Bootstrap "sm" breakpoint */
-@media(min-width: 576px) {
-    .classification-actions {
-        text-align: right;
-    }
 }

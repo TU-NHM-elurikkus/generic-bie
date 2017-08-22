@@ -1,3 +1,18 @@
+//= require jquery
+//= require jquery.sortElemets
+//= require jquery.htmlClean
+//= require jquery.qtip.min
+//= require jquery.jsonp-2.3.1.min
+//= require leaflet
+//= require tether.min
+//= require bootstrap.min
+//= require ekko-lightbox-5.2.0
+//= require moment.min
+//= require common
+//= require ala-charts
+//= require species.show
+//= require search
+
 $(function() {
     // Sticky footer
     var footerHeight = $('.site-footer').outerHeight();
@@ -51,9 +66,6 @@ $(function() {
         height *= 0.8;
         $('#viewerContainerId').height(height);
     }
-
-    // Tooltips
-    $('[data-toggle="tooltip"]').tooltip();
 
     // Search: Refine results accordions
     $('.refine-box h2 a').click(function() {

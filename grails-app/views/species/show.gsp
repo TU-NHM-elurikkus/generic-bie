@@ -38,11 +38,13 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <title>
             ${tc?.taxonConcept?.nameString} ${(tc?.commonNames) ? ' : ' + tc?.commonNames?.get(0)?.nameString : ''} | ${raw(grailsApplication.config.skin.orgNameLong)}
         </title>
+
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
-        <r:require modules="show, charts, image-viewer" />
+
     </head>
 
     <body>
@@ -1302,7 +1304,7 @@
             </div>  <%-- /.modal-dialog --%>
         </div>
 
-        <r:script>
+        <asset:script type="text/javascript">
             // Global var to pass GSP vars into JS file
             // @TODO replace bhl and trove with literatureSource list
             var SHOW_CONF = {
@@ -1316,7 +1318,7 @@
                 scientificName:     "${tc?.taxonConcept?.nameString ?: ''}",
                 rankString:         "${tc?.taxonConcept?.rankString ?: ''}",
                 taxonRankID:        "${tc?.taxonConcept?.rankID ?: ''}",
-                synonymsQuery:      "${synonymsQuery.replaceAll('""','"').encodeAsJavaScript()}",
+                synonymsQuery:      "${synonymsQuery.replaceAll('\"\"','\"').encodeAsJavaScript()}",
                 preferredImageId:   "${tc?.imageIdentifier?: ''}",
                 citizenSciUrl:      "${citizenSciUrl}",
                 serverName:         "${grailsApplication.config.grails.serverURL}",
@@ -1346,15 +1348,15 @@
                 likeUrl: "${createLink(controller: 'imageClient', action: 'likeImage')}",
                 dislikeUrl: "${createLink(controller: 'imageClient', action: 'dislikeImage')}",
                 userRatingUrl: "${createLink(controller: 'imageClient', action: 'userRating')}",
-                disableLikeDislikeButton: ${authService.getUserId() ? false : true},
-                userRatingHelpText: '<div><b>Up vote (<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>) an image:</b>'+
-                ' Image supports the identification of the species or is representative of the species.  Subject is clearly visible including identifying features.<br /><br />'+
+                disableLikeDislikeButton: "${authService.getUserId() ? false : true}",
+                userRatingHelpText: '<div><b>Up vote (<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>) an image:</b>' +
+                ' Image supports the identification of the species or is representative of the species.  Subject is clearly visible including identifying features.<br /><br />' +
                 '<b>Down vote (<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>) an image:</b>'+
                 ' Image does not support the identification of the species, subject is unclear and identifying features are difficult to see or not visible.<br /><br /></div>',
                 savePreferredSpeciesListUrl: "${createLink(controller: 'imageClient', action: 'saveImageToSpeciesList')}",
                 getPreferredSpeciesListUrl: "${grailsApplication.config.speciesList.baseURL}",
-                addPreferenceButton: ${authService?.getUserId() ? (authService.getUserForUserId(authService.getUserId())?.roles?.contains("ROLE_ADMIN") ? true : false) : false},
-                mapOutline: ${grailsApplication.config.map.outline ?: 'false'},
+                addPreferenceButton: "${authService?.getUserId() ? (authService.getUserForUserId(authService.getUserId())?.roles?.contains('ROLE_ADMIN') ? true : false) : false}",
+                mapOutline: "${grailsApplication.config.map.outline ?: 'false'}",
                 mapEnvOptions: "${grailsApplication.config.map.env?.options?:'color:' + grailsApplication.config.map.records.colour+ ';name:circle;size:4;opacity:0.8'}"
             };
 
@@ -1391,6 +1393,6 @@
                     openTab(window.location.hash);
                 }
             });
-        </r:script>
+        </asset:script>
     </body>
 </html>
