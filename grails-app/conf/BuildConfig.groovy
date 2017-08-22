@@ -42,7 +42,7 @@ grails.project.dependency.resolution = {
         // plugins for the build system only
         build ":tomcat:7.0.70"
 
-        compile ":asset-pipeline:2.13.1"
+        compile ":asset-pipeline:2.14.1"
         compile ":cache:1.1.8"
         compile ":jquery:1.11.1"
         compile ":elurikkus-bie:1.3.0-SNAPSHOT"
