@@ -1,36 +1,40 @@
-<p class="activeFilters">
-    <b>
+<p class="active-filters">
+    <span class="active-filters__title">
         <g:message code="activefilters.title" />
-    </b>
+    </span>
 
     <g:each var="item" in="${facetMap}" status="facetIdx">
-        <button class="erk-button erk-button--light erk-button--inline" onclick="removeFacet(${facetIdx});">
-            <g:if test="${item.key?.contains("uid")}">
-                <g:set var="resourceType">
-                    ${item.value}_resourceType
-                </g:set>
+        <span class="active-filters__filter">
+            <span class="activ-filters__label">
+                <g:if test="${item.key?.contains("uid")}">
+                    <g:set var="resourceType">
+                        ${item.value}_resourceType
+                    </g:set>
 
-                ${collectionsMap?.get(resourceType)}: ${collectionsMap?.get(item.value)}
-            </g:if>
+                    ${collectionsMap?.get(resourceType)}: ${collectionsMap?.get(item.value)}
+                </g:if>
 
-            <g:else>
-                <%-- TODO: Test it --%>
-                <g:message code="facet.${item.key}" default="${item.key}" />:
-                <g:message code="${item.key}.${item.value}" default="${item.value}" />
-            </g:else>
-
-            <span>
-                ×
+                <g:else>
+                    <%-- TODO: Test it --%>
+                    <g:message code="facet.${item.key}" default="${item.key}" />:
+                    <g:message code="${item.key}.${item.value}" default="${item.value}" />
+                </g:else>
             </span>
-        </button>
+
+            <span
+                class="fa fa-close active-filters__close-button"
+                onclick="removeFacet(${facetIdx});"
+            >
+            </span>
+        </span>
     </g:each>
 
-    <%--
-        TODO: Clear all filters button
-    --%>
     <g:if test="${facetMap?.size() > 1}">
-        <button class="erk-button erk-button--light erk-button--inline" onclick="removeAllFacets();">
+        <span
+            class="active-filters__clear-all-button"
+            onclick="removeAllFacets();"
+        >
             <g:message code="general.btn.clearAll" />
-        </button>
+        </span>
     </g:if>
 </p>
