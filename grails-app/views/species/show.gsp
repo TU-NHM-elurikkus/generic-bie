@@ -239,7 +239,7 @@
                                             </h3>
                                         </div>
 
-                                        <div class="card-block">
+                                        <div class="card-body">
                                             <g:render template="onlineResources" plugin="bie-plugin" />
                                         </div>
                                     </div>
@@ -311,7 +311,7 @@
                                             </h3>
                                         </div>
 
-                                        <div class="card-block">
+                                        <div class="card-body">
                                             <p>
                                                 <strong>
                                                     <span class="datasetCount">0</span>
@@ -1084,7 +1084,7 @@
                 <h3 class="card-title title"></h3>
             </div>
 
-            <div class="card-block">
+            <div class="card-body">
                 <p class="content"></p>
             </div>
 

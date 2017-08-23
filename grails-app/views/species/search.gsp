@@ -60,7 +60,7 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="card card-block filters-container">
+                        <div class="card card-body filters-container">
                             <h2 class="card-title">
                                 <g:message code="search.facets.refine" />
                             </h2>
@@ -160,7 +160,7 @@
                     </div>
 
                     <div class="col-md-9">
-                        <div id="search-results" class="card card-block">
+                        <div id="search-results" class="card card-body">
                             <div class="search-controls">
                                 <g:if test="${idxTypes.contains("TAXON")}">
                                     <g:set var="downloadUrl" value="${grailsApplication.config.bie.index.url}/download?${request.queryString?:''}${grailsApplication.config.bieService.queryContext}" />

@@ -1,14 +1,12 @@
 //= require jquery
+//= require common
 //= require jquery.sortElemets
 //= require jquery.htmlClean
 //= require jquery.qtip.min
 //= require jquery.jsonp-2.3.1.min
 //= require leaflet
-//= require tether.min
-//= require bootstrap.min
 //= require ekko-lightbox-5.2.0
 //= require moment.min
-//= require common
 //= require ala-charts
 //= require species.show
 //= require search
