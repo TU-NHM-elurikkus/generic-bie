@@ -976,7 +976,8 @@
                                             href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-records"
                                             class="page-header-links__link"
                                         >
-                                            <g:message code="show.records.list.title" />
+                                            <span class="fa fa-list"></span>
+                                            <g:message code="show.map.btn.viewRecords" />
                                             <g:message code="show.records.recordCount.title" />
                                         </a>
 
@@ -984,7 +985,7 @@
                                             href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-map"
                                             class="page-header-links__link"
                                         >
-                                            <g:message code="show.records.map.title" />
+                                            <g:message code="show.map.btn.viewMap" />
                                             <g:message code="show.records.recordCount.title" />
                                         </a>
                                     </div>
