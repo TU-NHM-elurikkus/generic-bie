@@ -164,7 +164,12 @@ function injectBiocacheResults() {
         success:  function(data) {
             var maxItems = parseInt(data.totalRecords);
             var url = SEARCH_CONF.biocacheUrl + '/occurrences/search?q=' + queryToUse;
-            var html = '<a href=\'' + url + '\' class=\'page-header-links__link\'>Occurrence records</a> (' + numberWithCommas(maxItems) + ')';
+            var html =
+            '<a href="' + url + '" class="page-header-links__link">' +
+                '<span class="fa fa-list"></span>\n' +
+                'View records' +
+            '</a>' +
+            '(' + numberWithCommas(maxItems) + ')';
 
             insertSearchLinks(html);
         }
