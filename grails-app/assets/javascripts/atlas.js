@@ -2,7 +2,6 @@
 //= require common
 //= require jquery.sortElemets
 //= require jquery.htmlClean
-//= require jquery.qtip.min
 //= require jquery.jsonp-2.3.1.min
 //= require leaflet
 //= require ekko-lightbox-5.2.0
