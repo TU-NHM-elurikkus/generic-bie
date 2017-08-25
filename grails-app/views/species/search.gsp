@@ -90,7 +90,7 @@
                                                 <g:message code="facet.${facetResult.fieldName}" default="${facetResult.fieldName}" />
                                             </h4>
 
-                                            <ul class="list-unstyled">
+                                            <ul class="list-unstyled" id="facet-${facetResult.fieldName}-list">
                                                 <g:set var="lastElement" value="${facetResult.fieldResult?.get(facetResult.fieldResult.length() - 1)}" />
 
                                                 <g:if test="${lastElement.label == 'before'}">
@@ -114,7 +114,12 @@
                                                     </g:set>
 
                                                     <g:if test="${facetResult.fieldName?.contains("occurrence_date") && fieldResult.label?.endsWith("Z")}">
-                                                        <li>
+                                                        <g:if test="${vs > 4}">
+                                                            <li class="collapse">
+                                                        </g:if>
+                                                        <g:else>
+                                                            <li>
+                                                        </g:else>
                                                             <g:set var="startYear" value="${fieldResult.label?.substring(0, 4)}" />
                                                             <a href="?${queryParam}${appendQueryParam}&fq=${facetResult.fieldName}:[${fieldResult.label} TO ${dateRangeTo}]">
                                                                 ${startYear} - ${startYear + 10}
@@ -127,11 +132,15 @@
                                                         <%-- skip --%>
                                                     </g:elseif>
 
-                                                    <g:elseif test="${fieldResult.label?.isEmpty()}">
-                                                    </g:elseif>
+                                                    <g:elseif test="${fieldResult.label?.isEmpty()}"></g:elseif>
 
                                                     <g:else>
-                                                        <li>
+                                                        <g:if test="${vs > 4}">
+                                                            <li class="collapse">
+                                                        </g:if>
+                                                        <g:else>
+                                                            <li>
+                                                        </g:else>
                                                             <a href="?${request.queryString}&fq=${facetResult.fieldName}:%22${fieldResult.label}%22">
                                                                 <g:message code="${facetResult.fieldName}.${fieldResult.label}" default="${fieldResult.label?:"[unknown]"}" />
                                                             </a>
@@ -139,18 +148,19 @@
                                                         </li>
                                                     </g:else>
                                                 </g:each>
+
                                             </ul>
 
                                             <g:if test="${facetResult.fieldResult.size() > 5}">
-                                                <a class="expand-options" href="javascript:void(0)">
-                                                    <%-- Sounds good, doesn't work...
-                                                    ToDo: The point of this part is to show maximum of 5 result per
-                                                    facet and 'show more' button after that which, when clicked, shows
-                                                    others as well. Not sure if it is needed functionality, but
-                                                    currently the link-button does nothing
-                                                    --%>
-                                                    <g:message code="search.facets.showMore" />
-                                                </a>
+                                                <ul class="list-unstyled">
+                                                    <a
+                                                        class="expand-options"
+                                                        href="#facet-${facetResult.fieldName}-list .collapse"
+                                                        data-toggle="collapse"
+                                                    >
+                                                        <g:message code="search.facets.showMore" />
+                                                    </a>
+                                                </ul>
                                             </g:if>
                                         </div>
                                     </g:if>

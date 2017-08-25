@@ -68,10 +68,10 @@ $(function() {
     $('.refine-box h2 a').click(function() {
         $(this).children('.glyphicon').toggleClass('glyphicon-chevron-down glyphicon-chevron-up');
     });
+
     $('a.expand-options').click(function() {
         $(this).text(function(i, text) {
             return text.trim() === 'More' ? 'Less' : 'More';
         });
-        $(this).prev('.collapse').collapse('toggle');
     });
 });
