@@ -50,7 +50,7 @@ a.expand-options {
     margin-top: 0;
 }
 
-.step .currentStep {
+.step, .currentStep {
     padding-right: 0.5em;
 }
 
