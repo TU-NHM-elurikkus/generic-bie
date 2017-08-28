@@ -412,7 +412,7 @@ var entityMap = {
 };
 
 function escapeHtml(string) {
-    return String(string).replace(/[&<>"'\/]/g, function (s) {
+    return String(string).replace(/[&<>"'\/]/g, function(s) {
         return entityMap[s];
     });
 }
@@ -420,18 +420,16 @@ function escapeHtml(string) {
 /**
  * Load overview images on the species page. This is separate from the main galleries.
  */
-function loadOverviewImages(){
-    console.info("HEHEAH");
+function loadOverviewImages() {
     var hasPreferredImage = false; // Could get a race condition where no main image gets loaded due callbacks
 
-    if (SHOW_CONF.preferredImageId) {
+    if(SHOW_CONF.preferredImageId) {
         hasPreferredImage = true;
-        var prefUrl = SHOW_CONF.biocacheServiceUrl  +
+        var prefUrl = SHOW_CONF.biocacheServiceUrl +
             '/occurrences/search.json?q=image_url:' + SHOW_CONF.preferredImageId +
             '&fq=-assertion_user_id:*&im=true&facet=off&pageSize=1&start=0&callback=?';
-        $.getJSON(prefUrl, function(data){
-            //console.log("prefUrl", prefUrl, data);
-            if (data && data.totalRecords > 0) {
+        $.getJSON(prefUrl, function(data) {
+            if(data && data.totalRecords > 0) {
                 addOverviewImage(data.occurrences[0]);
                 hasPreferredImage = true;
             } else {
@@ -444,14 +442,13 @@ function loadOverviewImages(){
         });
     }
 
-    var url = SHOW_CONF.biocacheServiceUrl  +
+    var url = SHOW_CONF.biocacheServiceUrl +
         '/occurrences/search.json?q=lsid:' +
         SHOW_CONF.guid +
         '&fq=multimedia:"Image"&fq=-assertion_user_id:*&im=true&facet=off&pageSize=5&start=0&callback=?';
-    //console.log('Loading images from: ' + url);
 
-    $.getJSON(url, function(data){
-        if (data && data.totalRecords > 0) {
+    $.getJSON(url, function(data) {
+        if(data && data.totalRecords > 0) {
             addOverviewImages(data.occurrences, hasPreferredImage);
         }
     }).fail(function(jqxhr, textStatus, error) {
