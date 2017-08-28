@@ -1055,7 +1055,6 @@
             </div><!-- end main-content -->
         </div>
 
-        <!-- taxon-summary-thumb template -->
         <div id="taxon-summary-thumb-template" class="taxon-summary-thumb hidden-node" style="">
             <a data-toggle="lightbox"
                data-gallery="taxon-summary-gallery"
@@ -1071,12 +1070,10 @@
             class="taxon-thumb hidden-node"
             data-toggle="lightbox"
             data-gallery="main-image-gallery"
-            data-footer=""
             href=""
         >
             <img src="" alt="" />
-            <div class="thumb-caption caption-brief"></div>
-            <div class="thumb-caption caption-detail"></div>
+            <div class="thumb-caption"></div>
         </a>
 
         <!-- description template -->
