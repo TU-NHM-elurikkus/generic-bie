@@ -1368,10 +1368,14 @@
             $(function(){
                 showSpeciesPage();
 
-                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
                     var target = $(e.target).attr("href");
 
-                    window.location.hash = target;
+                    if(window.history) {
+                        window.history.replaceState({}, '', target);
+                    } else {
+                        window.location.hash = target;
+                    }
 
                     if(target == "#records") {
                         $('#charts').html('');  //prevent multiple loads
