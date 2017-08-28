@@ -306,21 +306,7 @@ a.expand-options {
     /* oddly specific */
 }
 
-.caption-detail {
-    display: none;
-}
-
-.taxon-thumb:hover .caption-brief {
-    display: none;
-}
-
-.taxon-thumb:hover .caption-detail {
-    display: block;
-}
-
-
 /* Taxon Names tab */
-
 .name-table ul {
     margin: 0;
     padding-left: 25px;

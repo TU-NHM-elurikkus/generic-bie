@@ -341,7 +341,7 @@ var entityMap = {
 };
 
 function escapeHtml(string) {
-    return String(string).replace(/[&<>"'\/]/g, function (s) {
+    return String(string).replace(/[&<>"'\/]/g, function(s) {
         return entityMap[s];
     });
 }
@@ -349,17 +349,16 @@ function escapeHtml(string) {
 /**
  * Load overview images on the species page. This is separate from the main galleries.
  */
-function loadOverviewImages(){
+function loadOverviewImages() {
     var hasPreferredImage = false; // Could get a race condition where no main image gets loaded due callbacks
 
-    if (SHOW_CONF.preferredImageId) {
+    if(SHOW_CONF.preferredImageId) {
         hasPreferredImage = true;
-        var prefUrl = SHOW_CONF.biocacheServiceUrl  +
+        var prefUrl = SHOW_CONF.biocacheServiceUrl +
             '/occurrences/search.json?q=image_url:' + SHOW_CONF.preferredImageId +
             '&fq=-assertion_user_id:*&im=true&facet=off&pageSize=1&start=0&callback=?';
-        $.getJSON(prefUrl, function(data){
-            //console.log("prefUrl", prefUrl, data);
-            if (data && data.totalRecords > 0) {
+        $.getJSON(prefUrl, function(data) {
+            if(data && data.totalRecords > 0) {
                 addOverviewImage(data.occurrences[0]);
                 hasPreferredImage = true;
             } else {
@@ -372,14 +371,13 @@ function loadOverviewImages(){
         });
     }
 
-    var url = SHOW_CONF.biocacheServiceUrl  +
+    var url = SHOW_CONF.biocacheServiceUrl +
         '/occurrences/search.json?q=lsid:' +
         SHOW_CONF.guid +
         '&fq=multimedia:"Image"&fq=-assertion_user_id:*&im=true&facet=off&pageSize=5&start=0&callback=?';
-    //console.log('Loading images from: ' + url);
 
-    $.getJSON(url, function(data){
-        if (data && data.totalRecords > 0) {
+    $.getJSON(url, function(data) {
+        if(data && data.totalRecords > 0) {
             addOverviewImages(data.occurrences, hasPreferredImage);
         }
     }).fail(function(jqxhr, textStatus, error) {
@@ -485,14 +483,10 @@ function loadGalleryType(category, start) {
                 $taxonThumb.attr('id', 'thumb_' + category + i);
                 $taxonThumb.attr('href', el.largeImageUrl);
                 $taxonThumb.find('img').attr('src', el.smallImageUrl);
-                // turned off 'onerror' below as IE11 hides all images
-                // $taxonThumb.find('img').attr('onerror',"$(this).parent().hide();"); // hide broken images
 
                 // brief metadata
                 var briefHtml = getImageTitleFromOccurrence(el);
-                $taxonThumb.find('.caption-brief').html(briefHtml);
-                $taxonThumb.attr('data-title', briefHtml);
-                $taxonThumb.find('.caption-detail').html(briefHtml);
+                $taxonThumb.find('.thumb-caption').html(briefHtml);
 
                 // write to DOM
                 $taxonThumb.attr('data-footer', getImageFooterFromOccurrence(el));
@@ -506,9 +500,14 @@ function loadGalleryType(category, start) {
             if(data.totalRecords > (start + pageSize)) {
                 // add new 'load more images' button if required
                 var spinnerLink = $('img#gallerySpinner').attr('src');
-                btnLabel = 'Load more';  // ToDo: translation key == general.btn.loadMore
-                var btn = '<div class="loadMore ' + category + '"><br><button type="button" class="erk-button erk-button--light" onCLick="loadGalleryType(\'' + category + '\','
-                    + (start + pageSize) + ');">' + btnLabel + ' <img src="' + spinnerLink + '" class="hidden-node"/></button></div>';
+                var btnLabel = 'Load more';  // ToDo: translation key == general.btn.loadMore
+                var btn =
+                    '<div class="loadMore ' + category + '">' +
+                        '<br />' +
+                        '<button type="button" class="erk-button erk-button--light" onCLick="loadGalleryType(\'' + category + '\',' + (start + pageSize) + ');">' +
+                            btnLabel + ' <img src="' + spinnerLink + '" class="hidden-node" />' +
+                        '</button>' +
+                    '</div>';
                 $categoryTmpl.find('.taxon-gallery').append(btn);
             }
         }

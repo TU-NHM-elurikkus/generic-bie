@@ -10,6 +10,7 @@
     },
     "globals": {
         "$": true,
+        "L": true,
         "moment": true
     },
     "extends": "eslint:recommended",
