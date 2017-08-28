@@ -1059,7 +1059,6 @@
             </div><!-- end main-content -->
         </div>
 
-        <!-- taxon-summary-thumb template -->
         <div id="taxon-summary-thumb-template" class="taxon-summary-thumb hidden-node" style="">
             <a data-toggle="lightbox"
                data-gallery="taxon-summary-gallery"
@@ -1075,12 +1074,10 @@
             class="taxon-thumb hidden-node"
             data-toggle="lightbox"
             data-gallery="main-image-gallery"
-            data-footer=""
             href=""
         >
             <img src="" alt="" />
-            <div class="thumb-caption caption-brief"></div>
-            <div class="thumb-caption caption-detail"></div>
+            <div class="thumb-caption"></div>
         </a>
 
         <!-- description template -->
@@ -1372,10 +1369,14 @@
             $(function(){
                 showSpeciesPage();
 
-                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
                     var target = $(e.target).attr("href");
 
-                    window.location.hash = target;
+                    if(window.history) {
+                        window.history.replaceState({}, '', target);
+                    } else {
+                        window.location.hash = target;
+                    }
 
                     if(target == "#records") {
                         $('#charts').html('');  //prevent multiple loads

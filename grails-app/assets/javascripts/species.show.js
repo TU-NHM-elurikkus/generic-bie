@@ -21,10 +21,6 @@ function showSpeciesPage() {
     loadExternalSources();
     loadSpeciesLists();
     loadDataProviders();
-    loadIndigenousData();
-    //
-    // setup controls
-    addAlerts();
 
     loadReferences('plutof-references', SHOW_CONF.guid);
 }
@@ -69,23 +65,6 @@ function loadSpeciesLists() {
                 $description.appendTo('#listContent');
             }
         }
-    });
-}
-
-function addAlerts() {
-    // alerts button
-    $('#alertsButton').click(function(e) {
-        e.preventDefault();
-        var query = 'Species: ' + SHOW_CONF.scientificName;
-        var searchString = '?q=' + SHOW_CONF.guid;
-        var url = SHOW_CONF.alertsUrl + '/webservice/createBiocacheNewRecordsAlert?';
-        url += 'queryDisplayName=' + encodeURIComponent(query);
-        url += '&baseUrlForWS=' + encodeURIComponent(SHOW_CONF.biocacheUrl);
-        url += '&baseUrlForUI=' + encodeURIComponent(SHOW_CONF.serverName);
-        url += '&webserviceQuery=%2Fws%2Foccurrences%2Fsearch' + encodeURIComponent(searchString);
-        url += '&uiQuery=%2Foccurrences%2Fsearch%3Fq%3D*%3A*';
-        url += '&resourceName=' + encodeURIComponent('Atlas');
-        window.location.href = url;
     });
 }
 
@@ -228,73 +207,6 @@ function loadDataProviders() {
     });
 }
 
-function loadIndigenousData() {
-
-    if(!SHOW_CONF.profileServiceUrl || SHOW_CONF.profileServiceUrl === '') {
-        return;
-    }
-
-    var url = SHOW_CONF.profileServiceUrl + '/api/v1/profiles?summary=true&tags=IEK&guids=' + SHOW_CONF.guid;
-    $.getJSON(url, function(data) {
-        if(data.total > 0) {
-            $('#indigenous-info-tab').parent().removeClass('hidden-node');
-
-            $.each(data.profiles, function(index, profile) {
-                var panel = $('#indigenous-profile-summary-template').clone();
-                panel.removeClass('hidden-node');
-                panel.attr('id', profile.id);
-
-                var logo = profile.collection.logo || SHOW_CONF.noImage100Url;
-                panel.find('.collection-logo').append('<img src=\'' + logo + '\' alt=\'' + profile.collection.title + ' logo\'>');
-                panel.find('.collection-logo-caption').append(profile.collection.title);
-
-                panel.find('.profile-name').append(profile.name);
-                panel.find('.collection-name').append('(' + profile.collection.title + ')');
-                var otherNames = '';
-                var summary = '';
-                $.each(profile.attributes, function(index, attribute) {
-                    if(attribute.name) {
-                        otherNames += attribute.text;
-                        if(index < profile.attributes.length - 2) {
-                            otherNames += ', ';
-                        }
-                    }
-                    if(attribute.summary) {
-                        summary = attribute.text;
-                    }
-                });
-                panel.find('.other-names').append(otherNames);
-                panel.find('.summary-text').append(summary);
-                panel.find('.profile-link').append('<a href=\'' + profile.url + '\' title=\'Click to view the whole profile\' target=\'_blank\'>View the full profile</a>');
-
-                if(profile.thumbnailUrl) {
-                    panel.find('.main-image').removeClass('hidden-node');
-
-                    panel.find('.image-embedded').append('<img src=\'' + profile.thumbnailUrl + '\' alt=\'' + profile.collection.title + ' main image\'>');
-                }
-
-                if(profile.mainVideo) {
-                    panel.find('.main-video').removeClass('hidden-node');
-                    panel.find('.video-name').append(profile.mainVideo.name);
-                    panel.find('.video-attribution').append(profile.mainVideo.attribution);
-                    panel.find('.video-license').append(profile.mainVideo.license);
-                    panel.find('.video-embedded').append(profile.mainVideo.embeddedVideo);
-                }
-
-                if(profile.mainAudio) {
-                    panel.find('.main-audio').removeClass('hidden-node');
-                    panel.find('.audio-name').append(profile.mainAudio.name);
-                    panel.find('.audio-attribution').append(profile.mainAudio.attribution);
-                    panel.find('.audio-license').append(profile.mainAudio.license);
-                    panel.find('.audio-embedded').append(profile.mainAudio.embeddedAudio);
-                }
-
-                panel.appendTo('#indigenous-info');
-            });
-        }
-    });
-}
-
 function loadExternalSources() {
     // load EOL content
     $.ajax({ url: SHOW_CONF.eolUrl }).done(function(data) {
@@ -349,16 +261,33 @@ function loadExternalSources() {
     // load sound content
     $.ajax({ url: SHOW_CONF.soundUrl }).done(function(data) {
         if(data.sounds) {
+            var formats = data.sounds[0].alternativeFormats;
+            var links = [];
+
+            for(var format in formats) {
+                links.push(formats[format]);
+            }
+
+            if(!links) {
+                return;
+            }
+
+            var source = links[0];
+
             var soundsDiv = '<div class="panel panel-default"><div class="panel-heading">';
             soundsDiv += '<h3 class="panel-title">Sounds</h3></div><div class="panel-body">';
             soundsDiv += '<audio controls class="audio-player">';
-            soundsDiv += '<source src="' + data.sounds[0].alternativeFormats['audio/mpeg'] + '">';
+
+            soundsDiv += '<source src="' + source + '">';
+
             soundsDiv += "Your browser doesn't support playing audio</audio>"
-            var source = '';
+            soundsDiv += '</div><div class="panel-footer audio-player-footer"><p>';
 
             if(data.processed.attribution.collectionName) {
+                var source = '';
                 var attrUrl = '';
                 var attrUrlPrefix = SHOW_CONF.collectoryUrl + '/public/show/';
+
                 if(data.raw.attribution.dataResourceUid) {
                     attrUrl = attrUrlPrefix + data.raw.attribution.dataResourceUid;
                 } else if(data.processed.attribution.collectionUid) {
@@ -376,14 +305,14 @@ function loadExternalSources() {
                     source += data.processed.attribution.collectionName;
                 }
 
-            } else {
-                source += 'Source: ' + data.processed.attribution.dataResourceName;
+                soundsDiv += source + '<br />';
+            } else if(data.processed.attribution.dataResourceName) {
+                soundsDiv += 'Source: ' + data.processed.attribution.dataResourceName;
             }
 
-            soundsDiv += '</div><div class="panel-footer audio-player-footer"><p>';
-            soundsDiv += source + '<br>';
             soundsDiv += '<a href="' + SHOW_CONF.biocacheUrl + '/occurrence/' + data.raw.uuid + '">View more details of this audio</a>';
             soundsDiv += '</p></div></div>';
+
             $('#sounds').append(soundsDiv);
         }
     }).fail(function(jqXHR, textStatus, errorThrown) {
@@ -412,7 +341,7 @@ var entityMap = {
 };
 
 function escapeHtml(string) {
-    return String(string).replace(/[&<>"'\/]/g, function (s) {
+    return String(string).replace(/[&<>"'\/]/g, function(s) {
         return entityMap[s];
     });
 }
@@ -420,17 +349,16 @@ function escapeHtml(string) {
 /**
  * Load overview images on the species page. This is separate from the main galleries.
  */
-function loadOverviewImages(){
+function loadOverviewImages() {
     var hasPreferredImage = false; // Could get a race condition where no main image gets loaded due callbacks
 
-    if (SHOW_CONF.preferredImageId) {
+    if(SHOW_CONF.preferredImageId) {
         hasPreferredImage = true;
-        var prefUrl = SHOW_CONF.biocacheServiceUrl  +
+        var prefUrl = SHOW_CONF.biocacheServiceUrl +
             '/occurrences/search.json?q=image_url:' + SHOW_CONF.preferredImageId +
             '&fq=-assertion_user_id:*&im=true&facet=off&pageSize=1&start=0&callback=?';
-        $.getJSON(prefUrl, function(data){
-            //console.log("prefUrl", prefUrl, data);
-            if (data && data.totalRecords > 0) {
+        $.getJSON(prefUrl, function(data) {
+            if(data && data.totalRecords > 0) {
                 addOverviewImage(data.occurrences[0]);
                 hasPreferredImage = true;
             } else {
@@ -443,14 +371,13 @@ function loadOverviewImages(){
         });
     }
 
-    var url = SHOW_CONF.biocacheServiceUrl  +
+    var url = SHOW_CONF.biocacheServiceUrl +
         '/occurrences/search.json?q=lsid:' +
         SHOW_CONF.guid +
         '&fq=multimedia:"Image"&fq=-assertion_user_id:*&im=true&facet=off&pageSize=5&start=0&callback=?';
-    //console.log('Loading images from: ' + url);
 
-    $.getJSON(url, function(data){
-        if (data && data.totalRecords > 0) {
+    $.getJSON(url, function(data) {
+        if(data && data.totalRecords > 0) {
             addOverviewImages(data.occurrences, hasPreferredImage);
         }
     }).fail(function(jqxhr, textStatus, error) {
@@ -556,14 +483,10 @@ function loadGalleryType(category, start) {
                 $taxonThumb.attr('id', 'thumb_' + category + i);
                 $taxonThumb.attr('href', el.largeImageUrl);
                 $taxonThumb.find('img').attr('src', el.smallImageUrl);
-                // turned off 'onerror' below as IE11 hides all images
-                // $taxonThumb.find('img').attr('onerror',"$(this).parent().hide();"); // hide broken images
 
                 // brief metadata
                 var briefHtml = getImageTitleFromOccurrence(el);
-                $taxonThumb.find('.caption-brief').html(briefHtml);
-                $taxonThumb.attr('data-title', briefHtml);
-                $taxonThumb.find('.caption-detail').html(briefHtml);
+                $taxonThumb.find('.thumb-caption').html(briefHtml);
 
                 // write to DOM
                 $taxonThumb.attr('data-footer', getImageFooterFromOccurrence(el));
@@ -577,9 +500,14 @@ function loadGalleryType(category, start) {
             if(data.totalRecords > (start + pageSize)) {
                 // add new 'load more images' button if required
                 var spinnerLink = $('img#gallerySpinner').attr('src');
-                btnLabel = 'Load more';  // ToDo: translation key == general.btn.loadMore
-                var btn = '<div class="loadMore ' + category + '"><br><button type="button" class="erk-button erk-button--light" onCLick="loadGalleryType(\'' + category + '\','
-                    + (start + pageSize) + ');">' + btnLabel + ' <img src="' + spinnerLink + '" class="hidden-node"/></button></div>';
+                var btnLabel = 'Load more';  // ToDo: translation key == general.btn.loadMore
+                var btn =
+                    '<div class="loadMore ' + category + '">' +
+                        '<br />' +
+                        '<button type="button" class="erk-button erk-button--light" onCLick="loadGalleryType(\'' + category + '\',' + (start + pageSize) + ');">' +
+                            btnLabel + ' <img src="' + spinnerLink + '" class="hidden-node" />' +
+                        '</button>' +
+                    '</div>';
                 $categoryTmpl.find('.taxon-gallery').append(btn);
             }
         }
