@@ -1,10 +1,4 @@
-/*
-*= require leaflet
-*= require ekko-lightbox-5.2.0
-*= require elurikkus-common
-*= require species
-*= require ala-charts
-*/
+/* = require leaflet = require ekko-lightbox-5.2.0 = require elurikkus-common = require species = require ala-charts */
 
 .audio-player {
     width: 100%;
@@ -14,9 +8,9 @@
 /* Panels */
 
 .panel-footer p {
+    margin: 0;
     font-size: 12px;
     line-height: 14px;
-    margin: 0;
 }
 
 .audio-player-footer {
@@ -24,10 +18,10 @@
 }
 
 a.expand-options {
-    border-top: 1px solid #e3e3e3;
     display: block;
-    padding-top: 2px;
     margin-top: 6px;
+    padding-top: 2px;
+    border-top: 1px solid #e3e3e3;
 }
 
 
@@ -38,16 +32,16 @@ a.expand-options {
 }
 
 .search-result {
-    border-top: 1px solid #ddd;
     padding-top: 16px;
     padding-bottom: 15px;
+    border-top: 1px solid #ddd;
 }
 
 .search-result h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
     font-size: 17px;
     line-height: 21px;
-    margin-bottom: 5px;
-    margin-top: 0;
 }
 
 .step .currentStep {
@@ -68,19 +62,20 @@ a.expand-options {
 }
 
 .result-thumbnail img {
-    max-height: 150px;
     max-width: 300px;
+    max-height: 150px;
 }
 
 .page-taxon {
     width: 100%;
 }
 
+
 /* Taxon header */
 
 .pg-header {
-    padding-bottom: 20px;
     margin-top: 20px;
+    padding-bottom: 20px;
 }
 
 .taxonomy-bcrumb li {
@@ -104,27 +99,27 @@ a.expand-options {
 /* Taxon column gutters */
 
 .taxon-row {
-    margin-left: -10px;
     margin-right: -10px;
+    margin-left: -10px;
 }
 
 .taxon-row>div[class*="col-"] {
-    padding-left: 10px;
     padding-right: 10px;
+    padding-left: 10px;
 }
 
 
 /* Taxon summary gallery */
 
 .taxon-summary-gallery {
-    border-radius: 4px;
-    overflow: hidden;
     margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 4px;
 }
 
 .taxon-summary-gallery .main-img {
-    background-color: #3a3a3a;
     position: relative;
+    background-color: #3a3a3a;
 }
 
 .taxon-summary-gallery .main-img:hover {
@@ -137,12 +132,12 @@ a.expand-options {
 }
 
 .taxon-summary-gallery .main-img .caption {
-    background: rgba(0, 0, 0, 0.5);
-    color: #fff;
     position: absolute;
     bottom: 0;
     left: 0;
     padding: 4px 8px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
     font-size: 12px;
     line-height: 14px;
 }
@@ -153,13 +148,13 @@ a.expand-options {
 }
 
 .taxon-summary-thumb {
+    position: relative;
     width: 25%;
+    float: left;
     padding-top: 25%;
     border-left: 1px solid #fff;
-    float: left;
-    position: relative;
-    background-size: cover;
     background-position: center center;
+    background-size: cover;
 }
 
 .taxon-summary-thumb:hover {
@@ -184,24 +179,24 @@ a.expand-options {
 }
 
 .taxon-summary-thumb .more-photos span {
-    color: #fff;
-    font-size: 50px;
-    line-height: 50px;
-    width: 50px;
-    text-align: center;
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 50px;
     margin-top: -25px;
     margin-left: -25px;
+    color: #fff;
+    text-align: center;
+    font-size: 50px;
+    line-height: 50px;
 }
 
 
 /* Taxon resources */
 
 .panel-resources .panel-body {
-    -webkit-columns: 150px 2;
     -moz-columns: 150px 2;
+    -webkit-columns: 150px 2;
     columns: 150px 2;
 }
 
@@ -217,8 +212,8 @@ a.expand-options {
 }
 
 .taxon-map h3 {
-    font-size: 24px;
     padding-bottom: 1rem;
+    font-size: 24px;
 }
 
 #leafletMap {
@@ -227,23 +222,25 @@ a.expand-options {
     background-color: #ebebeb;
 }
 
-.map-buttons {
-    border-top: 1px solid #fff;
-    border-radius: 0 0 4px 4px;
-    overflow: hidden;
-    padding-top: 1rem;
-    text-align: center;
-    font-size: 20px;
+.map-button-outer {
+    padding-top: 2px;
+    padding-right: 2px;
+    padding-left: 0;
+    color: white;
+}
+
+.map-button-inner {
+    line-height: 40px;
 }
 
 
 /* Taxon actions */
 
 .panel-actions .panel-body {
-    padding-bottom: 4px;
     padding-top: 19px;
-    -webkit-columns: 150px 2;
+    padding-bottom: 4px;
     -moz-columns: 150px 2;
+    -webkit-columns: 150px 2;
     columns: 150px 2;
 }
 
@@ -252,9 +249,9 @@ a.expand-options {
 }
 
 .panel-actions a {
-    padding-left: 21px;
     display: inline-block;
     position: relative;
+    padding-left: 21px;
 }
 
 .panel-actions a .glyphicon {
@@ -266,27 +263,27 @@ a.expand-options {
 
 .loadMore {
     /**
-     * It's nested under .taxon-gallery class, thus needs the same margin as
-     * .taxon-thumb because .taxon-gallery is corrected against it.
-     */
-    margin: 4px
+  * It's nested under .taxon-gallery class, thus needs the same margin as .taxon-thumb because .taxon-gallery is
+  * corrected against it.
+  */
+    margin: 4px;
 }
 
 
 /* Taxon Gallery tab */
 
 .taxon-gallery {
-    line-height: 0;
     margin: 0 -4px;
     padding: 1rem 0;
+    line-height: 0;
 }
 
 .taxon-thumb {
     display: inline-block;
+    position: relative;
     height: 170px;
     margin: 4px;
     overflow: hidden;
-    position: relative;
 }
 
 .taxon-thumb img {
@@ -298,11 +295,11 @@ a.expand-options {
     bottom: 0;
     left: 0;
     width: 100%;
+    padding: 4px 5px;
+    color: #fff;
     background: rgba(0, 0, 0, 0.5);
     font-size: 12px;
     line-height: 14px;
-    color: #fff;
-    padding: 4px 5px;
     /* oddly specific */
 }
 
@@ -363,8 +360,8 @@ a.expand-options {
 }
 
 .result h3 {
-    font-weight: normal;
     border-bottom: 1px solid #fff;
+    font-weight: normal;
 }
 
 .result p {
@@ -373,8 +370,8 @@ a.expand-options {
 
 .thumbnail-container {
     margin: -4px;
-    font-size: 0;
     padding-top: 3px;
+    font-size: 0;
 }
 
 .page-thumbnail {
@@ -404,13 +401,13 @@ a.expand-options {
 /* Taxon Data Providers tab */
 
 .data-providers-list {
-    -webkit-columns: 300px 2;
-    -moz-columns: 300px 2;
-    columns: 300px 2;
-    -webkit-column-gap: 20px;
-    -moz-column-gap: 20px;
-    column-gap: 20px;
     padding-left: 0;
+    -moz-column-gap: 20px;
+    -webkit-column-gap: 20px;
+    column-gap: 20px;
+    -moz-columns: 300px 2;
+    -webkit-columns: 300px 2;
+    columns: 300px 2;
 }
 
 .data-providers-list li {
@@ -446,11 +443,11 @@ a.expand-options {
 
 .annotation {
     display: inline;
-    background: #C8D0E0;
-    font-size: smaller;
     padding: 2px 1ex;
     border: none;
     border-radius: 2px;
+    background: #C8D0E0;
+    font-size: smaller;
 }
 
 
@@ -463,10 +460,8 @@ a.expand-options {
 .chart {
     display: block;
     position: relative;
-
     width: 100%;
     max-width: 1200px;
-
     margin-bottom: 1rem;
     padding-right: 250px;
 }
@@ -475,9 +470,7 @@ a.expand-options {
     position: absolute;
     top: 1rem;
     right: 0;
-
     width: 250px;
-
     font-size: 12px;
 }
 
@@ -496,16 +489,11 @@ a.expand-options {
 /* Hackz */
 
 
-/*
-a.nav-link.active {
-    border-bottom: 1px solid white;
-}
-
-.nav-tabs li.nav-item {
-    padding: 0;
-    margin-bottom: -2px;
-}
-*/
+/**
+ * a.nav-link.active { border-bottom: 1px solid white; }
+ *
+ * .nav-tabs li.nav-item { padding: 0; margin-bottom: -2px; }
+ */
 
 
 /* Allow multiple rows of tabs */
@@ -550,8 +538,8 @@ a.nav-link.active {
 }
 
 .plutof-references__item {
-    list-style-type: none;
     padding-bottom: 1rem;
+    list-style-type: none;
 }
 
 .plutof-references__header {
@@ -562,9 +550,9 @@ a.nav-link.active {
 /* plutof-pagination */
 
 .plutof-pagination__page {
+    margin-right: 0.5rem;
     color: #0587aa;
     cursor: pointer;
-    margin-right: 0.5rem;
 }
 
 .plutof-pagination__page.plutof-pagination__page--current {

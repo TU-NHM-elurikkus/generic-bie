@@ -278,29 +278,33 @@
 
                                         <div id="leafletMap"></div>
 
-                                        <div class="map-buttons row">
-                                            <g:set
-                                                var="recordSearchUrl"
-                                                value="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}"
-                                            />
-
-                                            <a
-                                                class="col-md-6"
-                                                href="${recordSearchUrl}#tab-map"
-                                                title="${message(code: 'show.map.btn.viewMap')}"
-                                                role="button"
-                                            >
-                                                <g:message code="show.map.btn.viewMap" />
-                                            </a>
-                                            <a
-                                                class="col-md-6"
-                                                href="${recordSearchUrl}#tab-records"
-                                                title="${message(code: 'show.map.btn.viewRecords')}"
-                                                role="button"
-                                            >
-                                                <span class="fa fa-list"></span>
-                                                <g:message code="show.map.btn.viewRecords" />
-                                            </a>
+                                        <g:set
+                                            var="recordSearchUrl"
+                                            value="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid}"
+                                        />
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <a
+                                                    class="btn col-md-6 map-button-outer"
+                                                    href="${recordSearchUrl}#tab-map"
+                                                    title="${message(code: 'show.map.btn.viewMap')}"
+                                                >
+                                                    <div class="erk-button--dark map-button-inner">
+                                                        <i class="fa fa-map-marker"></i>
+                                                        <g:message code="show.map.btn.viewMap" />
+                                                    </div>
+                                                </a>
+                                                <a
+                                                    class="btn col-md-6 map-button-outer"
+                                                    href="${recordSearchUrl}#tab-records"
+                                                    title="${message(code: 'show.map.btn.viewRecords')}"
+                                                >
+                                                    <div class="erk-button--dark map-button-inner">
+                                                        <i class="fa fa-list"></i>
+                                                        <g:message code="show.map.btn.viewRecords" />
+                                                    </div>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
 
