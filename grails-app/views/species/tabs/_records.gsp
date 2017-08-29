@@ -21,12 +21,11 @@
                     href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-map"
                     class="page-header-links__link"
                 >
+                    <i class="fa fa-map-marker"></i>
                     <g:message code="show.map.btn.viewMap" />
                     <g:message code="show.records.recordCount.title" />
                 </a>
             </div>
-
-            <%--<div id="chartsHint">Hint: click on chart elements to view that subset of records</div>--%>
 
             <div id="charts"></div>
         </div>
