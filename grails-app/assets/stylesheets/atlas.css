@@ -236,7 +236,7 @@ a.expand-options {
 }
 
 .map-button-inner {
-    line-height: 40px;
+    border-radius: 0;
 }
 
 

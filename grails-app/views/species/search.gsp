@@ -453,8 +453,9 @@
                                                 <g:if test="${grailsApplication.config.occurrenceCounts.enabled.toBoolean() && result?.occurrenceCount?:0 > 0}">
                                                     <li>
                                                         <a href="${biocacheUrl}/occurrences/search?q=lsid:${result.guid}">
-                                                            <g:message code="search.resultList.field.occurrenceCount" />:
-                                                            <g:formatNumber number="${result.occurrenceCount}" />
+                                                            <i class="fa fa-list"></i>
+                                                            <g:message code="show.map.btn.viewRecords" />
+                                                            (<g:formatNumber number="${result.occurrenceCount}" />)
                                                         </a>
                                                     </li>
                                                 </g:if>

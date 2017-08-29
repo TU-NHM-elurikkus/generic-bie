@@ -126,26 +126,26 @@
                 />
                 <div class="container-fluid">
                     <div class="row">
-                        <a
-                            class="btn col-md-6 map-button-outer"
-                            href="${recordSearchUrl}#tab-map"
-                            title="${message(code: 'show.map.btn.viewMap')}"
-                        >
-                            <div class="erk-button--dark map-button-inner">
+                        <div class="col-md-6 map-button-outer">
+                            <a
+                                class="btn col-md-12 erk-button--dark map-button-inner"
+                                href="${recordSearchUrl}#tab-map"
+                                title="${message(code: 'show.map.btn.viewMap')}"
+                            >
                                 <i class="fa fa-map-marker"></i>
                                 <g:message code="show.map.btn.viewMap" />
-                            </div>
-                        </a>
-                        <a
-                            class="btn col-md-6 map-button-outer"
-                            href="${recordSearchUrl}#tab-records"
-                            title="${message(code: 'show.map.btn.viewRecords')}"
-                        >
-                            <div class="erk-button--dark map-button-inner">
+                            </a>
+                        </div>
+                        <div class="col-md-6 map-button-outer">
+                            <a
+                                class="btn col-md-12 erk-button--dark map-button-inner"
+                                href="${recordSearchUrl}#tab-records"
+                                title="${message(code: 'show.map.btn.viewRecords')}"
+                            >
                                 <i class="fa fa-list"></i>
                                 <g:message code="show.map.btn.viewRecords" />
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
