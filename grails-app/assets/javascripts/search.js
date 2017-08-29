@@ -167,9 +167,8 @@ function injectBiocacheResults() {
             var html =
             '<a href="' + url + '" class="page-header-links__link">' +
                 '<span class="fa fa-list"></span>\n' +
-                'View records' +
-            '</a>' +
-            '(' + numberWithCommas(maxItems) + ')';
+                'View records (' + numberWithCommas(maxItems) + ')' +
+            '</a>';
 
             insertSearchLinks(html);
         }
