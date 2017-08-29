@@ -479,19 +479,20 @@ function loadGalleryType(category, start) {
             $.each(data.occurrences, function(i, el) {
                 // clone template div & populate with metadata
                 var $taxonThumb = $('#taxon-thumb-template').clone();
+                var $anchor = $taxonThumb.find('a');
                 $taxonThumb.removeClass('hidden-node');
-                $taxonThumb.attr('id', 'thumb_' + category + i);
-                $taxonThumb.attr('href', el.largeImageUrl);
-                $taxonThumb.find('img').attr('src', el.smallImageUrl);
+                $anchor.attr('id', 'thumb_' + category + i);
+                $anchor.attr('href', el.largeImageUrl);
+                $anchor.find('img').attr('src', el.smallImageUrl);
 
                 // brief metadata
                 var briefHtml = getImageTitleFromOccurrence(el);
-                $taxonThumb.find('.thumb-caption').html(briefHtml);
+                $anchor.find('.brief').html(briefHtml);
 
                 // write to DOM
-                $taxonThumb.attr('data-footer', getImageFooterFromOccurrence(el));
-                $taxonThumb.attr('data-image-id', el.image);
-                $taxonThumb.attr('data-record-url', SHOW_CONF.biocacheUrl + '/occurrences/' + el.uuid);
+                $anchor.attr('data-footer', getImageFooterFromOccurrence(el));
+                $anchor.attr('data-image-id', el.image);
+                $anchor.attr('data-record-url', SHOW_CONF.biocacheUrl + '/occurrences/' + el.uuid);
                 $categoryTmpl.find('.taxon-gallery').append($taxonThumb);
             });
 

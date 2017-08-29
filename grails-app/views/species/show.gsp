@@ -189,16 +189,18 @@
         </div>
 
         <!-- thumbnail template -->
-        <a
-            id="taxon-thumb-template"
-            class="taxon-thumb hidden-node"
-            data-toggle="lightbox"
-            data-gallery="main-image-gallery"
-            href=""
-        >
-            <img src="" alt="" />
-            <div class="thumb-caption"></div>
-        </a>
+        <div class="imgCon hidden-node" id="taxon-thumb-template">
+            <a
+                class="cbLink"
+                data-toggle="lightbox"
+                data-gallery="main-image-gallery"
+                rel="thumbs"
+                href=""
+            >
+                <img src="" alt="" />
+                <div class="brief"></div>
+            </a>
+        </div>
 
         <!-- description template -->
         <div id="descriptionTemplate" class="card bie-card panel-description bie-vertical-space" style="display:none;">
