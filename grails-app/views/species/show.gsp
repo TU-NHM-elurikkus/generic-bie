@@ -806,6 +806,42 @@
                         </section>
 
                         <section class="tab-pane" id="classification" role="tabpanel">
+                            <g:if test="${tc.taxonConcept.rankID < 7000}">
+                                <div class="col-sm-6 col-xs-12 classification-actions">
+                                    <div class="btn-group btn-group-vertical">
+                                        <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&${grailsApplication.config.bieService.queryContext}">
+                                            <button class="erk-button erk-button--light">
+                                                <span class="fa fa-download"></span>
+                                                <g:message
+                                                    code="show.classification.btn.download.childTaxa"
+                                                    args="${[tc.taxonConcept.nameString]}"
+                                                />
+                                            </button>
+                                        </a>
+
+                                        <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&fq=rank:species&${grailsApplication.config.bieService.queryContext}">
+                                            <button class="erk-button erk-button--light">
+                                                <span class="fa fa-download"></span>
+                                                <g:message
+                                                    code="show.classification.btn.download.species"
+                                                    args="${[tc.taxonConcept.nameString]}"
+                                                />
+                                            </button>
+                                        </a>
+
+                                        <a href="${createLink(controller: 'species', action: 'search')}?q=${'rkid_' + tc.taxonConcept.rankString + ':' + tc.taxonConcept.guid}">
+                                            <button class="erk-button erk-button--light">
+                                                <span class="fa fa-search"></span>
+                                                <g:message
+                                                    code="show.classification.btn.search.childTaxa"
+                                                    args="${[tc.taxonConcept.nameString]}"
+                                                />
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </g:if>
+
                             <h2>
                                 <g:if test="${grailsApplication.config.classificationSupplier}">
                                     <g:message
@@ -869,31 +905,13 @@
                                                             : ${taxon.commonNameSingle}
                                                         </g:if>
                                                     </span>
-
-                                                    <g:if test="${taxon.isAustralian || tc.isAustralian}">
-                                                        <%-- XXX: I do not think span does anything. --%>
-                                                        <span>
-                                                            <%-- TODO: Not Australia. --%>
-                                                            <img
-                                                                src="${grailsApplication.config.ala.baseURL}/wp-content/themes/ala2011/images/status_native-sm.png"
-                                                                alt="Recorded in Australia"
-                                                                title="Recorded in Australia"
-                                                                width="21"
-                                                                height="21"
-                                                            />
-                                                        </span>
-                                                    </g:if>
                                                 </dd>
                                             <%-- XXX The dl is left open on purpose --%>
                                         </g:else>
                                     </g:each>
 
                                     <dl class="child-taxa">
-                                        <g:set var="currentRank" value="" />
-
                                         <g:each in="${childConcepts}" var="child" status="i">
-                                            <g:set var="currentRank" value="${child.rank}" />
-
                                             <dt>
                                                 ${child.rank}
                                             </dt>
@@ -922,47 +940,6 @@
                                         </dl>
                                     </g:each>
                                 </div>
-
-                                <g:if test="${tc.taxonConcept.rankID < 7000}">
-                                    <div class="col-sm-6 col-xs-12 classification-actions">
-                                        <div class="btn-group btn-group-vertical">
-                                            <a
-                                                href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&${grailsApplication.config.bieService.queryContext}"
-                                            >
-                                                <button class="erk-button erk-button--light">
-                                                    <span class="fa fa-download"></span>
-                                                    <g:message
-                                                        code="show.classification.btn.download.childTaxa"
-                                                        args="${[tc.taxonConcept.nameString]}"
-                                                    />
-                                                </button>
-                                            </a>
-
-                                            <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&fq=rank:species&${grailsApplication.config.bieService.queryContext}"
-                                            >
-                                                <button class="erk-button erk-button--light">
-                                                    <span class="fa fa-download"></span>
-                                                    <g:message
-                                                        code="show.classification.btn.download.species"
-                                                        args="${[tc.taxonConcept.nameString]}"
-                                                    />
-                                                </button>
-                                            </a>
-
-                                            <a
-                                                href="${createLink(controller: 'species', action: 'search')}?q=${'rkid_' + tc.taxonConcept.rankString + ':' + tc.taxonConcept.guid}"
-                                            >
-                                                <button class="erk-button erk-button--light">
-                                                    <span class="fa fa-search"></span>
-                                                    <g:message
-                                                        code="show.classification.btn.search.childTaxa"
-                                                        args="${[tc.taxonConcept.nameString]}"
-                                                    />
-                                                </button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </g:if>
                             </div>
                         </section>
 

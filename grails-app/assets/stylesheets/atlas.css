@@ -1,4 +1,10 @@
-/* = require leaflet = require ekko-lightbox-5.2.0 = require elurikkus-common = require species = require ala-charts */
+/*
+*= require leaflet
+*= require ekko-lightbox-5.2.0
+*= require elurikkus-common
+*= require species
+*= require ala-charts
+*/
 
 .audio-player {
     width: 100%;
@@ -576,4 +582,9 @@ a.expand-options {
 .btn-group a button {
     width: 100%;
     text-align: left;
+}
+
+.classification-actions {
+    margin-bottom: 1em;
+    padding-left: 0;
 }
