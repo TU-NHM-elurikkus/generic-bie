@@ -179,27 +179,6 @@
             </div><!-- end main-content -->
         </div>
 
-        <div id="taxon-summary-thumb-template" class="taxon-summary-thumb hidden-node" style="">
-            <a data-toggle="lightbox"
-               data-gallery="taxon-summary-gallery"
-               data-parent=".taxon-summary-gallery"
-               data-footer=""
-               href="">
-            </a>
-        </div>
-
-        <!-- thumbnail template -->
-        <a
-            id="taxon-thumb-template"
-            class="taxon-thumb hidden-node"
-            data-toggle="lightbox"
-            data-gallery="main-image-gallery"
-            href=""
-        >
-            <img src="" alt="" />
-            <div class="thumb-caption"></div>
-        </a>
-
         <!-- description template -->
         <div id="descriptionTemplate" class="card bie-card panel-description bie-vertical-space" style="display:none;">
             <div class="card-header">

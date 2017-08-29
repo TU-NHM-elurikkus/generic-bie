@@ -268,7 +268,7 @@ a.expand-options {
 }
 
 .loadMore {
-    /**
+/**
   * It's nested under .taxon-gallery class, thus needs the same margin as .taxon-thumb because .taxon-gallery is
   * corrected against it.
   */
@@ -277,36 +277,14 @@ a.expand-options {
 
 
 /* Taxon Gallery tab */
-
 .taxon-gallery {
-    margin: 0 -4px;
+    margin: 0 2px;
     padding: 1rem 0;
     line-height: 0;
 }
 
-.taxon-thumb {
-    display: inline-block;
-    position: relative;
-    height: 170px;
-    margin: 4px;
-    overflow: hidden;
-}
-
-.taxon-thumb img {
-    height: 100%;
-}
-
-.thumb-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 4px 5px;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.5);
-    font-size: 12px;
-    line-height: 14px;
-    /* oddly specific */
+.taxon-gallery-grid {
+    margin-right: 4px;
 }
 
 /* Taxon Names tab */
