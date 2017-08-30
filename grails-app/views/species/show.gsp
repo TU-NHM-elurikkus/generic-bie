@@ -85,7 +85,8 @@
                 </div>
 
                 <div class="page-header-links">
-                    <a href="/bie-hub" class="page-header-links__link">
+                    <a href="/bie-hub/search" class="page-header-links__link">
+                        <i class="fa fa-search"></i>
                         <g:message code="search.head.title" />
                     </a>
 
