@@ -12,9 +12,9 @@
                         href=""
                     >
                         <img class="mainOverviewImage img-responsive" src="" />
+                        <div class="gallery-thumb__footer mainOverviewImageInfo"></div>
                     </a>
 
-                    <div class="caption mainOverviewImageInfo"></div>
                 </div>
 
                 <div class="thumb-row hidden-node">
