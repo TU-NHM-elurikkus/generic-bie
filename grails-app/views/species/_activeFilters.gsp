@@ -5,7 +5,7 @@
 
     <g:each var="item" in="${facetMap}" status="facetIdx">
         <span class="active-filters__filter">
-            <span class="activ-filters__label">
+            <span class="active-filters__label">
                 <g:if test="${item.key?.contains("uid")}">
                     <g:set var="resourceType">
                         ${item.value}_resourceType
