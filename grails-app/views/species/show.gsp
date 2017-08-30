@@ -206,10 +206,7 @@
 
         <!-- sequence template -->
         <div id="sequenceTemplate" class="result hidden-node">
-            <h3>
-                <a href="" class="externalLink"></a>
-            </h3>
-
+            <a href="" class="externalLink"></a>
             <p class="description"></p>
         </div>
 

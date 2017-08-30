@@ -328,11 +328,6 @@ a.expand-options {
     margin-bottom: 1rem;
 }
 
-.result h3 {
-    border-bottom: 1px solid #fff;
-    font-weight: normal;
-}
-
 .result p {
     margin-bottom: 0px;
 }
@@ -511,10 +506,6 @@ a.expand-options {
 .plutof-references__item {
     padding-bottom: 1rem;
     list-style-type: none;
-}
-
-.plutof-references__header {
-    border-bottom: 1px solid #e2e2e2;
 }
 
 

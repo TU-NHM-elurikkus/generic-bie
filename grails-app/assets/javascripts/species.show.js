@@ -760,11 +760,9 @@ function loadReferences(containerID, taxonID) {
         page.forEach(function(occurrence) {
             var el = $(
                 '<li class="plutof-references__item">' +
-                    '<h3 class="plutof-references__header">' +
-                        '<a href="https://plutof.ut.ee/#/referencebased/view/' + occurrence.id + '">' +
-                            occurrence.reference +
-                        '</a>' +
-                    '</h3>' +
+                    '<a href="https://plutof.ut.ee/#/referencebased/view/' + occurrence.id + '">' +
+                        occurrence.reference +
+                    '</a>' +
                     '<div class="plutof-references__content">' +
                         occurrence.locality_text +
                     '</div>' +
