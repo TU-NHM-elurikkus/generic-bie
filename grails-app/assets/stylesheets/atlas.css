@@ -219,7 +219,6 @@ a.expand-options {
 
 .taxon-map h3 {
     padding-bottom: 1rem;
-    font-size: 24px;
 }
 
 #leafletMap {
@@ -327,11 +326,6 @@ a.expand-options {
 
 .result {
     margin-bottom: 1rem;
-}
-
-.result h3 {
-    border-bottom: 1px solid #fff;
-    font-weight: normal;
 }
 
 .result p {
@@ -470,6 +464,8 @@ a.expand-options {
 
 .nav-tabs {
     flex-wrap: wrap;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .bie-card {
@@ -510,10 +506,6 @@ a.expand-options {
 .plutof-references__item {
     padding-bottom: 1rem;
     list-style-type: none;
-}
-
-.plutof-references__header {
-    border-bottom: 1px solid #e2e2e2;
 }
 
 

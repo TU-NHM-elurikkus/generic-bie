@@ -1,52 +1,62 @@
 <section class="tab-pane" id="classification" role="tabpanel">
-    <g:if test="${tc.taxonConcept.rankID < 7000}">
-        <div class="col-sm-6 col-xs-12 classification-actions">
-            <div class="btn-group btn-group-vertical">
-                <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&${grailsApplication.config.bieService.queryContext}">
-                    <button class="erk-button erk-button--light">
-                        <span class="fa fa-download"></span>
-                        <g:message
-                            code="show.classification.btn.download.childTaxa"
-                            args="${[tc.taxonConcept.nameString]}"
-                        />
-                    </button>
-                </a>
-
-                <a href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&fq=rank:species&${grailsApplication.config.bieService.queryContext}">
-                    <button class="erk-button erk-button--light">
-                        <span class="fa fa-download"></span>
-                        <g:message
-                            code="show.classification.btn.download.species"
-                            args="${[tc.taxonConcept.nameString]}"
-                        />
-                    </button>
-                </a>
-
-                <a href="${createLink(controller: 'species', action: 'search')}?q=${'rkid_' + tc.taxonConcept.rankString + ':' + tc.taxonConcept.guid}">
-                    <button class="erk-button erk-button--light">
-                        <span class="fa fa-search"></span>
-                        <g:message
-                            code="show.classification.btn.search.childTaxa"
-                            args="${[tc.taxonConcept.nameString]}"
-                        />
-                    </button>
-                </a>
-            </div>
-        </div>
-    </g:if>
-
     <h2>
         <g:if test="${grailsApplication.config.classificationSupplier}">
             <g:message
                 code="show.classification.field.classificationSupplier"
                 args="${[grailsApplication.config.classificationSupplier]}"
             />
-
         </g:if>
         <g:else>
             <g:message code="show.classification.title" />
         </g:else>
     </h2>
+
+    <g:if test="${tc.taxonConcept.rankID < 7000}">
+        <div class="col-sm-6 col-xs-12 classification-actions">
+            <div class="page-header-links">
+                <g:set var="taxonName">
+                    <bie:formatSciName
+                        rankId="${tc.taxonConcept.rankID}"
+                        name="${tc.taxonConcept.nameString}"
+                        simpleName="${true}"
+                    />
+                </g:set>
+
+                <a
+                    href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&${grailsApplication.config.bieService.queryContext}"
+                    class="page-header-links__link"
+                >
+                    <span class="fa fa-download"></span>
+                    <g:message
+                        code="show.classification.btn.download.childTaxa"
+                        args="${[taxonName]}"
+                    />
+                </a>
+
+                <a
+                    href="${grailsApplication.config.bie.index.url}/download?q=rkid_${tc.taxonConcept.rankString}:${tc.taxonConcept.guid}&fq=rank:species&${grailsApplication.config.bieService.queryContext}"
+                    class="page-header-links__link"
+                >
+                    <span class="fa fa-download"></span>
+                    <g:message
+                        code="show.classification.btn.download.species"
+                        args="${[tc.taxonConcept.nameString]}"
+                    />
+                </a>
+
+                <a
+                    href="${createLink(controller: 'species', action: 'search')}?q=${'rkid_' + tc.taxonConcept.rankString + ':' + tc.taxonConcept.guid}"
+                    class="page-header-links__link"
+                >
+                    <span class="fa fa-search"></span>
+                    <g:message
+                        code="show.classification.btn.search.childTaxa"
+                        args="${[tc.taxonConcept.nameString]}"
+                    />
+                </a>
+            </div>
+        </div>
+    </g:if>
 
     <div class="row">
         <div class="col-sm-6 col-xs-12">
