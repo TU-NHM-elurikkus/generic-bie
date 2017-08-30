@@ -1,0 +1,44 @@
+.search-header {
+    font-size: 15px;
+    margin-bottom: 1em;
+}
+
+.search-results {
+    text-indent: 0;
+}
+
+.search-result {
+    padding-top: 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.search-result__header {
+    padding: 0.5em 0;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.search-result__all-common-names, .search-result__extra-field, .search-result__description, .search-result__view-records {
+    margin-bottom: 4px;
+}
+
+.step, .currentStep {
+    padding-right: 0.5em;
+}
+
+/* */
+.search-facet {
+    margin-bottom: 1em;
+}
+
+.search-facet__header {
+    font-size: 14px;
+}
+
+.search-facet__values {
+    margin-bottom: 0;
+}
+
+.search-facet__value {
+    padding: 3px 0;
+}

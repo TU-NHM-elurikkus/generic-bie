@@ -58,13 +58,14 @@
             <g:if test="${searchResults.totalRecords}">
                 <g:set var="paramsValues" value="${[:]}" />
 
+                <div class="search-header">
+                    <span class="fa fa-info-circle"></span>
+                    <g:message code="search.facets.refine" />
+                </div>
+
                 <div class="row">
                     <div class="col-md-3">
                         <div class="card card-body filters-container">
-                            <h2 class="card-title">
-                                <g:message code="search.facets.refine" />
-                            </h2>
-
                             <div id="refine-options">
                                 <g:if test="${query && filterQuery}">
                                     <g:set var="queryParam">q=${query.encodeAsHTML()}
@@ -85,21 +86,24 @@
                                 <!-- facets -->
                                 <g:each var="facetResult" in="${searchResults.facetResults}">
                                     <g:if test="${!facetMap?.get(facetResult.fieldName) && !filterQuery?.contains(facetResult.fieldResult?.opt(0)?.label) && !facetResult.fieldName?.contains('idxtype1') && facetResult.fieldResult.length() > 0 }">
-                                        <div class="refine-list" id="facet-${facetResult.fieldName}">
-                                            <h4>
+                                        <div id="facet-${facetResult.fieldName}" class="search-facet">
+                                            <h4 class="search-facet__header">
                                                 <g:message code="facet.${facetResult.fieldName}" default="${facetResult.fieldName}" />
                                             </h4>
 
-                                            <ul class="list-unstyled" id="facet-${facetResult.fieldName}-list">
+                                            <ul id="facet-${facetResult.fieldName}-list" class="search-facet__values list-unstyled">
                                                 <g:set var="lastElement" value="${facetResult.fieldResult?.get(facetResult.fieldResult.length() - 1)}" />
 
                                                 <g:if test="${lastElement.label == 'before'}">
-                                                    <li>
+                                                    <li class="search-facet__value">
                                                         <g:set var="firstYear" value="${facetResult.fieldResult?.opt(0)?.label.substring(0, 4)}" />
+
+                                                        <span class="fa fa-square-o"></span>
+
                                                         <a href="?${queryParam}${appendQueryParam}&fq=${facetResult.fieldName}:[* TO ${facetResult.fieldResult.opt(0)?.label}]">
                                                             <g:message code="search.facets.beforeYear" args="${[firstYear]}" />
+                                                            (<g:formatNumber number="${lastElement.count}" />)
                                                         </a>
-                                                        (<g:formatNumber number="${lastElement.count}" />)
                                                     </li>
                                                 </g:if>
 
@@ -114,17 +118,15 @@
                                                     </g:set>
 
                                                     <g:if test="${facetResult.fieldName?.contains("occurrence_date") && fieldResult.label?.endsWith("Z")}">
-                                                        <g:if test="${vs > 4}">
-                                                            <li class="collapse">
-                                                        </g:if>
-                                                        <g:else>
-                                                            <li>
-                                                        </g:else>
+                                                        <li class="search-facet__value ${vs > 4 ? 'collapse' : ''}">
                                                             <g:set var="startYear" value="${fieldResult.label?.substring(0, 4)}" />
+
+                                                            <span class="fa fa-square-o"></span>
+
                                                             <a href="?${queryParam}${appendQueryParam}&fq=${facetResult.fieldName}:[${fieldResult.label} TO ${dateRangeTo}]">
                                                                 ${startYear} - ${startYear + 10}
+                                                                (<g:formatNumber number="${fieldResult.count}" />)
                                                             </a>
-                                                            (<g:formatNumber number="${fieldResult.count}" />)
                                                         </li>
                                                     </g:if>
 
@@ -135,20 +137,16 @@
                                                     <g:elseif test="${fieldResult.label?.isEmpty()}"></g:elseif>
 
                                                     <g:else>
-                                                        <g:if test="${vs > 4}">
-                                                            <li class="collapse">
-                                                        </g:if>
-                                                        <g:else>
-                                                            <li>
-                                                        </g:else>
+                                                        <li class="search-facet__value ${vs > 4 ? 'collapse' : ''}">
+                                                            <span class="fa fa-square-o"></span>
+
                                                             <a href="?${request.queryString}&fq=${facetResult.fieldName}:%22${fieldResult.label}%22">
                                                                 <g:message code="${facetResult.fieldName}.${fieldResult.label}" default="${fieldResult.label?:"[unknown]"}" />
+                                                                (<g:formatNumber number="${fieldResult.count}" />)
                                                             </a>
-                                                            (<g:formatNumber number="${fieldResult.count}" />)
                                                         </li>
                                                     </g:else>
                                                 </g:each>
-
                                             </ul>
 
                                             <g:if test="${facetResult.fieldResult.size() > 5}">
@@ -170,7 +168,7 @@
                     </div>
 
                     <div class="col-md-9">
-                        <div id="search-results" class="card card-body">
+                        <div id="search-results-panel" class="card card-body">
                             <div class="search-controls">
                                 <g:if test="${idxTypes.contains("TAXON")}">
                                     <g:set var="downloadUrl" value="${grailsApplication.config.bie.index.url}/download?${request.queryString?:''}${grailsApplication.config.bieService.queryContext}" />
@@ -232,7 +230,7 @@
 
                             <input type="hidden" value="${pageTitle}" name="title" />
 
-                            <ol id="search-results-list" class="search-results-list list-unstyled">
+                            <ol class="search-results list-unstyled">
                                 <g:each var="result" in="${searchResults.results}">
                                     <li class="search-result clearfix">
                                         <g:if test="${result.has("idxtype") && result.idxtype == 'TAXON'}">
@@ -248,8 +246,9 @@
                                                 </div>
                                             </g:if>
 
-                                            <h4>
+                                            <div class="search-result__header">
                                                 ${result.rank}:
+
                                                 <a href="${speciesPageLink}">
                                                     <bie:formatSciName
                                                         rankId="${result.rankID}"
@@ -266,22 +265,20 @@
                                                         &nbsp;&ndash;&nbsp;${result.commonNameSingle}
                                                     </span>
                                                 </g:if>
-                                            </h4>
+                                            </div>
 
                                             <g:if test="${result.commonName != result.commonNameSingle}">
-                                                <p class="alt-names">
+                                                <div class="search-result__all-common-names">
                                                     ${result.commonName}
-                                                </p>
+                                                </div>
                                             </g:if>
 
                                             <g:each var="fieldToDisplay" in="${grailsApplication.config.additionalResultsFields.split(",")}">
                                                 <g:if test='${result."${fieldToDisplay}"}'>
-                                                    <p class="summary-info">
-                                                        <strong>
-                                                            <g:message code="${fieldToDisplay}" default="${fieldToDisplay}" />:
-                                                        </strong>
+                                                    <div class="search-result__extra-field">
+                                                        <g:message code="${fieldToDisplay}" default="${fieldToDisplay}" />:
                                                         ${result."${fieldToDisplay}"}
-                                                    </p>
+                                                    </div>
                                                 </g:if>
                                             </g:each>
                                         </g:if>
@@ -291,12 +288,13 @@
                                                 ${request.contextPath}/species/${result.linkIdentifier?:result.taxonGuid}
                                             </g:set>
 
-                                            <h4>
+                                            <div class="search-result__header">
                                                 <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}" />:
+
                                                 <a href="${speciesPageLink}">
                                                     ${result.name}
                                                 </a>
-                                            </h4>
+                                            </div>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("idxtype") && result.idxtype == 'IDENTIFIER'}">
@@ -304,162 +302,132 @@
                                                 ${request.contextPath}/species/${result.linkIdentifier?:result.taxonGuid}
                                             </g:set>
 
-                                            <h4>
+                                            <div class="search-result__header">
                                                 <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}" />:
                                                 <a href="${speciesPageLink}">
                                                     ${result.guid}
                                                 </a>
-                                            </h4>
+                                            </div>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("idxtype") && result.idxtype == 'REGION'}">
-                                            <h4>
+                                            <div class="search-result__header">
                                                 <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}" />:
                                                 <a href="${grailsApplication.config.regions.baseURL}/feature/${result.guid}">
                                                     ${result.name}
                                                 </a>
-                                            </h4>
+                                            </div>
 
-                                            <p>
-                                                <span>
-                                                    ${result?.description && result?.description != result?.name ? result?.description : ""}
-                                                </span>
-                                            </p>
+                                            <div class="search-result__description">
+                                                ${result?.description && result?.description != result?.name ? result?.description : ""}
+                                            </div>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("idxtype") && result.idxtype == 'LOCALITY'}">
-                                            <h4>
+                                            <div class="search-result__header">
                                                 <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}" />:
 
                                                 <bie:constructEYALink result="${result}">
                                                     ${result.name}
                                                 </bie:constructEYALink>
-                                            </h4>
+                                            </div>
 
-                                            <p>
-                                                <span>
-                                                    ${result?.description?:""}
-                                                </span>
-                                            </p>
+                                            <div class="search-result__description">
+                                                ${result?.description?:""}
+                                            </div>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("idxtype") && result.idxtype == 'LAYER'}">
-                                            <h4>
+                                            <div class="search-result__header">
                                                 <g:message code="idxtype.${result.idxtype}" />:
 
                                                 <a href="${grailsApplication.config.spatial.baseURL}?layers=${result.guid}">
                                                     ${result.name}
                                                 </a>
-                                            </h4>
+                                            </div>
 
-                                            <p>
-                                                <g:if test="${result.dataProviderName}">
-                                                    <strong>
-                                                        <g:message code="search.resultList.field.source" />: ${result.dataProviderName}
-                                                    </strong>
-                                                </g:if>
-                                            </p>
+                                            <g:if test="${result.dataProviderName}">
+                                                <div class="search-result__extra-field">
+                                                    <g:message code="search.resultList.field.source" />: ${result.dataProviderName}
+                                                </div>
+                                            </g:if>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("name")}">
-                                            <h4>
+                                            <div class="search-result__header">
                                                 <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}" />:
 
                                                 <a href="${result.guid}">
                                                     ${result.name}
                                                 </a>
-                                            </h4>
+                                            </div>
 
-                                            <p>
-                                                <span>
-                                                    ${result?.description?:""}
-                                                </span>
-                                            </p>
+                                            <div class="search-result__description">
+                                                ${result?.description?:""}
+                                            </div>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("acronym") && result.get("acronym")}">
-                                            <h4>
+                                            <div class="search-result__header">
                                                 <g:message code="idxtype.${result.idxtype}" />:
 
                                                 <a href="${result.guid}">
                                                     ${result.name}
                                                 </a>
-                                            </h4>
+                                            </div>
 
-                                            <p>
-                                                <span>
-                                                    ${result.acronym}
-                                                </span>
-                                            </p>
+                                            <div class="search-result__description">
+                                                ${result.acronym}
+                                            </div>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("description") && result.get("description")}">
-                                            <h4>
+                                            <div class="search-result__header">
                                                 <g:message code="idxtype.${result.idxtype}" />:
 
                                                 <a href="${result.guid}">
                                                     ${result.name}
                                                 </a>
-                                            </h4>
+                                            </div>
 
-                                            <p>
-                                                <span class="searchDescription">
-                                                    ${result.description?.trimLength(500)}
-                                                </span>
-                                            </p>
+                                            <div class="search-result__description">
+                                                ${result.description?.trimLength(500)}
+                                            </div>
                                         </g:elseif>
 
                                         <g:elseif test="${result.has("highlight") && result.get("highlight")}">
-                                            <h4>
+                                            <div class="search-result__header">
                                                 <g:message code="idxtype.${result.idxtype}" />:
 
                                                 <a href="${result.guid}">
                                                     ${result.name}
                                                 </a>
-                                            </h4>
+                                            </div>
 
-                                            <p>
-                                                <span>
-                                                    ${result.highlight}
-                                                </span>
-                                            </p>
+                                            <div class="search-result__dscription">
+                                                ${result.highlight}
+                                            </div>
                                         </g:elseif>
 
                                         <g:else>
-                                            <h4>
+                                            <div class="search-result__header">
                                                 <g:message code="idxtype.${result.idxtype}" /> TEST:
                                                 <a href="${result.guid}">
                                                     ${result.name}
                                                 </a>
-                                            </h4>
+                                            </div>
                                         </g:else>
 
-                                        <g:if test="${result.has("highlight")}">
-                                            <p>
-                                                <bie:displaySearchHighlights highlight="${result.highlight}" />
-                                            </p>
-                                        </g:if>
-
                                         <g:if test="${result.has("idxtype") && result.idxtype == 'TAXON'}">
-                                            <ul class="summary-actions list-inline">
-                                                <g:if test="${grailsApplication.config.sightings.guidUrl}">
-                                                    <li>
-                                                        <a href="${grailsApplication.config.sightings.guidUrl}${result.guid}">
-                                                            <g:message code="search.resultList.field.recordNew" />
-                                                        </a>
-                                                    </li>
-                                                </g:if>
-
-                                                <g:if test="${grailsApplication.config.occurrenceCounts.enabled.toBoolean() && result?.occurrenceCount?:0 > 0}">
-                                                    <li>
-                                                        <a href="${biocacheUrl}/occurrences/search?q=lsid:${result.guid}">
-                                                            <i class="fa fa-list"></i>
-                                                            <g:message code="show.map.btn.viewRecords" />
-                                                            (<g:formatNumber number="${result.occurrenceCount}" />)
-                                                        </a>
-                                                    </li>
-                                                </g:if>
-                                            </ul>
+                                            <g:if test="${grailsApplication.config.occurrenceCounts.enabled.toBoolean() && result?.occurrenceCount?:0 > 0}">
+                                                <div class="search-result__view-records">
+                                                    <a href="${biocacheUrl}/occurrences/search?q=lsid:${result.guid}">
+                                                        <i class="fa fa-list"></i>
+                                                        <g:message code="show.map.btn.viewRecords" />
+                                                        (<g:formatNumber number="${result.occurrenceCount}" />)
+                                                    </a>
+                                                </div>
+                                            </g:if>
                                         </g:if>
                                     </li>
                                 </g:each>
@@ -484,7 +452,7 @@
         <%-- TODO --%>
         <div id="result-template" class="row hidden-node">
             <div class="col-sm-12">
-                <ol class="search-results-list list-unstyled">
+                <ol class="search-results list-unstyled">
                     <li class="search-result clearfix">
                         <h4>
                             <g:message code="idxtype.LOCALITY" /> :
@@ -516,7 +484,7 @@
                                     '|' + searchResults[0].longitude +
                                     '|12|ALL_SPECIES'
                                 );
-                                $('#search-results').append($results.html());
+                                $('#search-results-panel').append($results.html());
                             }
                         }
                     });
