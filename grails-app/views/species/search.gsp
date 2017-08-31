@@ -14,7 +14,7 @@
 
         <g:javascript>
             // global var to pass GSP vars into JS file
-            SEARCH_CONF = {
+            var SEARCH_CONF = {
                 searchResultTotal: "${searchResults.totalRecords}",
                 query: "${BieTagLib.escapeJS(query)}",
                 serverName: "${grailsApplication.config.grails.serverURL}",

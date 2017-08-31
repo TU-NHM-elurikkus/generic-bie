@@ -1,10 +1,10 @@
 <section class="tab-pane" id="records" role="tabpanel">
     <div id="occurrenceRecords">
         <div id="recordBreakdowns">
-            <h2>
+            <h3>
                 <g:message code="show.records.chart.title" />
                 <g:message code="show.records.recordCount.title" />
-            </h2>
+            </h3>
 
             <%-- This is not page header but we can use its classes to lay out links in the same way. --%>
             <div class="page-header-links">

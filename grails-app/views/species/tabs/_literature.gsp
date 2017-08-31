@@ -1,9 +1,9 @@
 <section class="tab-pane" id="literature" role="tabpanel">
     <div id="plutof-references">
-        <h2>
+        <h3>
             <g:message code="show.literature.title" />
             <span class="plutof-references__count"></span>
-        </h2>
+        </h3>
 
         <ol class="plutof-references__list"></ol>
 

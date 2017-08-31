@@ -1,3 +1,5 @@
+var SHOW_CONF;  // This constant is populated by show.gsp inline javascript
+
 function showSpeciesPage() {
     // load content
     loadOverviewImages();
@@ -171,7 +173,7 @@ function loadDataProviders() {
                 if(facetValue.count > 0) {
 
                     var uid = facetValue.fq.replace(/data_resource_uid:/, '').replace(/[\\"]*/, '').replace(/[\\"]/, '');
-                    var dataResourceUrl =  SHOW_CONF.collectoryUrl + '/public/show/' + uid;
+                    var dataResourceUrl = SHOW_CONF.collectoryUrl + '/public/show/' + uid;
                     var tableRow = '<tr><td><a href="' + dataResourceUrl + '"><span class="data-provider-name">' + facetValue.label + '</span></a>';
 
                     $.getJSON(SHOW_CONF.collectoryUrl + '/ws/dataResource/' + uid, function(collectoryData) {
@@ -389,7 +391,7 @@ function addOverviewImages(imagesArray, hasPreferredImage) {
     for(var j = 1; j < 5; j++) {
         // load smaller thumb images
         if(imagesArray.length > j) {
-            addOverviewThumb(imagesArray[j], j)
+            addOverviewThumb(imagesArray[j], j);
         }
     }
 }
@@ -420,7 +422,7 @@ function addOverviewThumb(record, i) {
     }
 }
 
-function generateOverviewThumb(occurrence, id){
+function generateOverviewThumb(occurrence, id) {
     var $taxonSummaryThumb = $('#taxon-summary-thumb-template').clone();
     var $taxonSummaryThumbLink = $taxonSummaryThumb.find('a');
     $taxonSummaryThumb.removeClass('hidden-node');
@@ -546,12 +548,12 @@ function getImageFooterFromOccurrence(el) {
     var leftDetail =
         '<div class="col-sm-4 recordLink">' +
             '<a href="' + SHOW_CONF.biocacheUrl + '/occurrences/' + el.uuid + '">' +
-                'View details of this record' +
+                '<i class="fa fa-list"></i> View records' +
             '</a>' +
             '<br />' +
             '<br />' +
             'If this image is incorrectly identified please flag an issue on the ' +
-            '<a href=' + SHOW_CONF.biocacheUrl + '/occurrences/' + el.uuid + '>' +
+            '<a href="' + SHOW_CONF.biocacheUrl + '/occurrences/' + el.uuid + '">' +
                 'record.' +
             '</a>' +
         '</div>';
