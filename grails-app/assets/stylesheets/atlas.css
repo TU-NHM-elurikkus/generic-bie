@@ -427,22 +427,10 @@ a.expand-options {
 }
 
 
-/* Hackz */
-
-
-/**
- * a.nav-link.active { border-bottom: 1px solid white; }
- *
- * .nav-tabs li.nav-item { padding: 0; margin-bottom: -2px; }
- */
-
-
 /* Allow multiple rows of tabs */
 
 .nav-tabs {
     flex-wrap: wrap;
-    font-size: 16px;
-    font-weight: 700;
 }
 
 .bie-card {

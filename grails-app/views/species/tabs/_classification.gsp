@@ -1,5 +1,5 @@
 <section class="tab-pane" id="classification" role="tabpanel">
-    <h2>
+    <h3>
         <g:if test="${grailsApplication.config.classificationSupplier}">
             <g:message
                 code="show.classification.field.classificationSupplier"
@@ -9,7 +9,7 @@
         <g:else>
             <g:message code="show.classification.title" />
         </g:else>
-    </h2>
+    </h3>
 
     <g:if test="${tc.taxonConcept.rankID < 7000}">
         <div class="col-sm-6 col-xs-12 classification-actions">

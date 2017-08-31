@@ -1,3 +1,5 @@
+var SEARCH_CONF;  // This constant is populated by search.gsp inline javascript
+
 $(document).ready(function() {
     // set the search input to the current q param value
     if(typeof SEARCH_CONF !== 'undefined') {
@@ -54,7 +56,7 @@ function removeFacet(facetIdx) {
 
     var paramList = [];
 
-    if (q !== null) {
+    if(q !== null) {
         paramList.push('q=' + q);
     }
 

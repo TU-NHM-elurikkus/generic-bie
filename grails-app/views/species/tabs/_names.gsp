@@ -1,9 +1,9 @@
 <section class="tab-pane" id="names" rol="tabpanel">
     <g:set var="acceptedName" value="${tc.taxonConcept.taxonomicStatus == 'accepted'}" />
 
-    <h2>
+    <h3>
         <g:message code="show.names.title" />
-    </h2>
+    </h3>
 
     <div class="table-responsive">
         <table class="table name-table">

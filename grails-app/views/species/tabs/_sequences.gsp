@@ -1,9 +1,9 @@
 <section class="tab-pane" id="sequences" role="tabpanel">
     <div id="sequences-plutof">
-        <h2>
+        <h3>
             PlutoF
             <span class="sequences__count"></span>
-        </h2>
+        </h3>
 
         <div id="sequences-plutof-body">
             <div class="sequences__list result-list"></div>
