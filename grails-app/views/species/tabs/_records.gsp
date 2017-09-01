@@ -21,7 +21,7 @@
                     href="${biocacheUrl}/occurrences/search?q=lsid:${tc?.taxonConcept?.guid ?: ''}#tab-map"
                     class="page-header-links__link"
                 >
-                    <i class="fa fa-map-marker"></i>
+                    <span class="fa fa-map-marker"></span>
                     <g:message code="show.map.btn.viewMap" />
                     <g:message code="show.records.recordCount.title" />
                 </a>
