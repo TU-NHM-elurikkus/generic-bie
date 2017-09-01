@@ -86,7 +86,7 @@
 
                 <div class="page-header-links">
                     <a href="/bie-hub/search" class="page-header-links__link">
-                        <i class="fa fa-search"></i>
+                        <span class="fa fa-search"></span>
                         <g:message code="search.head.title" />
                     </a>
 
@@ -448,9 +448,9 @@
                 dislikeUrl: "${createLink(controller: 'imageClient', action: 'dislikeImage')}",
                 userRatingUrl: "${createLink(controller: 'imageClient', action: 'userRating')}",
                 disableLikeDislikeButton: "${authService.getUserId() ? false : true}",
-                userRatingHelpText: '<div><b>Up vote (<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>) an image:</b>' +
+                userRatingHelpText: '<div><b>Up vote (<span class="fa fa-thumbs-o-up" aria-hidden="true"></span>) an image:</b>' +
                 ' Image supports the identification of the species or is representative of the species.  Subject is clearly visible including identifying features.<br /><br />' +
-                '<b>Down vote (<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>) an image:</b>'+
+                '<b>Down vote (<span class="fa fa-thumbs-o-down" aria-hidden="true"></span>) an image:</b>'+
                 ' Image does not support the identification of the species, subject is unclear and identifying features are difficult to see or not visible.<br /><br /></div>',
                 savePreferredSpeciesListUrl: "${createLink(controller: 'imageClient', action: 'saveImageToSpeciesList')}",
                 getPreferredSpeciesListUrl: "${grailsApplication.config.speciesList.baseURL}",

@@ -132,7 +132,7 @@
                                 href="${recordSearchUrl}#tab-map"
                                 title="${message(code: 'show.map.btn.viewMap')}"
                             >
-                                <i class="fa fa-map-marker"></i>
+                                <span class="fa fa-map-marker"></span>
                                 <g:message code="show.map.btn.viewMap" />
                             </a>
                         </div>
@@ -142,7 +142,7 @@
                                 href="${recordSearchUrl}#tab-records"
                                 title="${message(code: 'show.map.btn.viewRecords')}"
                             >
-                                <i class="fa fa-list"></i>
+                                <span class="fa fa-list"></span>
                                 <g:message code="show.map.btn.viewRecords" />
                             </a>
                         </div>
