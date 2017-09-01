@@ -89,18 +89,6 @@
                         <span class="fa fa-search"></span>
                         <g:message code="search.head.title" />
                     </a>
-
-                    <g:if test="${taxonHierarchy && taxonHierarchy.size() > 1}">
-                        <g:each in="${taxonHierarchy}" var="taxon">
-                            <g:link controller="species" action="show" params="[guid: taxon.guid]" class="page-header-links__link">
-                                <bie:formatSciName
-                                    rankId="${taxon.rankID}"
-                                    name="${taxon.scientificName}"
-                                    simpleName="${true}"
-                                />
-                            </g:link>
-                        </g:each>
-                    </g:if>
                 </div>
             </header>
 
