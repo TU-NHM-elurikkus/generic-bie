@@ -391,7 +391,7 @@
             </div>  <%-- /.modal-dialog --%>
         </div>
 
-        <asset:script type="text/javascript">
+        <g:javascript>
             // Global var to pass GSP vars into JS file
             // @TODO replace bhl and trove with literatureSource list
             var SHOW_CONF = {
@@ -451,11 +451,11 @@
                 $('a[href="' + anchor + '"]').tab('show');
             }
 
-            $(function(){
+            $(function() {
                 showSpeciesPage();
 
                 $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-                    var target = $(e.target).attr("href");
+                    var target = $(e.target).attr('href');
 
                     if(window.history) {
                         window.history.replaceState({}, '', target);
@@ -463,7 +463,7 @@
                         window.location.hash = target;
                     }
 
-                    if(target == "#records") {
+                    if(target == '#records') {
                         $('#charts').html('');  //prevent multiple loads
 
                         <charts:biocache
@@ -475,7 +475,7 @@
                         />
                     }
 
-                    if(target == '#overview'){
+                    if(target === '#overview') {
                         loadMap();
                     }
                 });
@@ -484,6 +484,6 @@
                     openTab(window.location.hash);
                 }
             });
-        </asset:script>
+        </g:javascript>
     </body>
 </html>

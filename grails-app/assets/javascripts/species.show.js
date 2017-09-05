@@ -471,24 +471,34 @@ function loadGalleryType(category, start) {
             $('#cat_nonavailable').addClass('hidden-node');
 
             $.each(data.occurrences, function(i, el) {
-                // clone template div & populate with metadata
-                var $taxonThumb = $('.gallery-thumb-template').clone();
-                var $anchor = $taxonThumb.find('a.cbLink');
-
-                $taxonThumb.removeClass('gallery-thumb-template').removeClass('invisible');
-                $anchor.attr('id', 'thumb_' + category + i);
-                $anchor.attr('href', el.largeImageUrl);
-                $anchor.find('img').attr('src', el.smallImageUrl);
-
-                // brief metadata
-                var briefHtml = getImageTitleFromOccurrence(el);
-                $anchor.find('.gallery-thumb__footer').html(briefHtml);
+                var $galleryGrid = $('<div/>', {
+                    class: 'gallery-thumb'
+                }).append(
+                    $('<a>', {
+                        'id': 'thumb_' + category + i,
+                        'data-toggle': 'lightbox',
+                        'href': el.largeImageUrl,
+                        'data-gallery': 'main-image-gallery',
+                        'rel': 'thumbs',
+                        'data-image-id': el.image,
+                        'data-record-url': SHOW_CONF.biocacheUrl + '/occurrences/' + el.uuid,
+                        'data-footer': getImageFooterFromOccurrence(el)
+                    }).append(
+                        $('<div>', {
+                            'class': 'gallery-thumb__footer'
+                        }).append(
+                            getImageTitleFromOccurrence(el)
+                        )
+                    ).append(
+                        $('<img>', {
+                            'class': 'img-fluid gallery-thumb__img',
+                            'src': el.smallImageUrl
+                        })
+                    )
+                );
 
                 // write to DOM
-                $anchor.attr('data-footer', getImageFooterFromOccurrence(el));
-                $anchor.attr('data-image-id', el.image);
-                $anchor.attr('data-record-url', SHOW_CONF.biocacheUrl + '/occurrences/' + el.uuid);
-                $categoryTmpl.find('.taxon-gallery').append($taxonThumb);
+                $categoryTmpl.find('.taxon-gallery').append($galleryGrid);
             });
 
             $('.loadMore.' + category).remove();  // remove 'load more images' button that was just clicked

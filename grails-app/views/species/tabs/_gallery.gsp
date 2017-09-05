@@ -25,33 +25,18 @@
     </div>
 
     <div id="taxon-summary-thumb-template" class="taxon-summary-thumb hidden-node" style="">
-        <a data-toggle="lightbox"
-           data-gallery="taxon-summary-gallery"
-           data-parent=".taxon-summary-gallery"
-           data-footer=""
-           href="">
+        <a
+            data-toggle="lightbox"
+            data-gallery="taxon-summary-gallery"
+            data-parent=".taxon-summary-gallery"
+            data-footer=""
+        >
         </a>
-    </div>
-
-    <%-- thumbnail template --%>
-    <div class="gallery-thumb-template gallery-thumb invisible">
-        <div class="taxon-gallery-grid">
-            <a
-                class="cbLink"
-                data-toggle="lightbox"
-                data-gallery="main-image-gallery"
-                rel="thumbs"
-                href=""
-            >
-                <img class="gallery-thumb__img" src="" alt="" />
-                <div class="gallery-thumb__footer"></div>
-            </a>
-        </div>
     </div>
 
     <img
         id="gallerySpinner"
-        src="${resource(dir: 'images', file: 'spinner.gif', plugin: 'biePlugin')}"
+        src="${assetPath(src: 'spinner.gif', plugin: 'biePlugin')}"
         class="hidden-node"
         alt="spinner icon"
     />
