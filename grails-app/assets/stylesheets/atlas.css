@@ -251,18 +251,6 @@ a.expand-options {
     margin: 4px;
 }
 
-
-/* Taxon Gallery tab */
-.taxon-gallery {
-    margin: 0 2px;
-    padding: 1rem 0;
-    line-height: 0;
-}
-
-.taxon-gallery-grid {
-    margin-right: 4px;
-}
-
 /* Taxon Names tab */
 .name-table ul {
     margin: 0;
