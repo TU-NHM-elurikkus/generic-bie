@@ -221,7 +221,7 @@ function loadExternalSources() {
                         var sourceHtml = '';
 
                         if(sourceText.match('^http')) {
-                            sourceHtml = '<a href=\'' + sourceText + '\' target=\'eol\'>' + sourceText + '</a>';
+                            sourceHtml = '<a href="' + sourceText + '" target="eol">' + sourceText + '</a>';
                         } else {
                             sourceHtml = sourceText;
                         }
@@ -275,7 +275,7 @@ function loadExternalSources() {
                         '</audio>' +
                     '</div>' +
                     '<div class="panel-footer audio-player-footer">' +
-                        '<p>';
+                    '<p>';
 
             if(data.processed.attribution.collectionName) {
                 source = '';
