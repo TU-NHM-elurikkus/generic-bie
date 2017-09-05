@@ -24,16 +24,6 @@
         </p>
     </div>
 
-    <div id="taxon-summary-thumb-template" class="taxon-summary-thumb hidden-node" style="">
-        <a
-            data-toggle="lightbox"
-            data-gallery="taxon-summary-gallery"
-            data-parent=".taxon-summary-gallery"
-            data-footer=""
-        >
-        </a>
-    </div>
-
     <img
         id="gallerySpinner"
         src="${assetPath(src: 'spinner.gif', plugin: 'biePlugin')}"

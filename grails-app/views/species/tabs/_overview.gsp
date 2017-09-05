@@ -8,8 +8,6 @@
                         data-toggle="lightbox"
                         data-gallery="taxon-summary-gallery"
                         data-parent=".taxon-summary-gallery"
-                        data-footer=""
-                        href=""
                     >
                         <img class="mainOverviewImage img-responsive" src="" />
                         <div class="gallery-thumb__footer mainOverviewImageInfo"></div>
@@ -20,7 +18,7 @@
                 <div class="thumb-row hidden-node">
                     <div id="overview-thumbs"></div>
 
-                    <div id="more-photo-thumb-link" class="taxon-summary-thumb" style="">
+                    <div id="more-photo-thumb-link" class="taxon-summary-thumb">
                         <a
                             class="more-photos tab-link"
                             href="#gallery"

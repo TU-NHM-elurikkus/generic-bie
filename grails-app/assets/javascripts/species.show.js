@@ -423,16 +423,20 @@ function addOverviewThumb(record, i) {
 }
 
 function generateOverviewThumb(occurrence, id) {
-    var $taxonSummaryThumb = $('#taxon-summary-thumb-template').clone();
-    var $taxonSummaryThumbLink = $taxonSummaryThumb.find('a');
-    $taxonSummaryThumb.removeClass('hidden-node');
+    var $taxonSummaryThumb = $('<div class="taxon-summary-thumb"></div>');
+    var $taxonSummaryThumbLink = $('<a></a>');
     $taxonSummaryThumb.attr('id', 'taxon-summary-thumb-' + id);
     $taxonSummaryThumb.attr('style', 'background-image:url(' + occurrence.smallImageUrl + ')');
     $taxonSummaryThumbLink.attr('data-title', getImageTitleFromOccurrence(occurrence));
     $taxonSummaryThumbLink.attr('data-footer', getImageFooterFromOccurrence(occurrence));
+    $taxonSummaryThumbLink.attr('data-toggle', 'lightbox');
+    $taxonSummaryThumbLink.attr('data-parent', '.taxon-summary-gallery');
     $taxonSummaryThumbLink.attr('href', occurrence.largeImageUrl);
     $taxonSummaryThumbLink.attr('data-image-id', occurrence.image);
+    $taxonSummaryThumbLink.attr('data-gallery', 'taxon-summary-gallery');
     $taxonSummaryThumbLink.attr('data-record-url', SHOW_CONF.biocacheUrl + '/occurrences/' + occurrence.uuid);
+
+    $taxonSummaryThumb.append($taxonSummaryThumbLink);
     return $taxonSummaryThumb;
 }
 
