@@ -250,6 +250,7 @@
                                                 ${result.rank}:
 
                                                 <a href="${speciesPageLink}">
+                                                    <span class="fa fa-tag"></span>
                                                     <bie:formatSciName
                                                         rankId="${result.rankID}"
                                                         taxonomicStatus="${result.taxonomicStatus}"
