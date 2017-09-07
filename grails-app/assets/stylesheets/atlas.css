@@ -372,7 +372,8 @@ a.expand-options {
 
 .annotation {
     display: inline;
-    padding: 2px 1ex;
+    padding: 2px;
+    margin-right: 1px;
     border: none;
     border-radius: 2px;
     background: #C8D0E0;
