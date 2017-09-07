@@ -12,7 +12,7 @@
                     </th>
 
                     <th>
-                        <g:message code="show.map.occurrencesMap.nrRecords" />
+                        <g:message code="show.datasets.records" />
                     </th>
                 </tr>
             </thead>
