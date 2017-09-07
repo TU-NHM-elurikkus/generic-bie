@@ -48,7 +48,7 @@ function loadSpeciesLists() {
                 $description.find('.rights').css({ 'display': 'none' });
 
                 $description.find('.providedBy').attr('href', SHOW_CONF.speciesListUrl + '/speciesListItem/list/' + specieslist.dataResourceUid);
-                $description.find('.providedBy').html(specieslist.list.listName);
+                $description.find('.providedBy').html('<span class="fa fa-check-circle"></span> ' + specieslist.list.listName);
 
                 $description.appendTo('#listContent');
             }
@@ -290,11 +290,14 @@ function loadExternalSources() {
 
                 if(data.raw.attribution.dataResourceUid === 'dr341') {
                     // hard-coded copyright as most sounds are from ANWC and are missing attribution data fields
-                    source += '&copy; ' + data.processed.attribution.collectionName + ' ' + data.processed.event.year + '<br>';
+                    source += '&copy; ' + data.processed.attribution.collectionName + ' ' + data.processed.event.year + '<br />';
                 }
 
                 if(attrUrl) {
-                    source += 'Source: <a href=\'' + attrUrl + '\' target=\'biocache\'>' + data.processed.attribution.collectionName + '</a>';
+                    source +=
+                        'Source: <a href=\'' + attrUrl + '\' target=\'biocache\'>' +
+                            data.processed.attribution.collectionName +
+                        '</a>';
                 } else {
                     source += data.processed.attribution.collectionName;
                 }
@@ -304,8 +307,13 @@ function loadExternalSources() {
                 soundsDiv += 'Source: ' + data.processed.attribution.dataResourceName;
             }
 
-            soundsDiv += '<a href="' + SHOW_CONF.biocacheUrl + '/occurrence/' + data.raw.uuid + '">View more details of this audio</a>';
-            soundsDiv += '</p></div></div>';
+            soundsDiv +=
+                            '<a href="' + SHOW_CONF.biocacheUrl + '/occurrence/' + data.raw.uuid + '"> ' +
+                                'View more details of this audio' +
+                            '</a>' +
+                        '</p>' +
+                    '</div>' +
+                '</div>';
 
             $('#sounds').append(soundsDiv);
         }
