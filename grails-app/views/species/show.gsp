@@ -9,17 +9,6 @@
 <g:set var="alertsUrl" value="${grailsApplication.config.alerts.url}" />
 <g:set var="guid" value="${tc?.previousGuid ?: tc?.taxonConcept?.guid ?: ''}" />
 
-<g:set var="sciNameFormatted">
-    <bie:formatSciName
-        rankId="${tc?.taxonConcept?.rankID}"
-        nameFormatted="${tc?.taxonConcept?.nameString}"
-        nameComplete="${tc?.taxonConcept?.nameComplete}"
-        name="${tc?.taxonConcept?.name}"
-        taxonomicStatus="${tc?.taxonConcept?.taxonomicStatus}"
-        acceptedName="${tc?.taxonConcept?.acceptedConceptName}"
-    />
-</g:set>
-
 <g:set var="synonymsQuery">
     <g:each in="${tc?.synonyms}" var="synonym" status="i">
         \"${synonym.nameString}\"
@@ -51,7 +40,7 @@
         <div class="page-taxon">
             <header class="page-header">
                 <h1 class="page-header__title">
-                    ${raw(sciNameFormatted)}
+                    ${raw(tc.taxonConcept.nameFormatted)}
                 </h1>
 
                 <div class="page-header__subtitle row subtitle-row">
