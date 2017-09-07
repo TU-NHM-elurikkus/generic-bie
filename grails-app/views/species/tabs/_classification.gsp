@@ -67,7 +67,7 @@
                     <dl>
                         <dt>
                             <g:if test="${taxon.rankID ?: 0 != 0}">
-                                ${taxon.rank}
+                                <g:message code="rank.${taxon.rank.replaceAll('[\\W]_', '')}" />
                             </g:if>
                         </dt>
 
@@ -93,7 +93,7 @@
                     <%-- XXX Intentional unclosed tag. --%>
                     <dl>
                         <dt id="currentTaxonConcept">
-                            ${taxon.rank}
+                            <g:message code="rank.${taxon.rank.replaceAll('[\\W]_', '')}" />
                         </dt>
 
                         <dd>
@@ -116,7 +116,7 @@
             <dl class="child-taxa">
                 <g:each in="${childConcepts}" var="child" status="i">
                     <dt>
-                        ${child.rank}
+                        <g:message code="rank.${child.rank.replaceAll('[\\W]_', '')}" />
                     </dt>
 
                     <g:set var="taxonLabel">
