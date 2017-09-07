@@ -67,7 +67,7 @@
                     <dl>
                         <dt>
                             <g:if test="${taxon.rankID ?: 0 != 0}">
-                                ${taxon.rank}
+                                <g:message code="rank.${taxon.rank.replaceAll('[\\W]_', '')}" />
                             </g:if>
                         </dt>
 
@@ -76,15 +76,9 @@
                                 href="${request?.contextPath}/species/${taxon.guid}#classification"
                                 title="${message(code: 'rank.' + taxon.rank, default: taxon.rank)}"
                             >
-                                <bie:formatSciName
-                                    rankId="${taxon.rankID}"
-                                    name="${taxon.scientificName}"
-                                    simpleName="${true}"
-                                />
-
-                                <g:if test="${taxon.commonNameSingle}">
-                                    : ${taxon.commonNameSingle}
-                                </g:if>
+                                <g:render
+                                    template="tabs/classification-taxon"
+                                    model="['taxon': taxon, 'name': taxon.scientificName ]" />
                             </a>
                         </dd>
                     <%-- XXX The dl is left open on purpose --%>
@@ -93,20 +87,14 @@
                     <%-- XXX Intentional unclosed tag. --%>
                     <dl>
                         <dt id="currentTaxonConcept">
-                            ${taxon.rank}
+                            <g:message code="rank.${taxon.rank.replaceAll('[\\W]_', '')}" />
                         </dt>
 
                         <dd>
                             <span>
-                                <bie:formatSciName
-                                    rankId="${taxon.rankID}"
-                                    name="${taxon.scientificName}"
-                                    simpleName="${true}"
-                                />
-
-                                <g:if test="${taxon.commonNameSingle}">
-                                    : ${taxon.commonNameSingle}
-                                </g:if>
+                                <g:render
+                                    template="tabs/classification-taxon"
+                                    model="['taxon': taxon, 'name': taxon.scientificName ]" />
                             </span>
                         </dd>
                     <%-- XXX The dl is left open on purpose --%>
@@ -116,18 +104,14 @@
             <dl class="child-taxa">
                 <g:each in="${childConcepts}" var="child" status="i">
                     <dt>
-                        ${child.rank}
+                        <g:message code="rank.${child.rank.replaceAll('[\\W]_', '')}" />
                     </dt>
 
                     <g:set var="taxonLabel">
-                        <bie:formatSciName
-                            rankId="${child.rankID}"
-                            name="${child.name}"
-                            simpleName="${true}"
-                        />
-                        <g:if test="${child.commonNameSingle}">
-                            : ${child.commonNameSingle}
-                        </g:if>
+                        <%-- Yep, rendering template to prepare value for assignment... --%>
+                        <g:render
+                            template="tabs/classification-taxon"
+                            model="['taxon': child, 'name': child.name ]" />
                     </g:set>
 
                     <dd>
