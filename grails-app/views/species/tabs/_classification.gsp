@@ -76,15 +76,9 @@
                                 href="${request?.contextPath}/species/${taxon.guid}#classification"
                                 title="${message(code: 'rank.' + taxon.rank, default: taxon.rank)}"
                             >
-                                <bie:formatSciName
-                                    rankId="${taxon.rankID}"
-                                    name="${taxon.scientificName}"
-                                    simpleName="${true}"
-                                />
-
-                                <g:if test="${taxon.commonNameSingle}">
-                                    : ${taxon.commonNameSingle}
-                                </g:if>
+                                <g:render
+                                    template="tabs/classification-taxon"
+                                    model="['taxon': taxon, 'name': taxon.scientificName ]" />
                             </a>
                         </dd>
                     <%-- XXX The dl is left open on purpose --%>
@@ -98,15 +92,9 @@
 
                         <dd>
                             <span>
-                                <bie:formatSciName
-                                    rankId="${taxon.rankID}"
-                                    name="${taxon.scientificName}"
-                                    simpleName="${true}"
-                                />
-
-                                <g:if test="${taxon.commonNameSingle}">
-                                    : ${taxon.commonNameSingle}
-                                </g:if>
+                                <g:render
+                                    template="tabs/classification-taxon"
+                                    model="['taxon': taxon, 'name': taxon.scientificName ]" />
                             </span>
                         </dd>
                     <%-- XXX The dl is left open on purpose --%>
@@ -120,14 +108,10 @@
                     </dt>
 
                     <g:set var="taxonLabel">
-                        <bie:formatSciName
-                            rankId="${child.rankID}"
-                            name="${child.name}"
-                            simpleName="${true}"
-                        />
-                        <g:if test="${child.commonNameSingle}">
-                            : ${child.commonNameSingle}
-                        </g:if>
+                        <%-- Yep, rendering template to prepare value for assignment... --%>
+                        <g:render
+                            template="tabs/classification-taxon"
+                            model="['taxon': child, 'name': child.name ]" />
                     </g:set>
 
                     <dd>
