@@ -98,9 +98,8 @@
                                                     <li class="search-facet__value">
                                                         <g:set var="firstYear" value="${facetResult.fieldResult?.opt(0)?.label.substring(0, 4)}" />
 
-                                                        <span class="fa fa-square-o"></span>
-
                                                         <a href="?${queryParam}${appendQueryParam}&fq=${facetResult.fieldName}:[* TO ${facetResult.fieldResult.opt(0)?.label}]">
+                                                            <span class="fa fa-square-o"></span>
                                                             <g:message code="search.facets.beforeYear" args="${[firstYear]}" />
                                                             (<g:formatNumber number="${lastElement.count}" />)
                                                         </a>
@@ -121,9 +120,8 @@
                                                         <li class="search-facet__value ${vs > 4 ? 'collapse' : ''}">
                                                             <g:set var="startYear" value="${fieldResult.label?.substring(0, 4)}" />
 
-                                                            <span class="fa fa-square-o"></span>
-
                                                             <a href="?${queryParam}${appendQueryParam}&fq=${facetResult.fieldName}:[${fieldResult.label} TO ${dateRangeTo}]">
+                                                                <span class="fa fa-square-o"></span>
                                                                 ${startYear} - ${startYear + 10}
                                                                 (<g:formatNumber number="${fieldResult.count}" />)
                                                             </a>
@@ -138,9 +136,8 @@
 
                                                     <g:else>
                                                         <li class="search-facet__value ${vs > 4 ? 'collapse' : ''}">
-                                                            <span class="fa fa-square-o"></span>
-
                                                             <a href="?${request.queryString}&fq=${facetResult.fieldName}:%22${fieldResult.label}%22">
+                                                                <span class="fa fa-square-o"></span>
                                                                 <g:message code="${facetResult.fieldName}.${fieldResult.label}" default="${fieldResult.label?:"[unknown]"}" />
                                                                 (<g:formatNumber number="${fieldResult.count}" />)
                                                             </a>
@@ -250,6 +247,7 @@
                                                 ${result.rank}:
 
                                                 <a href="${speciesPageLink}">
+                                                    <span class="fa fa-tag"></span>
                                                     <bie:formatSciName
                                                         rankId="${result.rankID}"
                                                         taxonomicStatus="${result.taxonomicStatus}"
