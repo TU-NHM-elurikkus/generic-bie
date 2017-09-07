@@ -57,7 +57,6 @@ function loadSpeciesLists() {
 }
 
 function loadMap() {
-
     if(SHOW_CONF.map !== null) {
         return;
     }
@@ -108,7 +107,6 @@ function loadMap() {
     SHOW_CONF.map.invalidateSize(false);
 
     updateOccurrenceCount();
-    fitMapToBounds();
 }
 
 /**
@@ -127,24 +125,35 @@ function updateOccurrenceCount() {
     });
 }
 
+// Disabled for now - always position the map over default coordinates
 function fitMapToBounds() {
     var jsonUrl = SHOW_CONF.biocacheServiceUrl + '/mapping/bounds.json?q=lsid:' + SHOW_CONF.guid + '&callback=?';
+
     $.getJSON(jsonUrl, function(data) {
-        if(data.length === 4) {
-            var sw = L.latLng(data[1], data[0]);
-            var ne = L.latLng(data[3], data[2]);
-            var dataBounds = L.latLngBounds(sw, ne);
-            var mapBounds = SHOW_CONF.map.getBounds();
-
-            if(!mapBounds.contains(dataBounds) && !mapBounds.intersects(dataBounds)) {
-                SHOW_CONF.map.fitBounds(dataBounds);
-                if(SHOW_CONF.map.getZoom() > 3) {
-                    SHOW_CONF.map.setZoom(3);
-                }
-            }
-
-            SHOW_CONF.map.invalidateSize(true);
+        if(data.length !== 4) {
+            return;
         }
+
+        // If query has no mapped results, /mapping/bounds returns [0, 0, 0, 0]
+        if(data.every(function(coord) { return coord === 0 })) {
+            return;
+        }
+
+        var sw = L.latLng(data[1], data[0]);
+        var ne = L.latLng(data[3], data[2]);
+        var dataBounds = L.latLngBounds(sw, ne);
+
+        var mapBounds = SHOW_CONF.map.getBounds();
+
+        if(!mapBounds.contains(dataBounds) && !mapBounds.intersects(dataBounds)) {
+            SHOW_CONF.map.fitBounds(dataBounds);
+
+            if(SHOW_CONF.map.getZoom() > 3) {
+                SHOW_CONF.map.setZoom(3);
+            }
+        }
+
+        SHOW_CONF.map.invalidateSize(true);
     });
 }
 
