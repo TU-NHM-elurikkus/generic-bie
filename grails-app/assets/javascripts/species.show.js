@@ -174,19 +174,42 @@ function loadDataProviders() {
 
                     var uid = facetValue.fq.replace(/data_resource_uid:/, '').replace(/[\\"]*/, '').replace(/[\\"]/, '');
                     var dataResourceUrl = SHOW_CONF.collectoryUrl + '/public/show/' + uid;
-                    var tableRow = '<tr><td><a href="' + dataResourceUrl + '"><span class="data-provider-name">' + facetValue.label + '</span></a>';
+                    var tableRow =
+                        '<tr>' +
+                            '<td>' +
+                                '<a href="' + dataResourceUrl + '">' +
+                                    '<span class="fa fa-database"></span>' +
+                                    '&nbsp;' +
+                                    facetValue.label +
+                                '</a>';
 
                     $.getJSON(SHOW_CONF.collectoryUrl + '/ws/dataResource/' + uid, function(collectoryData) {
 
                         if(collectoryData.provider) {
-                            tableRow += '<br/><small><a href="' + SHOW_CONF.collectoryUrl + '/public/show/' + uid + '">' + collectoryData.provider.name + '</a></small>';
+                            tableRow +=
+                                '<br />' +
+                                '<small>' +
+                                    '<a href="' + SHOW_CONF.collectoryUrl + '/public/show/' + uid + '">' +
+                                        collectoryData.provider.name +
+                                    '</a>' +
+                                '</small>';
                         }
-                        tableRow += '</td>';
-                        tableRow += '<td>' + collectoryData.licenseType + '</td>';
+                        var queryUrl = uiUrl + '&fq=data_resource_uid:' + uid;
 
-                        var queryUrl = uiUrl + '&fq=' + facetValue.fq;
-                        tableRow += '</td><td><a href="' + queryUrl + '"><span class="record-count">' + facetValue.count + '</span></a></td>';
-                        tableRow += '</tr>';
+                        tableRow +=
+                                '</td>' +
+                                '<td>' +
+                                    collectoryData.licenseType +
+                                '</td>' +
+                                '<td>' +
+                                    '<a href="' + queryUrl + '">' +
+                                        '<span class="fa fa-list"></span>' +
+                                        '&nbsp;' +
+                                        facetValue.count +
+                                    '</a>' +
+                                '</td>' +
+                            '</tr>';
+
                         $('#data-providers-list tbody').append(tableRow);
                     });
                 }
