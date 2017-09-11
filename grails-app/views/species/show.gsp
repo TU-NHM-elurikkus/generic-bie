@@ -76,7 +76,7 @@
                 <div class="page-header-links">
                     <a href="/bie-hub/search" class="page-header-links__link">
                         <span class="fa fa-search"></span>
-                        <g:message code="search.head.title" />
+                        <g:message code="general.btn.search" />
                     </a>
                 </div>
             </header>
