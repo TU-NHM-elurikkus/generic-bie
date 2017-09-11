@@ -9,7 +9,7 @@
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <g:set var="searchQuery" value="${!searchResults.queryTitle || searchResults.queryTitle == '*:*' ? message(code: 'search.query.allRecords') : searchResults.queryTitle}" />
         <title>
-            ${searchQuery} | <g:message code="search.head.title" />
+            <g:message code="index.body.title" /> | ${searchQuery}
         </title>
 
         <g:javascript>
