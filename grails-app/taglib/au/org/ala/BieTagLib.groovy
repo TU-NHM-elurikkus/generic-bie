@@ -244,6 +244,28 @@ class BieTagLib {
         }
     }
 
+    private String languageName(String lang) {
+        synchronized (this.class) {
+            if (languages == null) {
+                JsonSlurper slurper = new JsonSlurper()
+                def ld = slurper.parse(new URL(grailsApplication.config.languageCodesUrl))
+                languages = [:]
+                ld.codes.each { code ->
+                    if (languages.containsKey(code.code))
+                        log.warn "Duplicate language code ${code.code}"
+                    languages[code.code] = code
+                    if (code.part2b && !languages.containsKey(code.part2b))
+                        languages[code.part2b] = code
+                    if (code.part2t && !languages.containsKey(code.part2t))
+                        languages[code.part2t] = code
+                    if (code.part1 && !languages.containsKey(code.part1))
+                        languages[code.part1] = code
+                }
+            }
+        }
+        return languages[lang]?.name ?: lang
+    }
+
     /**
      * Custom function to escape a string for JS use
      *
@@ -253,3 +275,4 @@ class BieTagLib {
     def static escapeJS(String value) {
         return StringEscapeUtils.escapeJavaScript(value);
     }
+}
