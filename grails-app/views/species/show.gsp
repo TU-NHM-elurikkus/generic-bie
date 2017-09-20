@@ -54,15 +54,15 @@
                     <div class="col-sm-4">
                         <g:message code="show.details.rank" />
                         :
-                        ${tc.taxonConcept.rankString}
+                        <g:message code="taxonomy.rank.${tc.taxonConcept.rankString}" />
                     </div>
 
                     <g:if test="${tc.taxonConcept.taxonomicStatus}">
                         <div
                             class="inline-head taxonomic-status col-sm-2"
-                            title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail', default: '')}"
+                            title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail')}"
                         >
-                            <g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" default="${tc.taxonConcept.taxonomicStatus}" />
+                            <g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" />
                         </div>
                     </g:if>
                 </div>

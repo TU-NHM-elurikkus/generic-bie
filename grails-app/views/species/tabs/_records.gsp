@@ -22,7 +22,7 @@
                     class="page-header-links__link"
                 >
                     <span class="fa fa-map-marker"></span>
-                    <g:message code="show.map.btn.viewMap" />
+                    <g:message code="show.overview.map.btn.viewMap" />
                     <g:message code="show.records.recordCount.title" />
                 </a>
             </div>

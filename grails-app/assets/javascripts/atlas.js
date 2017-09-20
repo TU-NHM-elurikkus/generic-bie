@@ -70,7 +70,8 @@ $(function() {
 
     $('a.expand-options').click(function() {
         $(this).text(function(i, text) {
-            return text.trim() === 'More' ? 'Less' : 'More';
+            var more = $.i18n.prop('search.facets.showMore');
+            return text.trim() === more ? $.i18n.prop('search.facets.showLess') : more;
         });
     });
 });

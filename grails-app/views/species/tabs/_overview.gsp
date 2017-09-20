@@ -22,7 +22,7 @@
                         <a
                             class="more-photos tab-link"
                             href="#gallery"
-                            title="${message(code: 'show.gallery.showMore')}"
+                            title="${message(code: 'show.overview.showMore')}"
                             onclick="openTab('#gallery')"
                         >
                            <span>
@@ -111,9 +111,9 @@
 
             <div class="taxon-map">
                 <h3>
-                    <g:message code="show.map.occurrencesMap.title" />
+                    <g:message code="show.overview.occurrencesMap.title" />
                     (<span class="occurrenceRecordCount">0</span>
-                    <g:message code="show.map.occurrencesMap.nrRecords" />)
+                    <g:message code="show.overview.occurrencesMap.nrRecords" />)
                 </h3>
 
                 <div id="leafletMap"></div>
@@ -128,10 +128,10 @@
                             <a
                                 class="btn col-md-12 erk-button--dark map-button-inner"
                                 href="${recordSearchUrl}#tab-map"
-                                title="${message(code: 'show.map.btn.viewMap')}"
+                                title="${message(code: 'show.overview.map.btn.viewMap')}"
                             >
                                 <span class="fa fa-map-marker"></span>
-                                <g:message code="show.map.btn.viewMap" />
+                                <g:message code="show.overview.map.btn.viewMap" />
                             </a>
                         </div>
                         <div class="col-md-6 map-button-outer">
@@ -161,16 +161,16 @@
                             <span class="datasetCount">0</span>
                         </strong>
                         <g:message
-                            code="show.datasets.summary"
+                            code="show.overview.datasets.summary"
                             args="${[tc.taxonConcept.rankString]}"
                         />
                     </p>
 
                     <p>
                         <a class="tab-link" href="#data-partners" onclick="openTab('#data-partners')">
-                            <g:message code="show.datasets.desc.01" />
+                            <g:message code="show.overview.datasets.desc.01" />
                         </a>
-                        <g:message code="show.datasets.desc.02" />
+                        <g:message code="show.overview.datasets.desc.01" />
                     </p>
                 </div>
             </div>
