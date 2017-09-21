@@ -18,10 +18,7 @@
         </h3>
 
         <p>
-            <g:message
-                code="show.gallery.upload.desc"
-                args="${[raw(grailsApplication.config.skin.orgNameLong)]}"
-            />
+            <g:message code="show.gallery.upload.desc" />
         </p>
     </div>
 

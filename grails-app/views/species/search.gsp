@@ -136,7 +136,14 @@
                                                         <li class="search-facet__value ${vs > 4 ? 'collapse' : ''}">
                                                             <a href="?${request.queryString}&fq=${facetResult.fieldName}:%22${fieldResult.label}%22">
                                                                 <span class="fa fa-square-o"></span>
-                                                                <g:message code="${facetResult.fieldName}.${fieldResult.label}" default="${fieldResult.label?:"[unknown]"}" />
+
+                                                                <g:if test="${facetResult.fieldName == 'rank'}">
+                                                                    <g:message code="taxonomy.rank.${fieldResult.label}" />
+                                                                </g:if>
+                                                                <g:else>
+                                                                    <g:message code="${facetResult.fieldName}.${fieldResult.label}" default="${fieldResult.label?:"[unknown]"}" />
+                                                                </g:else>
+
                                                                 (<g:formatNumber number="${fieldResult.count}" />)
                                                             </a>
                                                         </li>
@@ -344,7 +351,7 @@
 
                                             <g:if test="${result.dataProviderName}">
                                                 <div class="search-result__extra-field">
-                                                    <g:message code="search.resultList.field.source" />: ${result.dataProviderName}
+                                                    <g:message code="show.names.field.source" />: ${result.dataProviderName}
                                                 </div>
                                             </g:if>
                                         </g:elseif>

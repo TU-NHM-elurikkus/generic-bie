@@ -336,7 +336,7 @@ function loadExternalSources() {
 
                 soundsDiv += source + '<br />';
             } else if(data.processed.attribution.dataResourceName) {
-                soundsDiv += 'Source: ' + data.processed.attribution.dataResourceName;
+                soundsDiv += $.i18n.prop('show.names.field.source') + ': ' + data.processed.attribution.dataResourceName;
             }
 
             soundsDiv +=
@@ -551,12 +551,11 @@ function loadGalleryType(category, start) {
             if(data.totalRecords > (start + pageSize)) {
                 // add new 'load more images' button if required
                 var spinnerLink = $('img#gallerySpinner').attr('src');
-                var btnLabel = 'Load more';  // ToDo: translation key == general.btn.loadMore
                 var btn =
                     '<div class="loadMore ' + category + '">' +
                         '<br />' +
                         '<button type="button" class="erk-button erk-button--light" onCLick="loadGalleryType(\'' + category + '\',' + (start + pageSize) + ');">' +
-                            btnLabel + ' <img src="' + spinnerLink + '" class="hidden-node" />' +
+                            $.i18n.prop('general.btn.loadMore') + ' <img src="' + spinnerLink + '" class="hidden-node" />' +
                         '</button>' +
                     '</div>';
                 $categoryTmpl.find('.taxon-gallery').append(btn);
@@ -585,17 +584,23 @@ function getImageTitleFromOccurrence(el) {
 
 function getImageFooterFromOccurrence(el) {
     var br = '<br />';
-    var rightDetail = '<b>Taxon: </b>' + el.raw_scientificName;
-    if(el.typeStatus) { rightDetail += br + '<b>Type: </b>' + el.typeStatus; }
-    if(el.collector) { rightDetail += br + '<b>By: </b>' + el.collector; }
-    if(el.eventDate) { rightDetail += br + '<b>Date: </b>' + moment(el.eventDate).format('YYYY-MM-DD'); }
+    var rightDetail = '<b>' + $.i18n.prop('js.image.modal.taxon') + ': </b>' + el.raw_scientificName;
+    if(el.typeStatus) {
+        rightDetail += br + '<b>' + $.i18n.prop('js.image.modal.type') + ': </b>' + el.typeStatus;
+    }
+    if(el.collector) {
+        rightDetail += br + '<b>' + $.i18n.prop('js.image.modal.by') + ': </b>' + el.collector;
+    }
+    if(el.eventDate) {
+        rightDetail += br + '<b>' + $.i18n.prop('js.image.modal.date') + ': </b>' + moment(el.eventDate).format('YYYY-MM-DD');
+    }
     if(el.institutionName && el.institutionName !== undefined) {
-        rightDetail += br + '<b>Source: </b>' + el.institutionName;
+        rightDetail += br + '<b>' + $.i18n.prop('show.names.field.source') + ': </b>' + el.institutionName;
     } else if(el.dataResourceName) {
-        rightDetail += br + '<b>Source: </b>' + el.dataResourceName;
+        rightDetail += br + '<b>' + $.i18n.prop('show.names.field.source') + ': </b>' + el.dataResourceName;
     }
     if(el.imageMetadata && el.imageMetadata.length > 0 && el.imageMetadata[0].rightsHolder !== null) {
-        rightDetail += br + '<b>Rights holder: </b>' + el.imageMetadata[0].rightsHolder;
+        rightDetail += br + '<b>' + $.i18n.prop('show.overview.field.rightsHolder') + ': </b>' + el.imageMetadata[0].rightsHolder;
     }
     rightDetail = '<div class="col-sm-8">' + rightDetail + '</div>';
 
@@ -603,13 +608,13 @@ function getImageFooterFromOccurrence(el) {
     var leftDetail =
         '<div class="col-sm-4 recordLink">' +
             '<a href="' + SHOW_CONF.biocacheUrl + '/occurrences/' + el.uuid + '">' +
-                '<span class="fa fa-list"></span> View records' +
+                '<span class="fa fa-list"></span> ' + $.i18n.prop('show.map.btn.viewRecords') +
             '</a>' +
             '<br />' +
             '<br />' +
-            'If this image is incorrectly identified please flag an issue on the ' +
-            '<a href="' + SHOW_CONF.biocacheUrl + '/occurrences/' + el.uuid + '">' +
-                'record.' +
+            $.i18n.prop('js.image.modal.issues') +
+            '<a href="' + SHOW_CONF.biocacheUrl + '/occurrences/' + el.uuid + '"> ' +
+                $.i18n.prop('js.image.modal.issue.link') +
             '</a>' +
         '</div>';
 
