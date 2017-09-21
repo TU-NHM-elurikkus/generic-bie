@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta name="layout" content="${grailsApplication.config.skin.layout}" />
-        <g:set var="searchQuery" value="${!searchResults.queryTitle || searchResults.queryTitle == '*:*' ? message(code: 'search.query.allRecords') : searchResults.queryTitle}" />
+        <g:set var="searchQuery" value="${!searchResults.queryTitle || searchResults.queryTitle == 'all records' ? message(code: 'search.query.allRecords') : searchResults.queryTitle}" />
         <title>
             <g:message code="index.body.title" />
         </title>
@@ -306,7 +306,7 @@
                                             <g:each var="fieldToDisplay" in="${grailsApplication.config.additionalResultsFields.split(",")}">
                                                 <g:if test='${result."${fieldToDisplay}"}'>
                                                     <div class="search-result__extra-field">
-                                                        <g:message code="${fieldToDisplay}" default="${fieldToDisplay}" />:
+                                                        <g:message code="taxonomy.rank.${fieldToDisplay}" />:
                                                         ${result."${fieldToDisplay}"}
                                                     </div>
                                                 </g:if>
