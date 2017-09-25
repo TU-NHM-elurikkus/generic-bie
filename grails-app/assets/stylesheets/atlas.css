@@ -73,12 +73,6 @@ a.expand-options {
     content: none;
 }
 
-.inline-head {
-    display: inline-block;
-    margin-right: 20px;
-}
-
-
 /* Taxon column gutters */
 
 .taxon-row {
@@ -460,10 +454,6 @@ a.expand-options {
 
 .modal-header {
     display: none;
-}
-
-.subtitle-row {
-    font-weight: bold;
 }
 
 .btn-group a {
