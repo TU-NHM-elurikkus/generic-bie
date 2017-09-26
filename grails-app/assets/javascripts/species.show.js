@@ -15,12 +15,17 @@ function showSpeciesPage() {
 
 function loadSpeciesLists() {
     $.getJSON(SHOW_CONF.speciesListUrl + '/ws/species/' + SHOW_CONF.guid + '?callback=?', function(data) {
+        if(data === undefined) {
+            return;
+        }
+
         for(var i = 0; i < data.length; i++) {
             var specieslist = data[i];
             var maxListFields = 10;
 
             if(specieslist.list.isBIE) {
                 var $description = $('#descriptionTemplate').clone();
+
                 $description.css({ 'display': 'block' });
                 $description.attr('id', '#specieslist-block-' + specieslist.dataResourceUid);
                 $description.addClass('species-list-block');
@@ -28,16 +33,21 @@ function loadSpeciesLists() {
 
                 if(specieslist.kvpValues.length > 0) {
                     var content = '<table class="table">';
+
                     $.each(specieslist.kvpValues, function(idx, kvpValue) {
                         if(idx >= maxListFields) {
                             return false;
                         }
+
                         var value = kvpValue.value;
+
                         if(kvpValue.vocabValue) {
                             value = kvpValue.vocabValue;
                         }
+
                         content += '<tr><td>' + (kvpValue.key + '</td><td>' + value + '</td></tr>');
                     });
+
                     content += '</table>';
                     $description.find('.content').html(content);
                 } else {

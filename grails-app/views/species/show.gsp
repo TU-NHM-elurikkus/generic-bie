@@ -42,28 +42,25 @@
                     ${raw(tc.taxonConcept.nameFormatted)}
                 </h1>
 
-                <div class="page-header__subtitle row subtitle-row">
+                <div class="page-header__subtitle">
                     <g:if test="${commonNameDisplay}">
-                        <div class="col-md-2">
-                            ${raw(commonNameDisplay)}
-                        </div>
+                        ${raw(commonNameDisplay)}
                     </g:if>
 
                     <g:set var="commonNameDisplay" value="${(tc?.commonNames) ? tc?.commonNames?.opt(0)?.nameString : ''}" />
 
-                    <div class="col-sm-4">
-                        <g:message code="show.details.rank" />
-                        :
-                        <g:message code="taxonomy.rank.${tc.taxonConcept.rankString}" />
-                    </div>
+                    <span>
+                        <g:message code="show.details.rank" />:
+                        <g:message code="taxonomy.rank.${tc.taxonConcept.rankString}" />.
+                    </span>
 
                     <g:if test="${tc.taxonConcept.taxonomicStatus}">
-                        <div
-                            class="inline-head taxonomic-status col-sm-2"
+                        <span
+                            class="inline-head taxonomic-status"
                             title="${message(code: 'taxonomicStatus.' + tc.taxonConcept.taxonomicStatus + '.detail')}"
                         >
                             <g:message code="taxonomicStatus.${tc.taxonConcept.taxonomicStatus}" />
-                        </div>
+                        </span>
                     </g:if>
                 </div>
 
