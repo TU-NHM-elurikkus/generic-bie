@@ -31,24 +31,6 @@ a.expand-options {
     border-top: 1px solid #e3e3e3;
 }
 
-
-/* Search results list */
-
-
-.result-thumbnail {
-    float: right;
-    margin: 4px 0px 5px 20px;
-}
-
-.result-thumbnail a {
-    display: block;
-}
-
-.result-thumbnail img {
-    max-width: 300px;
-    max-height: 150px;
-}
-
 .page-taxon {
     width: 100%;
 }

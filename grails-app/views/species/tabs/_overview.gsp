@@ -1,6 +1,8 @@
 <section class="tab-pane active" id="tab-overview" role="tabpanel">
     <div class="row taxon-row">
         <div class="col-md-5">
+
+            <%-- Gallery --%>
             <div class="taxon-summary-gallery hidden-node">
                 <div class="main-img">
                     <a
@@ -33,6 +35,10 @@
                 </div>
             </div>
 
+            <%-- Sounds --%>
+            <div id="sounds"></div>
+
+            <%-- Conservation Info --%>
             <g:if test="${tc.conservationStatuses}">
                 <div class="card">
                     <div class="card-header">
@@ -68,10 +74,10 @@
                 </div>
             </g:if>
 
+            <%-- Dynamic descriptions --%>
             <div id="descriptiveContent"></div>
 
-            <div id="sounds"></div>
-
+            <%-- Online resources --%>
             <div class="card bie-card">
                 <div class="card-header">
                     <h3>

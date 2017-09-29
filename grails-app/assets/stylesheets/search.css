@@ -1,6 +1,5 @@
 .search-header {
-    font-size: 15px;
-    margin-bottom: 1em;
+    border-bottom: 1px solid #ddd;
 }
 
 .search-results {
@@ -10,14 +9,29 @@
 .search-result {
     padding-top: 0;
     border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
 }
 
 .search-result__header {
     padding: 0.5em 0;
 }
 
-.search-result__all-common-names, .search-result__extra-field, .search-result__description, .search-result__view-records {
+.search-result__all-common-names,
+.search-result__extra-field,
+.search-result__description,
+.search-result__view-records {
     margin-bottom: 4px;
+}
+
+.result-thumbnail {
+    align-self: center;
+    margin: .5rem;
+}
+
+.result-thumbnail img {
+    max-width: 300px;
+    max-height: 128px;
 }
 
 .step, .currentStep {
