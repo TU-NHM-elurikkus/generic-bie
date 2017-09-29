@@ -18,18 +18,11 @@ function showSpeciesPage() {
 
 function loadSpeciesLists() {
     $.getJSON(SHOW_CONF.speciesListUrl + '/ws/species/' + SHOW_CONF.guid + '?callback=?', function(data) {
-        if(data === undefined) {
-            return;
-        }
-
-        for(var i = 0; i < data.length; i++) {
-            var specieslist = data[i];
+        if(data) {
             var maxListFields = 10;
-
-            if(specieslist.list.isBIE) {
+            data.forEach(function(specieslist) {
                 var $description = $('#descriptionTemplate').clone();
 
-                $description.css({ 'display': 'block' });
                 $description.attr('id', '#specieslist-block-' + specieslist.dataResourceUid);
                 $description.addClass('species-list-block');
                 $description.find('.title').html(specieslist.list.listName);
@@ -54,7 +47,7 @@ function loadSpeciesLists() {
                     content += '</table>';
                     $description.find('.content').html(content);
                 } else {
-                    $description.find('.content').html('A species list provided by ' + specieslist.list.listName);
+                    $description.find('.content').html($.i18n.prop('show.list.defaultText', specieslist.list.listName));
                 }
 
                 $description.find('.source').css({ 'display': 'none' });
@@ -64,7 +57,8 @@ function loadSpeciesLists() {
                 $description.find('.providedBy').html('<span class="fa fa-check-circle"></span> ' + specieslist.list.listName);
 
                 $description.appendTo('#listContent');
-            }
+                $description.show();
+            });
         }
     });
 }
@@ -246,7 +240,7 @@ function loadExternalSources() {
         // clone a description template...
         if(data.dataObjects) {
             $.each(data.dataObjects, function(idx, dataObject) {
-                if(dataObject.language === SHOW_CONF.eolLanguage || !dataObject.language) {
+                if((dataObject.language === SHOW_CONF.locale) || (!dataObject.language && SHOW_CONF.locale === 'en')) {
                     var $description = $('#descriptionTemplate').clone();
                     $description.css({ 'display': 'block' });
                     $description.attr('id', dataObject.id);
@@ -288,6 +282,23 @@ function loadExternalSources() {
                     $description.appendTo('#descriptiveContent');
                 }
             });
+        }
+
+        if(data.references) {
+            var $eolReferences = $('#eol-references');
+
+            data.references.forEach(function(reference) {
+                var liDom = $(
+                    '<li class="plutof-references__item">' +
+                        reference +
+                    '</li>'
+                );
+                liDom.find('a').attr('target', '_blank');
+
+                $eolReferences.append(liDom);
+            });
+
+            $eolReferences.show();
         }
     });
 
@@ -849,6 +860,9 @@ function loadReferences(containerID, taxonID) {
 
         $count.html('(' + count + ')');
 
+        if(count > 0) {
+            $('#plutof-references').show();
+        }
         setPlutoFPagination($pagination, currentPage, pageCount, loadPage);
     }
 
