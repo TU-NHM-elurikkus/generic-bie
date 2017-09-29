@@ -1,4 +1,4 @@
-<section class="tab-pane" id="literature" role="tabpanel">
+<section class="tab-pane" id="tab-literature" role="tabpanel">
     <div id="plutof-references" style="display:none;">
         <h3>
             <g:message code="show.literature.title.plutof" />
