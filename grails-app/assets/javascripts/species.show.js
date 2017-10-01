@@ -6,9 +6,9 @@ function showSpeciesPage() {
     loadMap();
     loadGalleries();
     loadExpertDistroMap();
-    loadExternalSources();
     loadSpeciesLists();
     loadDataProviders();
+    loadExternalSources();
 
     loadReferences('plutof-references', SHOW_CONF.guid);
 
@@ -256,6 +256,7 @@ function loadExternalSources() {
                     } else {
                         $description.find('.content').html(dataObject.description);
                     }
+                    $description.find('img').addClass('img-responsive');
 
                     if(dataObject.source && dataObject.source.trim().length !== 0) {
                         var sourceText = dataObject.source;
@@ -282,23 +283,6 @@ function loadExternalSources() {
                     $description.appendTo('#descriptiveContent');
                 }
             });
-        }
-
-        if(data.references) {
-            var $eolReferences = $('#eol-references');
-
-            data.references.forEach(function(reference) {
-                var liDom = $(
-                    '<li class="plutof-references__item">' +
-                        reference +
-                    '</li>'
-                );
-                liDom.find('a').attr('target', '_blank');
-
-                $eolReferences.append(liDom);
-            });
-
-            $eolReferences.show();
         }
     });
 
