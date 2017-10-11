@@ -9,7 +9,7 @@ if(!grails.config.locations || !(grails.config.locations instanceof List)) {
     grails.config.locations = []
 }
 
-// ToDo: server doesn't see config files for some reason
+// Build server doesn't see config files for some reason
 if (!new File(default_config).exists()) {
     // throw ApplicationException("Config doesn't exist: " + default_config)
     println "[${appName}] No external configuration file defined."
