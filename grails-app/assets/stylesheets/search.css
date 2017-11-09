@@ -54,3 +54,10 @@
 .search-facet__value {
     padding: 3px 0;
 }
+
+a.expand-options {
+    display: block;
+    margin-top: 6px;
+    padding-top: 2px;
+    border-top: 1px solid #e3e3e3;
+}

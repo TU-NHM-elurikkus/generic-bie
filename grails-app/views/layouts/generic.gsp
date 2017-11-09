@@ -19,8 +19,8 @@
             };
         </script>
 
-        <asset:stylesheet src="atlas.css" />
-        <asset:javascript src="atlas.js" />
+        <asset:stylesheet src="bie-hub.css" />
+        <asset:javascript src="bie-hub.js" />
 
         <g:layoutHead />
     </head>

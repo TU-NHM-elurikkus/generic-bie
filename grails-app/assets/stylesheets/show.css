@@ -1,62 +1,30 @@
 /*
 *= require leaflet
 *= require ekko-lightbox-5.2.0
-*= require elurikkus-common
-*= require species
 *= require ala-charts
-*= require search
+*= require species
 */
 
 .audio-player {
     width: 100%;
 }
 
+.audio-player-footer {
+    margin-bottom: 1rem;
+}
 
-/* Panels */
-
+/* Audio player footer */
 .panel-footer p {
     margin: 0;
     font-size: 12px;
     line-height: 14px;
 }
 
-.audio-player-footer {
-    margin-bottom: 1rem;
-}
-
-a.expand-options {
-    display: block;
-    margin-top: 6px;
-    padding-top: 2px;
-    border-top: 1px solid #e3e3e3;
-}
-
 .page-taxon {
     width: 100%;
 }
 
-
-/* Taxon header */
-
-.pg-header {
-    margin-top: 20px;
-    padding-bottom: 20px;
-}
-
-.taxonomy-bcrumb li {
-    position: relative;
-}
-
-.taxonomy-bcrumb li:first-child {
-    padding-left: 5px;
-}
-
-.taxonomy-bcrumb li:first-child:before {
-    content: none;
-}
-
 /* Taxon column gutters */
-
 .taxon-row {
     margin-right: -10px;
     margin-left: -10px;
@@ -67,9 +35,7 @@ a.expand-options {
     padding-left: 10px;
 }
 
-
 /* Taxon summary gallery */
-
 .taxon-summary-gallery {
     margin-bottom: 20px;
     overflow: hidden;
@@ -150,9 +116,16 @@ a.expand-options {
     line-height: 50px;
 }
 
+/* Taxon map */
+.taxon-map {
+    margin-bottom: 20px;
+}
+
+.taxon-map h3 {
+    padding-bottom: 1rem;
+}
 
 /* Taxon resources */
-
 .panel-resources .panel-body {
     -moz-columns: 150px 2;
     -webkit-columns: 150px 2;
@@ -163,37 +136,7 @@ a.expand-options {
     padding-left: 15px;
 }
 
-
-/* Taxon map */
-
-.taxon-map {
-    margin-bottom: 20px;
-}
-
-.taxon-map h3 {
-    padding-bottom: 1rem;
-}
-
-#leafletMap {
-    height: 550px;
-    overflow: hidden;
-    background-color: #ebebeb;
-}
-
-.map-button-outer {
-    padding-top: 2px;
-    padding-right: 2px;
-    padding-left: 0;
-    color: white;
-}
-
-.map-button-inner {
-    border-radius: 0;
-}
-
-
 /* Taxon actions */
-
 .panel-actions .panel-body {
     padding-top: 19px;
     padding-bottom: 4px;
@@ -235,7 +178,6 @@ a.expand-options {
 
 
 /* Taxon Classification tab */
-
 .classification-list dl {
     margin-left: 24px;
 }
@@ -252,7 +194,6 @@ a.expand-options {
 
 
 /* Taxon Literature & Taxon Sequences tabs */
-
 .result-list {
     padding-top: 1rem;
 }
@@ -296,7 +237,6 @@ a.expand-options {
 
 
 /* Taxon Data Providers tab */
-
 .data-providers-list {
     padding-left: 0;
     -moz-column-gap: 20px;
@@ -318,7 +258,6 @@ a.expand-options {
 
 
 /* Name formatting */
-
 .scientific-name {
     font-style: normal;
 }
@@ -337,7 +276,6 @@ a.expand-options {
 
 
 /* Name annotations */
-
 .annotation {
     display: inline;
     padding: 2px;
@@ -350,7 +288,6 @@ a.expand-options {
 
 
 /* charts config */
-
 #charts {
     padding-top: 2rem;
 }
@@ -378,14 +315,12 @@ a.expand-options {
 
 
 /* Hide wikipedia links */
-
 .mw-editsection {
     display: none;
 }
 
 
 /* Allow multiple rows of tabs */
-
 .nav-tabs {
     flex-wrap: wrap;
 }
@@ -395,7 +330,6 @@ a.expand-options {
 }
 
 /* plutof-references */
-
 .plutof-references__list {
     padding-top: 1rem;
     padding-left: 0;
@@ -408,7 +342,6 @@ a.expand-options {
 
 
 /* plutof-pagination */
-
 .plutof-pagination__page {
     margin-right: 0.5rem;
     color: #0587aa;
@@ -422,14 +355,11 @@ a.expand-options {
 
 
 /* XXX */
-
 .tab-pane {
     margin-bottom: 0;
 }
 
-
 /* XXX */
-
 .modal-body img {
     max-width: 100%;
 }
@@ -450,4 +380,21 @@ a.expand-options {
 .classification-actions {
     margin-bottom: 1em;
     padding-left: 0;
+}
+
+#leafletMap {
+    height: 550px;
+    overflow: hidden;
+    background-color: #ebebeb;
+}
+
+.map-button-outer {
+    padding-top: 2px;
+    padding-right: 2px;
+    padding-left: 0;
+    color: white;
+}
+
+.map-button-inner {
+    border-radius: 0;
 }
