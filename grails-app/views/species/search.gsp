@@ -12,6 +12,9 @@
             <g:message code="index.body.title" />
         </title>
 
+        <asset:stylesheet src="search.css" />
+        <asset:javascript src="search.js" />
+
         <g:javascript>
             // global var to pass GSP vars into JS file
             var SEARCH_CONF = {

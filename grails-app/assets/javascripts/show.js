@@ -1,3 +1,9 @@
+//= require leaflet
+//= require ala-charts
+//= require ekko-lightbox-5.2.0
+//= require moment.min
+//= require jquery.htmlClean
+
 var SHOW_CONF;  // This constant is populated by show.gsp inline javascript
 
 function showSpeciesPage() {

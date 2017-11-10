@@ -25,14 +25,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta name="layout" content="${grailsApplication.config.skin.layout}" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>
             ${tc?.taxonConcept?.nameString} ${(tc?.commonNames) ? ' : ' + tc?.commonNames?.get(0)?.nameString : ''}
         </title>
-        <meta name="layout" content="${grailsApplication.config.skin.layout}" />
 
+        <asset:stylesheet src="show.css" />
+        <asset:javascript src="show.js" />
     </head>
 
     <body>
