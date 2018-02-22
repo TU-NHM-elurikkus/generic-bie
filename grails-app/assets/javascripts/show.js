@@ -26,7 +26,8 @@ function showSpeciesPage() {
 }
 
 function loadSpeciesLists() {
-    $.getJSON(SHOW_CONF.speciesListUrl + '/ws/species/' + SHOW_CONF.guid + '?callback=?', function(data) {
+    var listUrl = SHOW_CONF.speciesListUrl + '/ws/species/' + SHOW_CONF.guid + '?lang=' + SHOW_CONF.locale + '&callback=?';
+    $.getJSON(listUrl, function(data) {
         if(data) {
             var $listPanel = $('#descriptionTemplate').clone();
             var $listContent = $('<ul>');
