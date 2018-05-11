@@ -4,10 +4,21 @@ import org.apache.commons.lang.StringUtils
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.JSONObject
 
+import javax.annotation.PostConstruct
+
+
 class UtilityService {
 
     def grailsApplication
     def webService
+
+    String COLLECTORY_BACKEND_URL
+
+    @PostConstruct
+    def init() {
+        COLLECTORY_BACKEND_URL = grailsApplication.config.collectory.internal.url
+    }
+
 
     def unDuplicateNames(List names) {
         def namesSet = []
@@ -93,12 +104,13 @@ class UtilityService {
                                       (uid.startsWith("dp")) ? "dataProvider" :
                                       (uid.startsWith("co")) ? "collection" :
                                       (uid.startsWith("in")) ? "institution" : null
-                        if(type != null){
-                            String url = grailsApplication.config.collectory.baseURL+"/ws/"+type+"/"+uid
+                        if(type != null) {
+                            def url = "${COLLECTORY_BACKEND_URL}/ws/${type}/${uid}"
+
                             def json = webService.get(url)
-                            Map wsmap =JSON.parse(json)
+                            Map wsmap = JSON.parse(json)
                             map.putAt(uid, wsmap.get("name"))
-                            map.put(uid+"_resourceType", wsmap.get("resourceType"))
+                            map.put(uid + "_resourceType", wsmap.get("resourceType"))
                         }
                     }
                 }

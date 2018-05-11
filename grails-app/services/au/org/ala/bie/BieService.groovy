@@ -2,15 +2,25 @@ package au.org.ala.bie
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.JSONObject
 
+import javax.annotation.PostConstruct
+
+
 class BieService {
 
     def webService
     def grailsApplication
 
+    String BIE_SERVICE_BACKEND_URL, LISTS_BACKEND_URL
+
+    @PostConstruct
+    def init() {
+        BIE_SERVICE_BACKEND_URL = grailsApplication.config.bieService.internal.url
+        LISTS_BACKEND_URL = grailsApplication.config.lists.internal.url
+    }
+
     def searchBie(SearchRequestParamsDTO requestObj) {
 
-        def queryUrl = grailsApplication.config.bie.index.url + "/search?" + requestObj.getQueryString() +
-            "&facets=" + grailsApplication.config.facets + "&q.op=OR"
+        def queryUrl = "${BIE_SERVICE_BACKEND_URL}/search?${requestObj.getQueryString()}&facets=${grailsApplication.config.facets}&q.op=OR"
 
         // add a query context for BIE - to reduce taxa to a subset
         if(grailsApplication.config.bieService.queryContext){
@@ -31,7 +41,8 @@ class BieService {
             return null
         }
         try {
-            def json = webService.get(grailsApplication.config.speciesList.baseURL + "/ws/species/" + guid.replaceAll(/\s+/,'+') + "?isBIE=true", true)
+            def url = "${LISTS_BACKEND_URL}/ws/species/${guid.replaceAll(/\s+/,'+')}?isBIE=true"
+            def json = webService.get(url, true)
             return JSON.parse(json)
         } catch(Exception e) {
             // handles the situation where timeout exceptions etc occur.
@@ -44,7 +55,8 @@ class BieService {
         if (!guid && guid != "undefined") {
             return null
         }
-        def json = webService.get(grailsApplication.config.bie.index.url + "/taxon/" + guid.replaceAll(/\s+/,'+'))
+
+        def json = webService.get("${BIE_SERVICE_BACKEND_URL}/taxon/${guid.replaceAll(/\s+/,'+')}")
 
         try{
             JSON.parse(json)
@@ -55,8 +67,9 @@ class BieService {
     }
 
     def getClassificationForGuid(guid) {
-        def url = grailsApplication.config.bie.index.url + "/classification/" + guid.replaceAll(/\s+/,'+')
+        def url = "${BIE_SERVICE_BACKEND_URL}/classification/${guid.replaceAll(/\s+/,'+')}"
         def json = webService.getJson(url)
+
         if (json instanceof JSONObject && json.has("error")) {
             log.warn "classification request error: " + json.error
             return [:]
@@ -66,7 +79,7 @@ class BieService {
     }
 
     def getChildConceptsForGuid(guid) {
-        def url = grailsApplication.config.bie.index.url + "/childConcepts/" + guid.replaceAll(/\s+/,'+')
+        def url = "${BIE_SERVICE_BACKEND_URL}/childConcepts/${guid.replaceAll(/\s+/,'+')}"
 
         if(grailsApplication.config.bieService.queryContext){
             url = url + "?" + URLEncoder.encode(grailsApplication.config.bieService.queryContext, "UTF-8")
