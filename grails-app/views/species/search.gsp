@@ -1,7 +1,7 @@
 <%@ page import="au.org.ala.BieTagLib" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<g:set var="biocacheUrl" value="${grailsApplication.config.biocache.baseURL}" />
+<g:set var="biocacheUrl" value="${grailsApplication.config.occurrences.ui.url}" />
 
 <!DOCTYPE html>
 <html>
@@ -19,10 +19,10 @@
             // global var to pass GSP vars into JS file
             var SEARCH_CONF = {
                 query: "${BieTagLib.escapeJS(query)}",
-                serverName: "${grailsApplication.config.grails.serverURL}",
-                bieUrl: "${grailsApplication.config.bie.baseURL}",
+                serverName: "${grailsApplication.config.bie.ui.url}",
+                bieUrl: "${grailsApplication.config.bie.ui.url}",
                 biocacheUrl: "${biocacheUrl}",
-                biocacheServicesUrl: "${grailsApplication.config.biocacheService.baseURL}",
+                biocacheServicesUrl: "${grailsApplication.config.biocacheService.ui.url}",
                 biocacheQueryContext: "${grailsApplication.config.biocacheService.queryContext}",
                 geocodeLookupQuerySuffix: "${grailsApplication.config.geocode.querySuffix}"
             }
@@ -230,7 +230,7 @@
                         <div id="search-results-panel" class="card card-body">
                             <div class="search-header">
                                 <g:if test="${idxTypes.contains("TAXON")}">
-                                    <g:set var="downloadUrl" value="${grailsApplication.config.bie.index.url}/download?${request.queryString?:''}${grailsApplication.config.bieService.queryContext}" />
+                                    <g:set var="downloadUrl" value="${grailsApplication.config.bieService.ui.url}/download?${request.queryString?:''}${grailsApplication.config.bieService.queryContext}" />
 
                                     <%-- XXX XXX XXX --%>
                                     <a
@@ -358,7 +358,7 @@
                                             <g:elseif test="${result.has("idxtype") && result.idxtype == 'REGION'}">
                                                 <div class="search-result__header">
                                                     <g:message code="idxtype.${result.idxtype}" default="${result.idxtype}" />:
-                                                    <a href="${grailsApplication.config.regions.baseURL}/feature/${result.guid}">
+                                                    <a href="${grailsApplication.config.regions.ui.url}/feature/${result.guid}">
                                                         ${result.name}
                                                     </a>
                                                 </div>
@@ -386,6 +386,7 @@
                                                 <div class="search-result__header">
                                                     <g:message code="idxtype.${result.idxtype}" />:
 
+                                                    %{-- We don't use Spatial Portal. Remove this block entirely? --}%
                                                     <a href="${grailsApplication.config.spatial.baseURL}?layers=${result.guid}">
                                                         ${result.name}
                                                     </a>
@@ -534,7 +535,7 @@
                             if(searchResults.length > 0) {
                                 $results.find('.exploreYourAreaLink').html(searchResults[i].name);
                                 $results.find('.exploreYourAreaLink').attr('href',
-                                    '${grailsApplication.config.biocache.baseURL}/explore/your-area#' +
+                                    '${grailsApplication.config.occurrences.ui.url}/explore/your-area#' +
                                     searchResults[0].latitude +
                                     '|' + searchResults[0].longitude +
                                     '|12|ALL_SPECIES'

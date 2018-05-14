@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<g:set var="alaUrl" value="${grailsApplication.config.ala.baseURL}" />
-<g:set var="biocacheUrl" value="${grailsApplication.config.biocache.baseURL}" />
-<g:set var="speciesListUrl" value="${grailsApplication.config.speciesList.baseURL}" />
+<g:set var="alaUrl" value="${grailsApplication.config.serverRoot}" />
+<g:set var="biocacheUrl" value="${grailsApplication.config.occurrences.ui.url}" />
+<g:set var="speciesListUrl" value="${grailsApplication.config.lists.ui.url}" />
 <g:set var="spatialPortalUrl" value="${grailsApplication.config.spatial.baseURL}" />
-<g:set var="collectoryUrl" value="${grailsApplication.config.collectory.baseURL}" />
+<g:set var="collectoryUrl" value="${grailsApplication.config.collectory.ui.url}" />
 <g:set var="citizenSciUrl" value="${grailsApplication.config.sightings.guidUrl}" />
-<g:set var="alertsUrl" value="${grailsApplication.config.alerts.url}" />
+<g:set var="alertsUrl" value="${grailsApplication.config.alerts.ui.url}" />
 <g:set var="guid" value="${tc?.previousGuid ?: tc?.taxonConcept?.guid ?: ''}" />
 
 <g:set var="synonymsQuery">
@@ -380,10 +380,10 @@
             // Global var to pass GSP vars into JS file
             // @TODO replace bhl and trove with literatureSource list
             var SHOW_CONF = {
-                biocacheUrl:        "${grailsApplication.config.biocache.baseURL}",
-                biocacheServiceUrl: "${grailsApplication.config.contextPath}/proxy/biocache-service",
-                layersServiceUrl:   "${grailsApplication.config.layersService.baseURL}",
-                collectoryUrl:      "${grailsApplication.config.collectory.baseURL}",
+                biocacheUrl:        "${grailsApplication.config.occurrences.ui.url}",
+                biocacheServiceUrl: "${grailsApplication.config.bie.ui.url}/proxy/biocache-service",
+                layersServiceUrl:   "${grailsApplication.config.layersService.ui.url}",
+                collectoryUrl:      "${grailsApplication.config.collectory.ui.url}",
                 profileServiceUrl:  "${grailsApplication.config.profileService.baseURL}",
                 imageServiceBaseUrl:"${grailsApplication.config.image.baseURL}",
                 guid:               "${guid}",
@@ -393,10 +393,10 @@
                 synonymsQuery:      "${synonymsQuery.replaceAll('\"\"','\"').encodeAsJavaScript()}",
                 preferredImageId:   "${tc?.imageIdentifier?: ''}",
                 citizenSciUrl:      "${citizenSciUrl}",
-                serverName:         "${grailsApplication.config.grails.serverURL}",
-                speciesListUrl:     "${grailsApplication.config.speciesList.baseURL}",
-                bieUrl:             "${grailsApplication.config.bie.baseURL}",
-                alertsUrl:          "${grailsApplication.config.alerts.baseUrl}",
+                serverName:         "${grailsApplication.config.bie.ui.url}",
+                speciesListUrl:     "${grailsApplication.config.lists.ui.url}",
+                bieUrl:             "${grailsApplication.config.bie.ui.url}",
+                alertsUrl:          "${grailsApplication.config.alerts.ui.url}",
                 remoteUser:         "${request.remoteUser ?: ''}",
                 eolUrl:             "${raw(createLink(controller: 'externalSite', action: 'eol', params: [s: tc?.taxonConcept?.nameString ?: '', f:tc?.classification?.class ?: tc?.classification?.phylum ?: '']))}",
                 genbankUrl:         "${createLink(controller: 'externalSite', action: 'genbank', params: [s: tc?.taxonConcept?.nameString ?: ''])}",
@@ -426,7 +426,7 @@
                 '<b>Down vote (<span class="fa fa-thumbs-o-down" aria-hidden="true"></span>) an image:</b>'+
                 ' Image does not support the identification of the species, subject is unclear and identifying features are difficult to see or not visible.<br /><br /></div>',
                 savePreferredSpeciesListUrl: "${createLink(controller: 'imageClient', action: 'saveImageToSpeciesList')}",
-                getPreferredSpeciesListUrl: "${grailsApplication.config.speciesList.baseURL}",
+                getPreferredSpeciesListUrl: "${grailsApplication.config.lists.ui.url}",
                 addPreferenceButton: "${authService?.getUserId() ? (authService.getUserForUserId(authService.getUserId())?.roles?.contains('ROLE_ADMIN') ? true : false) : false}",
                 mapOutline: "${grailsApplication.config.map.outline ?: 'false'}",
                 mapEnvOptions: "${grailsApplication.config.map.env?.options ?: 'color:' + grailsApplication.config.map.records.colour+ ';name:circle;size:4;opacity:0.8'}",
@@ -453,8 +453,8 @@
                         $('#charts').html('');  //prevent multiple loads
 
                         <charts:biocache
-                            biocacheServiceUrl="${grailsApplication.config.biocacheService.baseURL}"
-                            biocacheWebappUrl="${grailsApplication.config.biocache.baseURL}"
+                            biocacheServiceUrl="${grailsApplication.config.biocacheService.ui.url}"
+                            biocacheWebappUrl="${grailsApplication.config.occurrences.ui.url}"
                             q="lsid:${guid}"
                             qc="${grailsApplication.config.biocacheService.queryContext ?: ''}"
                             fq=""

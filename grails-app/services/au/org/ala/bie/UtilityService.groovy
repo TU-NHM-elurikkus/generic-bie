@@ -115,10 +115,10 @@ class UtilityService {
                     }
                 }
             }
-        } catch(Exception e){
+        } catch(Exception e) {
             log.error("Unable to get collectory information.",e)
         }
-        if(map.size()>0){
+        if(map.size() > 0) {
             log.debug("Collectory UID map for filters " + map)
         }
 
