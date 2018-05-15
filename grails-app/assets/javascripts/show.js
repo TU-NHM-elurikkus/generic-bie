@@ -124,13 +124,15 @@ function updateOccurrenceCount() {
         $('.occurrenceEstCount').html(data.totalRecords.toLocaleString(GLOBAL_LOCALE_CONF.locale));
     });
 
-    $.getJSON(SHOW_CONF.biocacheServiceUrl + '/occurrences/search/?facets=country,geospatial_kosher&q=lsid:' + SHOW_CONF.guid, function(data) {
+    $.getJSON(SHOW_CONF.biocacheServiceUrl + '/occurrences/search/?facets=geospatial_kosher&q=lsid:' + SHOW_CONF.guid, function(data) {
         $('.occurrenceRecordCount').html(data.totalRecords.toLocaleString(GLOBAL_LOCALE_CONF.locale));
 
         var coords = data.facetResults.filter(function(facet) { return facet.fieldName === 'geospatial_kosher'; })[0];
         if(coords !== undefined) {
             var withCoords = coords.fieldResult.filter(function(coordValue) { return coordValue.label === 'true'; })[0];
-            $('.occurrenceCoordsCount').html(withCoords.count.toLocaleString(GLOBAL_LOCALE_CONF.locale));
+            if(withCoords) {
+                $('.occurrenceCoordsCount').html(withCoords.count.toLocaleString(GLOBAL_LOCALE_CONF.locale));
+            }
         }
     });
 }
