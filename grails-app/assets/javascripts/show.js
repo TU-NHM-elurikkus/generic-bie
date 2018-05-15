@@ -8,6 +8,7 @@
 //= require jquery.htmlClean
 
 var SHOW_CONF; // This constant is populated by show.gsp inline javascript
+var GLOBAL_LOCALE_CONF; // This constant is populated by show.gsp inline javascript
 
 function showSpeciesPage() {
     // load content
@@ -119,14 +120,12 @@ function loadMap() {
  * Update the total/est/coordinates records count for the occurrence map in heading text
  */
 function updateOccurrenceCount() {
-    $.getJSON(SHOW_CONF.biocacheServiceUrl + '/occurrences/search/?facets=country,geospatial_kosher&q=lsid:' + SHOW_CONF.guid + '&fq=' + SHOW_CONF.mapQueryContext, function(data) {
-        $('.occurrenceRecordCount').html(data.totalRecords.toLocaleString(GLOBAL_LOCALE_CONF.locale));
+    $.getJSON(SHOW_CONF.biocacheServiceUrl + '/occurrences/search/?q=lsid:' + SHOW_CONF.guid + '&fq=country:Estonia', function(data) {
+        $('.occurrenceEstCount').html(data.totalRecords.toLocaleString(GLOBAL_LOCALE_CONF.locale));
+    });
 
-        var countries = data.facetResults.filter(function(facet) { return facet.fieldName === 'country'; })[0];
-        if(countries !== undefined) {
-            var est = countries.fieldResult.filter(function(countryName) { return countryName.label === 'Estonia'; })[0];
-            $('.occurrenceEstCount').html(est.count.toLocaleString(GLOBAL_LOCALE_CONF.locale));
-        }
+    $.getJSON(SHOW_CONF.biocacheServiceUrl + '/occurrences/search/?facets=country,geospatial_kosher&q=lsid:' + SHOW_CONF.guid, function(data) {
+        $('.occurrenceRecordCount').html(data.totalRecords.toLocaleString(GLOBAL_LOCALE_CONF.locale));
 
         var coords = data.facetResults.filter(function(facet) { return facet.fieldName === 'geospatial_kosher'; })[0];
         if(coords !== undefined) {
