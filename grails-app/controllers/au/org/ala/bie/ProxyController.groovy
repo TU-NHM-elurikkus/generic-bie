@@ -319,6 +319,7 @@ class ProxyController {
             Thread.sleep(5000);  // wait 5 seconds
             outputStreamClientResponse.flush();
         }
+        outputStreamClientResponse.close();
     }
 
     private String getProxyURL(HttpServletRequest httpServletRequest, String pathInfo) {
