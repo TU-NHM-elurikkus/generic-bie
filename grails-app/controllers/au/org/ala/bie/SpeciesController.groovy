@@ -77,19 +77,27 @@ class SpeciesController {
             )
         }
 
-        if (searchResults instanceof JSONObject && searchResults.has("error")) {
-            log.error "TaxonConcept get Error: ${searchResults.error} | params: ${params} | ${searchResults.error}"
-            render(view: "../error", model: [message: searchResults.error])
-        } else {
-            render(view: "search", model: [
-                searchResults: searchResults?.searchResults,
-                facetMap: utilityService.addFacetMap(filterQuery),
-                query: query?.trim(),
-                filterQuery: filterQuery,
-                idxTypes: utilityService.getIdxtypes(searchResults?.searchResults?.facetResults),
-                collectionsMap: utilityService.addFqUidMap(filterQuery)
-            ])
+        def searchError = ""
+        if(searchResults instanceof JSONObject) {
+            if(searchResults?.error != null) {
+                searchError = "${searchResults?.error}"
+                // a super hacky way of checking whether search input is faulty. user input isn't validated at all, so we
+                // search 400 from error message and just tell user to check input
+                if(!searchError.contains("Server returned HTTP response code: 400")) {
+                    log.error "TaxonConcept get Error: search() | params: ${params} | ${searchResults}"
+                }
+            }
         }
+
+        render(view: "search", model: [
+            errors: searchError,
+            searchResults: searchResults?.searchResults ? searchResults.searchResults : [],
+            facetMap: utilityService.addFacetMap(filterQuery),
+            query: query?.trim(),
+            filterQuery: filterQuery,
+            idxTypes: utilityService.getIdxtypes(searchResults?.searchResults?.facetResults),
+            collectionsMap: utilityService.addFqUidMap(filterQuery)
+        ])
     }
 
     /**
@@ -118,7 +126,7 @@ class SpeciesController {
                 response.status = 404
                 render(view: "../404", model: [message: "Requested taxon <b>${guid}</b> was not found"])
             } else {
-                log.info("TaxonConcept get Error: ${guid} | params: ${params} | ${taxonDetails.error}")
+                log.info("TaxonConcept get Error: show() | ${guid} | params: ${params} | ${taxonDetails.error}")
                 render(view: "../error", model: [message: taxonDetails.error])
             }
         } else if (taxonDetails.taxonConcept?.guid && taxonDetails.taxonConcept.guid != guid) {
