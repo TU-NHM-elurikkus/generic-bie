@@ -84,7 +84,8 @@ class SpeciesController {
                 // a super hacky way of checking whether search input is faulty. user input isn't validated at all, so we
                 // search 400 from error message and just tell user to check input
                 if(!searchError.contains("Server returned HTTP response code: 400")) {
-                    log.error "TaxonConcept get Error: search() | params: ${params} | ${searchResults}"
+                    // no point in spamming rollbar with faulty searches
+                    log.info "TaxonConcept get Error: search() | params: ${params} | ${searchResults}"
                 }
             }
         }
