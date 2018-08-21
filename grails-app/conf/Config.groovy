@@ -121,6 +121,9 @@ environments {
 }
 
 
+cors.url.pattern = ["/assets/*"]
+
+
 def logging_dir = System.getProperty("catalina.base") ? System.getProperty("catalina.base") + "/logs" : "/var/log/tomcat7"
 if(!new File(logging_dir).exists()) {
     logging_dir = "/tmp"
