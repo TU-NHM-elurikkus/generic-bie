@@ -1,38 +1,52 @@
 package au.org.ala.bie
 
-import grails.converters.JSON
+import org.apache.commons.httpclient.HttpClient
+import org.apache.commons.httpclient.HttpException
+import org.apache.commons.httpclient.HttpMethod
+import org.apache.commons.httpclient.methods.GetMethod
+
 
 class PlutofController {
+    static final HTTP_USER_AGENT = "Elurikkus/bie-hub"
+
     def index() {
     }
 
     def doGet(String path) {
-        // Yep, this is the shortest way to proxy a json get...
-        def url = 'https://api.plutof.ut.ee/v1/' + path + '?' + request.queryString
-        def urlObj = new java.net.URL(url)
+        def url = "https://api.plutof.ut.ee/v1/${path}?${request.queryString}"
 
-        def connection = urlObj.openConnection()
-        connection.setRequestProperty('Accept', 'application/json,application/vnd.api+json')
-        connection.connect()
+        HttpClient client = new HttpClient()
 
-        def br
+        HttpMethod method = new GetMethod(url)
+        method.setRequestHeader("User-Agent", HTTP_USER_AGENT)
+        method.setRequestHeader("Accept", "application/json,application/vnd.api+json")
 
-        if (connection.getResponseCode() == 200) {
-            br = new BufferedReader(new InputStreamReader(connection.getInputStream()))
-        } else {
-            br = new BufferedReader(new InputStreamReader(connection.getErrorStream()))
+        String result = "{}"
+        String contentType = "text/json"
+
+        try {
+            // Execute the method.
+            client.executeMethod(method)
+            contentType = method.getResponseHeader("Content-Type").getValue()
+
+            // Read the response body.
+            byte[] responseBody = method.getResponseBody()
+            result = new String(responseBody)
+
+            // Deal with the response.
+            // Use caution: ensure correct character encoding and is not binary data
+            } catch (HttpException e) {
+                log.warn "Fatal protocol violation: ${e.getMessage()}"
+                e.printStackTrace()
+            } catch (IOException e) {
+                log.warn "Fatal transport error: ${e.getMessage()}"
+                e.printStackTrace();
+            } finally {
+                // Release the connection.
+                method.releaseConnection();
+            }
+
+            render(contentType: contentType, text: result)
         }
-        StringBuilder sb = new StringBuilder()
 
-        String line
-        while ((line = br.readLine()) != null) {
-            sb.append(line + "\n")
-        }
-
-        br.close()
-
-        def content = sb.toString()
-
-        render(contentType: 'text/json', text: content)
-    }
 }

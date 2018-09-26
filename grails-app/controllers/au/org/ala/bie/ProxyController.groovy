@@ -43,6 +43,10 @@ import javax.servlet.http.HttpServletResponse
 class ProxyController {
 
     /**
+     * Key for User-Agent header
+     */
+    private static final String STRING_USER_AGENT = "Elurikkus/bie-hub";
+    /**
      * Key for redirect location header.
      */
     private static final String STRING_LOCATION_HEADER = "Location";
@@ -117,6 +121,7 @@ class ProxyController {
      *                                the proxy host
      */
     private void setProxyRequestHeaders(HttpServletRequest httpServletRequest, HttpMethod httpMethodProxyRequest) {
+        httpMethodProxyRequest.setRequestHeader("User-Agent", STRING_USER_AGENT)
         // Get an Enumeration of all of the header names sent by the client
         Enumeration enumerationOfHeaderNames = httpServletRequest.getHeaderNames();
         while(enumerationOfHeaderNames.hasMoreElements()) {
