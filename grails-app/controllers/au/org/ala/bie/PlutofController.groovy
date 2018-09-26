@@ -1,5 +1,7 @@
 package au.org.ala.bie
 
+import grails.util.Environment
+
 import org.apache.commons.httpclient.HttpClient
 import org.apache.commons.httpclient.HttpException
 import org.apache.commons.httpclient.HttpMethod
@@ -18,7 +20,7 @@ class PlutofController {
         HttpClient client = new HttpClient()
 
         HttpMethod method = new GetMethod(url)
-        method.setRequestHeader("User-Agent", HTTP_USER_AGENT)
+        method.setRequestHeader("User-Agent", "${HTTP_USER_AGENT} (${Environment.current.name})")
         method.setRequestHeader("Accept", "application/json,application/vnd.api+json")
 
         String result = "{}"
