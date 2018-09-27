@@ -23,12 +23,15 @@ class BiocacheService {
      * @return
      */
     def getSoundsForTaxon(taxonName){
+        if(taxonName == null) {
+            return []
+        }
 
         def queryUrl = "${BIOCACHE_SERVICE_BACKEND_URL}/occurrences/search?q=${java.net.URLEncoder.encode(taxonName, "UTF-8")}&fq=multimedia:\"Sound\""
         def data = webService.getJson(queryUrl)
         //log.debug "sound data => " + data
-        if(data.size() && data.has("occurrences") && data.get("occurrences").size()){
-            def recordUrl = "${BIOCACHE_SERVICE_BACKEND_URL}/occurrence/${data.get("occurrences").get(0).uuid}"
+        if(data.size() && data.has("occurrences") && data.get("occurrences").size()) {
+            def recordUrl = "${BIOCACHE_SERVICE_BACKEND_URL}/occurrence/${data.get('occurrences').get(0).uuid}"
             webService.getJson(recordUrl)
         } else {
             []
