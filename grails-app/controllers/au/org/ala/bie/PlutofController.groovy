@@ -16,8 +16,10 @@ class PlutofController {
     }
 
     def doGet(String path) {
-        String qString = URIUtil.encodeQuery(request.queryString)
-        def url = "https://api.plutof.ut.ee/v1/${path}?${qString}"
+        def url = "https://api.plutof.ut.ee/v1/${path}"
+        if(request.queryString) {
+            url = "${url}?${URIUtil.encodeQuery(request.queryString)}"
+        }
 
         HttpClient client = new HttpClient()
 
