@@ -6,6 +6,7 @@ import org.apache.commons.httpclient.HttpClient
 import org.apache.commons.httpclient.HttpException
 import org.apache.commons.httpclient.HttpMethod
 import org.apache.commons.httpclient.methods.GetMethod
+import org.apache.commons.httpclient.util.URIUtil
 
 
 class PlutofController {
@@ -15,7 +16,8 @@ class PlutofController {
     }
 
     def doGet(String path) {
-        def url = "https://api.plutof.ut.ee/v1/${path}?${request.queryString}"
+        String qString = URIUtil.encodeQuery(request.queryString)
+        def url = "https://api.plutof.ut.ee/v1/${path}?${qString}"
 
         HttpClient client = new HttpClient()
 
