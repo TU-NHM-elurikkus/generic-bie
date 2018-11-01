@@ -433,7 +433,7 @@ function loadOverviewImages() {
     var url = SHOW_CONF.biocacheServiceUrl + '/occurrences/search.json' +
         '?q=lsid:' + SHOW_CONF.guid +
         '&fq=multimedia:"Image"&im=true&facet=off&pageSize=5&start=0' +
-        '&defType=edismax&bq=basis_of_record:HumanObservation^200&dir=desc' +  // boost line
+        '&defType=edismax&bq=basis_of_record:HumanObservation%5E200&dir=desc' +  // boost line
         '&callback=?';
 
     $.getJSON(url, function(data) {
