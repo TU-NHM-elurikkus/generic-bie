@@ -27,7 +27,7 @@ class BiocacheService {
             return []
         }
 
-        def queryUrl = "${BIOCACHE_SERVICE_BACKEND_URL}/occurrences/search?q=${java.net.URLEncoder.encode(taxonName, "UTF-8")}&fq=multimedia:\"Sound\""
+        def queryUrl = "${BIOCACHE_SERVICE_BACKEND_URL}/occurrences/search?q=${java.net.URLEncoder.encode(taxonName, "UTF-8")}&fq=multimedia:Sound"
         def data = webService.getJson(queryUrl)
         //log.debug "sound data => " + data
         if(data.size() && data.has("occurrences") && data.get("occurrences").size()) {
