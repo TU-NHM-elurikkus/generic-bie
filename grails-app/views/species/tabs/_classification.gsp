@@ -11,7 +11,7 @@
         </g:else>
     </h3>
     <div>
-        <g:message code="show.classification.updatedAt" /> 2018-05-20
+        <g:message code="show.classification.updatedAt" /> 2019-03-08
     </div>
 
     <g:if test="${tc.taxonConcept.rankID < 7000}">
