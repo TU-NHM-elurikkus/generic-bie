@@ -5,7 +5,6 @@
 <g:set var="speciesListUrl" value="${grailsApplication.config.lists.ui.url}" />
 <g:set var="spatialPortalUrl" value="${grailsApplication.config.spatial.ui.url}" />
 <g:set var="collectoryUrl" value="${grailsApplication.config.collectory.ui.url}" />
-<g:set var="citizenSciUrl" value="${grailsApplication.config.sightings.guidUrl}" />
 <g:set var="alertsUrl" value="${grailsApplication.config.alerts.ui.url}" />
 <g:set var="guid" value="${tc?.previousGuid ?: tc?.taxonConcept?.guid ?: ''}" />
 
@@ -410,7 +409,6 @@
                 taxonRankID:        "${tc?.taxonConcept?.rankID ?: ''}",
                 synonymsQuery:      "${synonymsQuery.replaceAll('\"\"','\"').encodeAsJavaScript()}",
                 preferredImageId:   "${tc?.imageIdentifier?: ''}",
-                citizenSciUrl:      "${citizenSciUrl}",
                 serverName:         "${grailsApplication.config.bie.ui.url}",
                 speciesListUrl:     "${grailsApplication.config.lists.ui.url}",
                 bieUrl:             "${grailsApplication.config.bie.ui.url}",

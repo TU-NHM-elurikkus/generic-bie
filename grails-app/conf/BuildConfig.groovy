@@ -32,6 +32,17 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
+        compile("au.org.ala:ala-name-matching:2.4.0") {
+            excludes "lucene-core", "lucene-analyzers-common", "lucene-queryparser", "simmetrics"
+        }
+        compile(
+            "commons-httpclient:commons-httpclient:3.1",
+            "org.codehaus.jackson:jackson-core-asl:1.8.6",
+            "org.codehaus.jackson:jackson-mapper-asl:1.8.6"
+        )
+        runtime(
+            "org.jsoup:jsoup:1.7.2"
+        )
     }
 
     plugins {
@@ -42,10 +53,12 @@ grails.project.dependency.resolution = {
         // plugins for the build system only
         build ":tomcat:7.0.70"
 
+        runtime ":rest:0.8"
+
         compile ":asset-pipeline:2.14.1"
         compile ":cache:1.1.8"
         compile ":jquery:1.11.1"
-        compile ":elurikkus-bie:1.3.0-SNAPSHOT"
+        compile ":images-client-plugin:0.7.9-SNAPSHOT"
         compile ":elurikkus-charts:1.3"
         compile ":elurikkus-commons:0.2-SNAPSHOT"
     }

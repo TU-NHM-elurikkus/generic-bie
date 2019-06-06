@@ -98,6 +98,8 @@ grails.spring.bean.packages = []
 // whether to disable processing of multi part requests
 grails.web.disable.multipart = false
 
+grails.cache.config = { }
+
 // request parameters to mask when logging exceptions
 grails.exceptionresolver.params.exclude = ["password"]
 
@@ -187,3 +189,13 @@ log4j = {
            "org.hibernate",
            "net.sf.ehcache.hibernate"
 }
+
+additionalResultsFields = "kingdom"
+map.default.id = "" // not needed for CartoDB map
+map.default.token = "" // not needed for CartoDB map
+map.default.url = "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
+map.default.attr = "Map data &copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>, imagery &copy; <a href='http://cartodb.com/attributions'>CartoDB</a>"
+map.default.domain = "abcd"
+languageCodesUrl = ""
+occurrenceCounts.enabled = true
+synonymsTypes="synonym" // comma separated list
