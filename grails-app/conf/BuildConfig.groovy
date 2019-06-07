@@ -32,16 +32,13 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
+        // Explicitly needed because "grails war" won't compile with lower guava version. Dependency of ala-name-matching
+        compile(group: "com.google.guava", name: "guava", version: "19.0")
         compile("au.org.ala:ala-name-matching:2.4.0") {
             excludes "lucene-core", "lucene-analyzers-common", "lucene-queryparser", "simmetrics"
         }
         compile(
             "commons-httpclient:commons-httpclient:3.1",
-            "org.codehaus.jackson:jackson-core-asl:1.8.6",
-            "org.codehaus.jackson:jackson-mapper-asl:1.8.6"
-        )
-        runtime(
-            "org.jsoup:jsoup:1.7.2"
         )
     }
 

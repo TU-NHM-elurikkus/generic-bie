@@ -415,8 +415,6 @@
                 alertsUrl:          "${grailsApplication.config.alerts.ui.url}",
                 remoteUser:         "${request.remoteUser ?: ''}",
                 eolUrl:             "${raw(createLink(controller: 'externalSite', action: 'eol', params: [s: tc?.taxonConcept?.nameString ?: '', f:tc?.classification?.class ?: tc?.classification?.phylum ?: '']))}",
-                genbankUrl:         "${createLink(controller: 'externalSite', action: 'genbank', params: [s: tc?.taxonConcept?.nameString ?: ''])}",
-                scholarUrl:         "${createLink(controller: 'externalSite', action: 'scholar', params: [s: tc?.taxonConcept?.nameString ?: ''])}",
                 soundUrl:           "${createLink(controller: 'species', action: 'soundSearch', params: [s: tc?.taxonConcept?.nameString ?: ''])}",  // FixMe: do somthing so that it starts working
                 eolLanguage:        "${grailsApplication.config.eol.lang}",
                 defaultDecimalLatitude: ${grailsApplication.config.defaultDecimalLatitude},

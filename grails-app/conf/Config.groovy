@@ -196,6 +196,6 @@ map.default.token = "" // not needed for CartoDB map
 map.default.url = "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
 map.default.attr = "Map data &copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>, imagery &copy; <a href='http://cartodb.com/attributions'>CartoDB</a>"
 map.default.domain = "abcd"
-languageCodesUrl = ""
+languageCodesUrl = defaultConfig.class.getResource("/languages.json").toString()
 occurrenceCounts.enabled = true
 synonymsTypes="synonym" // comma separated list
