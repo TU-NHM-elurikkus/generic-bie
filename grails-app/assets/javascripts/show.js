@@ -408,56 +408,63 @@ function escapeHtml(string) {
  * Load overview images on the species page. This is separate from the main galleries.
  */
 function loadOverviewImages() {
-    var hasPreferredImage = false; // Could get a race condition where no main image gets loaded due callbacks
+    var images = [];
 
     if(SHOW_CONF.preferredImageId) {
-        hasPreferredImage = true;
+        // If preferred is a specimen, we still want to show some observation instead. And in general,
+        // prefere observations to anything else
         var prefUrl = SHOW_CONF.biocacheServiceUrl +
             '/occurrences/search.json?q=image_url:' + SHOW_CONF.preferredImageId +
             '&fq=-assertion_user_id:*&im=true&facet=off&pageSize=1&start=0&callback=?';
 
         $.getJSON(prefUrl, function(data) {
             if(data && data.totalRecords > 0) {
-                addOverviewImage(data.occurrences[0]);
-                hasPreferredImage = true;
-            } else {
-                hasPreferredImage = false;
+                images.push(data.occurrences[0]);
+            }
+        }).fail(function(jqxhr, textStatus, error) {
+            console.warn('Error loading preferred image: ' + textStatus + ', ' + error);
+        }).always(function() {
+            loadOccurrenceImages();
+        });
+    } else {
+        loadOccurrenceImages();
+    }
+
+    function loadOccurrenceImages() {
+        var url = SHOW_CONF.biocacheServiceUrl + '/occurrences/search.json' +
+            '?q=lsid:' + SHOW_CONF.guid +
+            '&fq=multimedia:"Image"&im=true&facet=off&pageSize=5&start=0' +
+            '&defType=edismax&bq=basis_of_record:HumanObservation%5E200&dir=desc' +  // boost line
+            '&callback=?';
+
+        $.getJSON(url, function(data) {
+            if(data && data.totalRecords > 0) {
+                data.occurrences.forEach(function(occ) {
+                    images.push(occ);
+                });
+            }
+        }).fail(function(jqxhr, textStatus, error) {
+            console.warn('Error loading overview images: ' + textStatus + ', ' + error);
+        }).always(function() {
+            if(images.length > 0) {
+                var PREFERENCE = ['HumanObservation', 'MachineObservation', 'LivingSpecimen', 'PreservedSpecimen', 'FossilSpecimen'];
+
+                images.sort(function(a, b) {
+                    var apref = PREFERENCE.indexOf(a.basisOfRecord);
+                    var bpref = PREFERENCE.indexOf(b.basisOfRecord);
+
+                    return apref - bpref;
+                });
+
+                addOverviewImage(images[0]);
+
+                images.slice(1).forEach(function(image, idx) {
+                    addOverviewThumb(image, idx + 1);
+                });
             }
 
-        }).fail(function(jqxhr, textStatus, error) {
-            console.warn('Error loading overview image: ' + textStatus + ', ' + error);
-            hasPreferredImage = false;
+            $('#gallerySpinner').hide();
         });
-    }
-
-    var url = SHOW_CONF.biocacheServiceUrl + '/occurrences/search.json' +
-        '?q=lsid:' + SHOW_CONF.guid +
-        '&fq=multimedia:"Image"&im=true&facet=off&pageSize=5&start=0' +
-        '&defType=edismax&bq=basis_of_record:HumanObservation%5E200&dir=desc' +  // boost line
-        '&callback=?';
-
-    $.getJSON(url, function(data) {
-        if(data && data.totalRecords > 0) {
-            addOverviewImages(data.occurrences, hasPreferredImage);
-        }
-    }).fail(function(jqxhr, textStatus, error) {
-        console.warn('Error loading overview images: ' + textStatus + ', ' + error);
-    }).always(function() {
-        $('#gallerySpinner').hide();
-    });
-}
-
-function addOverviewImages(imagesArray, hasPreferredImage) {
-    if(!hasPreferredImage) {
-        // no preferred image so use first in results set
-        addOverviewImage(imagesArray[0]);
-    }
-
-    for(var j = 1; j < 5; j++) {
-        // load smaller thumb images
-        if(imagesArray.length > j) {
-            addOverviewThumb(imagesArray[j], j);
-        }
     }
 }
 
