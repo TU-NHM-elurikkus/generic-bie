@@ -138,6 +138,23 @@ function updateOccurrenceCount() {
             }
         }
     });
+
+    var speciesCountURL = SHOW_CONF.bieUrl + '/search/?fq=' + SHOW_CONF.rankString + 'ID_s:' + SHOW_CONF.guid + '&fq=rank:species&pageSize=0';
+
+    function updateCount(placeholderSelector) {
+        return function(data) {
+            var count = data.searchResults.totalRecords;
+
+            $(placeholderSelector).html(count);
+
+            if(count > 0) {
+                $('#speciesCountSection').removeClass('hidden-node');
+            }
+        };
+    }
+
+    $.getJSON(speciesCountURL, updateCount('#speciesCount'));
+    $.getJSON(speciesCountURL + '&fq=locatedInHubCountry:true', updateCount('#speciesEstCount'));
 }
 
 // Disabled for now - always position the map over default coordinates
