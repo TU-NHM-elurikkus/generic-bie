@@ -122,7 +122,9 @@
                     <g:message code="show.overview.occurrencesMap.title" />.
                     (<g:message code="show.overview.occurrences.total" /> <span class="occurrenceRecordCount">0</span>;
                     <g:message code="show.overview.occurrences.est" /> <span class="occurrenceEstCount">0</span>;
-                    <g:message code="show.overview.occurrences.coords" /> <span class="occurrenceCoordsCount">0</span>)
+                    <g:message code="show.overview.occurrences.coords" /> <span class="occurrenceCoordsCount">0</span><span id="speciesCountSection" class="hidden-node">;
+                    <g:message code="show.overview.species.total" /> <span id="speciesCount">0</span>;
+                    <g:message code="show.overview.species.est" /> <span id="speciesEstCount">0</span></span>)
                 </h3>
 
                 <div id="leafletMap" class="leaflet-map-container"></div>

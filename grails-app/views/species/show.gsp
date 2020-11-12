@@ -412,6 +412,7 @@
                 serverName:         "${grailsApplication.config.bie.ui.url}",
                 speciesListUrl:     "${grailsApplication.config.lists.ui.url}",
                 bieUrl:             "${grailsApplication.config.bie.ui.url}",
+                bieServiceUrl:      "${grailsApplication.config.bie.index.url}",
                 alertsUrl:          "${grailsApplication.config.alerts.ui.url}",
                 remoteUser:         "${request.remoteUser ?: ''}",
                 eolUrl:             "${raw(createLink(controller: 'externalSite', action: 'eol', params: [s: tc?.taxonConcept?.nameString ?: '', f:tc?.classification?.class ?: tc?.classification?.phylum ?: '']))}",
