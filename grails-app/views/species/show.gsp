@@ -144,6 +144,12 @@
                                 <g:message code="show.datasets.title" />
                             </a>
                         </li>
+
+                        <li id="redlistTabContainer" class="nav-item" style="display:none">
+                            <a href="#tab-redlist" data-toggle="tab" class="nav-link">
+                                <g:message code="show.redlist.title" />
+                            </a>
+                        </li>
                     </ul>
 
                     <div class="tab-content">
@@ -164,6 +170,8 @@
                         <g:render template="tabs/sequences" />
 
                         <g:render template="tabs/datasets" />
+
+                        <g:render template="tabs/redlist" />
 
                         <section class="tab-pane" id="indigenous-info" role="tabpanel"></section>
                     </div>
