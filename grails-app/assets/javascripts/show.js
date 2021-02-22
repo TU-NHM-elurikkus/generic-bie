@@ -22,6 +22,7 @@ function showSpeciesPage() {
     loadSpeciesLists();
     loadDataProviders();
     loadExternalSources();
+    loadRedlistAssessments(SHOW_CONF.guid);
 
     loadReferences('plutof-references', SHOW_CONF.guid);
 
@@ -1094,3 +1095,51 @@ function addConservationInstructions(markdown) {
 
     $('#conservation').append(renderedHTML);
 }
+
+const loadRedlistAssessments = (function() {
+    return function(taxonID) {
+        return load(taxonID).then(assessments => {
+            if(assessments.length > 0) {
+                assessments.forEach(show);
+                $('#redlistTabContainer').show();
+            }
+        });
+    };
+
+    function load(taxonID) {
+        var endpoint = '/bie-hub/proxy/plutof/redbook/red-list-species';
+        var params = { taxon_node: taxonID };
+
+        return loadJSON(endpoint, params).then(response => {
+            return Promise.all(response.data.map(resolveAssessment));
+        });
+    }
+
+    function resolveAssessment(serialized) {
+        return {
+            id: serialized.id,
+            title: serialized.attributes.title,
+            assessmentDate: serialized.attributes.assessment_date,
+        };
+    }
+
+    function loadJSON(...args) {
+        return new Promise((resolve, reject) => {
+            $.getJSON(...args, resolve);
+        });
+    }
+
+    function show(assessment) {
+        const container = document.getElementById('redlist');
+
+        const wrap = document.createElement('div');
+
+        const link = document.createElement('a');
+        link.href = `https://plutof.ut.ee/conservation-lab/redlist/view/${assessment.id}`;
+
+        link.innerHTML = `${assessment.assessmentDate}: ${assessment.title}`;
+
+        wrap.appendChild(link);
+        container.appendChild(wrap);
+    }
+})();
