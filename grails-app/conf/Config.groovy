@@ -199,3 +199,9 @@ map.default.domain = "abcd"
 languageCodesUrl = getClass().getResource("/languages.json").toString()
 occurrenceCounts.enabled = true
 synonymsTypes="synonym" // comma separated list
+
+grails.assets.minifyOptions = [
+    languageMode: 'ES6',
+    targetLanguage: 'ES5', //Can go from ES6 to ES5 for those bleeding edgers
+    optimizationLevel: 'SIMPLE' //Or ADVANCED or WHITESPACE_ONLY
+]
