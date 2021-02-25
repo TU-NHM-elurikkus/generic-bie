@@ -1100,6 +1100,18 @@ const loadRedlistAssessments = (function() {
     return function(taxonID) {
         return load(taxonID).then(assessments => {
             if(assessments.length > 0) {
+                assessments.sort((x, y) => {
+                    if(x.assessmentDate < y.assessmentDate) {
+                        return 1;
+                    }
+
+                    if(x.assessmentDate > y.assessmentDate) {
+                        return -1;
+                    }
+
+                    return 0;
+                });
+
                 assessments.forEach(show);
                 $('#redlistTabContainer').show();
             }
