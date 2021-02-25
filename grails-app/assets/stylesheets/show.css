@@ -414,3 +414,13 @@
 .conservation__download-button {
     margin-bottom: 1rem;
 }
+
+.redlist-assessment {
+    padding-bottom: 0.25em;
+    margin-bottom: 0.25em;
+    border-bottom: 1px solid #ccc;
+}
+
+.redlist-assessment:last-child {
+    border-bottom: 0;
+}
