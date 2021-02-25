@@ -1132,6 +1132,8 @@ const loadRedlistAssessments = (function() {
             id: serialized.id,
             title: serialized.attributes.title,
             assessmentDate: serialized.attributes.assessment_date,
+            category: serialized.attributes.category,
+            categoryDescription: serialized.attributes.category_description,
         };
     }
 
@@ -1145,6 +1147,7 @@ const loadRedlistAssessments = (function() {
         const container = document.getElementById('redlist');
 
         const wrap = document.createElement('div');
+        wrap.classList.add('redlist-assessment')
 
         const link = document.createElement('a');
         link.href = `https://plutof.ut.ee/conservation-lab/redlist/view/${assessment.id}`;
@@ -1152,6 +1155,33 @@ const loadRedlistAssessments = (function() {
         link.innerHTML = `${assessment.assessmentDate}: ${assessment.title}`;
 
         wrap.appendChild(link);
+
+        if(assessment.category) {
+            wrap.appendChild(document.createElement('br'));
+
+            addField(
+                wrap,
+                $.i18n.prop('show.redlist.category'),
+                $.i18n.prop(`show.redlist.categories.${assessment.category}`)
+            );
+        }
+
+        if(assessment.categoryDescription) {
+            wrap.appendChild(document.createElement('br'));
+            addField(wrap, $.i18n.prop('show.redlist.categoryDescription'), assessment.categoryDescription);
+        }
+
         container.appendChild(wrap);
+    }
+
+    function addField(container, label, value) {
+        const _label = document.createElement('strong');
+        _label.innerHTML = `${label}: `;
+
+        const _value = document.createElement('span');
+        _value.innerHTML = value; // TODO: Name
+
+        container.appendChild(_label);
+        container.appendChild(_value);
     }
 })();
