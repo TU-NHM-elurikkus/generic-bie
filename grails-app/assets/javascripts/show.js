@@ -1150,7 +1150,7 @@ const loadRedlistAssessments = (function() {
         wrap.classList.add('redlist-assessment')
 
         const link = document.createElement('a');
-        link.href = `https://plutof.ut.ee/conservation-lab/redlist/view/${assessment.id}`;
+        link.href = `https://plutof.ut.ee/#/conservation-lab/red-list/view/${assessment.id}`;
 
         link.innerHTML = `${assessment.assessmentDate}: ${assessment.title}`;
 
